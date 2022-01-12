@@ -1,0 +1,27 @@
+{
+  "name": "mapper",
+  "version": "1.0.0",
+  "description": "Web Application to map a dataset from one schema to another",
+  "main": "index.js",
+  "source": "app.js",
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nwallin1/mapper.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nwallin1/mapper/issues"
+  },
+  "homepage": "https://github.com/nwallin1/mapper#readme",
+  "dependencies": {
+    "parcel": "^2.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  }
+}

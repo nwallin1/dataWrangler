@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapper</title>
+
+    <link rel="stylesheet" href="styles.css">
+    <script src="main.js"></script>
+</head>
+<body>
+    
+    <!-- File Upload -->
+    <input type="file" id="fileInput" accept=".csv" style="display:none">
+    <button id="fileInputButton">Upload File</button>
+
+    <!-- Dropbox -->
+    <div id="dropbox">Drop</div>
+    <p id="droppable-element">Drop Here</p></p>
+    <div id="files">
+        <div id="inputFileDiv">
+            <h2>Input File</h2>
+            <div id="inputTableDiv">Upload an input file!</div>
+        </div>
+        <div id="desiredSchemaDiv">
+            <h2>Desired Schema</h2>
+
+            <table>
+                <table>
+                    <caption>Schema Table</caption>
+                    <tr class="header-row">
+                        <th>Column Name</th>
+                        <th>Data Type</th>
+                        <th>Unit</th>
+                    </tr>
+                    <tr>
+                        <td>person_first_name</td>
+                        <td>
+                            <label for="dataTypeSchema_row_0">Type: </label>
+                            <input id="dataTypeSchema_row_0" name="dataTypeSchema_row_0" list="dataTypeList">
+                        </td>
+                        <td>
+                            <label for="unitsSchema_row_0">Units: </label>
+                            <input id="unitsSchema_row_0" name="unitsSchema_row_0" list="unitsList">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>person_age</td>
+                        <td>
+                            <label for="dataTypeSchema_row_1">Type: </label>
+                            <input id="dataTypeSchema_row_1" name="dataTypeSchema_row_1" list="dataTypeList">
+                        </td>
+                        <td>
+                            <label for="unitsSchema_row_1">Units: </label>
+                            <input id="unitsSchema_row_1" name="unitsSchema_row_1" list="unitsList">
+                        </td>
+                    </tr>
+            </tr>
+        </table>
+                
+            </table> 
+        </div>
+    </div>
+
+    <datalist id="dataTypeList">
+        <option value="String">
+        <option value="Number">
+    </datalist>
+
+    <datalist id="unitsList">
+        <option value="Grams">
+        <option value="Not Grams">
+    </datalist>
+    <datalist id="targetColumnsList">
+        <option value="person_first_name">
+        <option value="person_age">
+    </datalist>
+</body>
+</html>

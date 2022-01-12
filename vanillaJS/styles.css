@@ -1,0 +1,48 @@
+
+
+#dropbox{
+    background-color: lightgrey;
+    width: 100px;
+    height: 100px;
+}
+
+#files{
+    display: flex;
+    margin: 20px;
+    padding: 20px;
+}
+
+#files > div {
+    flex:1;
+    text-align: center;
+    border: 1px black solid;
+    border-collapse: collapse;
+}
+
+table{
+    margin: 20px auto;
+}
+
+table, th, td {
+    border-bottom: 1px solid white;
+    border-collapse: collapse;
+}
+
+th{
+    background-color: #888888;
+}
+
+td {
+    background-color: #eeeeee;
+}
+
+th,td{
+    padding: 10px;
+}
+
+  #droppable-element
+  {
+      width: 100px;
+      height: 100px;
+      background-color: lightblue;
+  }
