@@ -1,0 +1,10 @@
+- fetching a data set from edi
+- combining the dataset
+
+- Pasta API: 
+    https://pasta.lternet.edu/package/docs/api
+    https://pastaplus-core.readthedocs.io/en/latest/doc_tree/pasta_api/data_package_manager_api.html#accessing
+
+    https://github.com/ropensci/EDIutils/
+
+    
