@@ -703,7 +703,7 @@ function createMetadataTable(csvRows)
     let metadataFileNameLabel = createLabelElement({'id':'metadataFileNameLabel','for':'metadataFileNameInput'}, text="Metadata File Name:");
 
     //Add download button and labels to div
-    div.append($('<hr><h2>Download File With Metdata</h2>'));
+    div.append($('<hr><h2>Download File With Metadata</h2>'));
     div.append(metadataFileNameLabel);
     div.append(metadataFileNameInput);
     div.append(downloadButton);  
