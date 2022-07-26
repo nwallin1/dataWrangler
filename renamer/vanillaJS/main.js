@@ -56,17 +56,15 @@ function createLimnoODM2VariableNameDataList()
 
         //Create columns
         dataArray.forEach((value, index, array) => {
-           array[index] = value.split(",");
+        //    array[index] = value.split(/,"|","|",,?|,(?![\d\w])|(?<=,),/, 7);
+        array[index] = value.split(/"?,(?![\d\w])"?|(?<=,),/, 7);
             //array[index][0] is the variable name
             //array[index][1] is the variable term
             //array[index][2] is the variable definition
-            //array[index][array[index].length -3] is the variable definition
-            debugger;
-            array[index] = [array[index][0], array[index][array[index].length-3]];
+            array[index] = {name: array[index][0], term: array[index][1], definition: array[index][2]};
         });
         
         let datalist = createDataList(dataArray, id='ODM2_limno');
-        
         $('#datalists').append(datalist);
 
     });
@@ -97,10 +95,11 @@ function createFullODM2VariableNameDataList()
 
         //Create columns
         dataArray.forEach((value, index, array) => {
-           array[index] = value.split(",");
+            array[index] = value.split(/"?,(?![\d\w])"?|(?<=,),/, 7);
             //array[index][0] is the variable name
-            //array[index][array[index].length -3] is the variable definition
-            array[index] = [array[index][0], array[index][array[index].length-3]];
+            //array[index][1] is the variable term
+            //array[index][2] is the variable definition
+            array[index] = {name: array[index][0], term: array[index][1], definition: array[index][2]};
         });
         
         let datalist = createDataList(dataArray, id='ODM2_full');
@@ -154,11 +153,10 @@ function createDataList(arr, id)
 
     arr.forEach(function(value, index, array){
         option = $('<option></option');
-        option.attr('value', value[0]);
-        option.attr('id', value[0]);
-        
-        //Set element text
-        option.text(value[1]);
+        option.attr('value', value.name);
+        option.attr('id', value.name);
+        option.attr('data-term', value.term);
+        option.attr('label', value.definition);
 
         //this === datalist
         //Add option to datalist
