@@ -3,7 +3,9 @@ var csvUploaded = false;
 
 
 /*--------- Events Pre Document Load -------------- */
-createODM2VariableNameDataList();
+createLimnoODM2VariableNameDataList();
+createFullODM2VariableNameDataList();
+
 
 if (document.readyState === 'loading') 
 {  // Loading hasn't finished yet
@@ -16,7 +18,6 @@ else
 
 function handleDOMContentLoaded()
 {
-
     //Add Event Handlers to file input HTML elements
     initializeInputFileElement();
 
@@ -33,14 +34,57 @@ function handleDOMContentLoaded()
 /*  Short Summary: Fetches local .csv with odm2 variable names, and converts the list
  *                 of variables into a datalist that is added to the end of the <div id="datalists">
  */
-function createODM2VariableNameDataList()
+function createLimnoODM2VariableNameDataList()
 {
     //REWRITE
     //REFACTOR this code is not great. the forEach look is only designed to work with one specific csv
 
     //Read in .csv file
     //Current location is 'data/odm2_variable_names.csv'
-    const request = new Request('data/odm2_variable_names.csv');
+    // const request = new Request('data/odm2_variable_names.csv');
+    const request = new Request('data/limno_list/ODM2_varname_limno.csv');
+
+    fetch(request)
+    .then((response) => {
+        return response.text();
+    }).then((data) => {
+        //Create rows
+        //shift() removes first element of the array
+        //Remove first element because it is the header row
+        let dataArray = data.split("\n");
+        dataArray.shift();
+
+        //Create columns
+        dataArray.forEach((value, index, array) => {
+           array[index] = value.split(",");
+            //array[index][0] is the variable name
+            //array[index][1] is the variable term
+            //array[index][2] is the variable definition
+            //array[index][array[index].length -3] is the variable definition
+            debugger;
+            array[index] = [array[index][0], array[index][array[index].length-3]];
+        });
+        
+        let datalist = createDataList(dataArray, id='ODM2_limno');
+        
+        $('#datalists').append(datalist);
+
+    });
+};
+
+/*  Short Summary: Fetches local .csv with odm2 variable names, and converts the list
+ *                 of variables into a datalist that is added to the end of the <div id="datalists">
+ */
+function createFullODM2VariableNameDataList()
+{
+    //REWRITE
+    //REFACTOR this code is not great. the forEach look is only designed to work with one specific csv
+
+    //Read in .csv file
+    //Current location is 'data/odm2_variable_names.csv'
+    // const request = new Request('data/odm2_variable_names.csv');
+    const request = new Request('data/full_list/ODM2_varname_full.csv');
+
     fetch(request)
     .then((response) => {
         return response.text();
@@ -59,7 +103,7 @@ function createODM2VariableNameDataList()
             array[index] = [array[index][0], array[index][array[index].length-3]];
         });
         
-        let datalist = createDataList(dataArray, id='ODM2');
+        let datalist = createDataList(dataArray, id='ODM2_full');
         
         $('#datalists').append(datalist);
 
@@ -75,7 +119,15 @@ function getSelectedControlledVocabularyDataListId()
     //Return value of selected datalist name
     let input = getControlledVocabularyInputElement();
 
-    return input[0].value;
+    //Check if the full list or limno list should be used
+    //COMEBACK
+    let name = getShortenedListInputAttributes().name;
+    let isLimno = document.querySelector(`input[name="${name}"]:checked`).value
+    if(isLimno)
+    {
+        return input[0].value + '_limno';
+    };
+    return input[0].value + '_full';
 
 }
 
@@ -202,6 +254,25 @@ function createRenameTable(csvRows)
     div.append(controlledVocabularyLabel);
     div.append(controlledVocabularyInput);
 
+    //Create an input to select the controlled vocabulary
+    let shortenedListYesInput = createShortenedListInput("Yes");
+    shortenedListYesInput.attr("checked", "checked");
+    let shortenedListNoInput = createShortenedListInput("No");
+
+    let shortenedListYesLabel = createShortenedListLabel("Yes");
+    let shortenedListNoLabel = createShortenedListLabel("No");
+
+    let shortenedListQuestionLabel = createLabelElement({'id':'shortenedListLabel'}, text="Is this limnological data? (Selecting 'Yes' will display filtered lists of variable names and units):");
+
+    //Adds created elements to the <div>
+    div.append("<br>");
+    div.append(shortenedListQuestionLabel);
+    div.append("<br>");
+    div.append(shortenedListYesLabel);
+    div.append(shortenedListYesInput);
+    div.append(shortenedListNoLabel);
+    div.append(shortenedListNoInput);
+
     //Create Table Element
     let table = $("<table class='table'></table>");
     
@@ -238,10 +309,49 @@ function createRenameTable(csvRows)
     div.append(fileNameLabel);
     div.append(fileNameInput);
     div.append(downloadButton);
-    
-    
 };
 
+function createShortenedListInput(value)
+{
+    //Create input to select controlled vocabulary
+    let attributes = getShortenedListInputAttributes(value);
+
+    let shortenedListInput = createInputElement(attributes, text="");
+
+    //Create on change event
+    shortenedListInput.on('change', function(e){
+        //Update 'list' attribute of <input> elements with the class type 'newNameInput
+
+        let currentListBaseName = $('#controlledVocabularyInput')[0].value;
+
+        //If "Yes", show shortened list
+        if(e.target.value == "Yes")
+        {          
+
+            //Change value from <listname>_full to <listname>_limno
+            $('.newNameInput').attr('list', currentListBaseName + '_limno');
+            return;
+        }
+
+        //Change value from <listname>_limno to <listname>_full
+        $('.newNameInput').attr('list', currentListBaseName + '_full');
+        return;
+    });
+
+    return shortenedListInput;
+};
+
+function createShortenedListLabel(value)
+{
+    let inputElementAttributes = getShortenedListInputAttributes(value);
+
+    let labelElementAttributes = {
+        id : 'shortenedListLabel',
+        for : inputElementAttributes.id
+    }
+
+    return createLabelElement(labelElementAttributes, text=value)
+};
 
 function createButtonElement(attributes,text)
 {
@@ -298,6 +408,17 @@ function getControlledVocabularyInputAttributes(attribute=undefined)
         name : 'controlledVocabularyInput',
         type : 'text',
         list : getControlledVocabularyDataListId()
+    }
+};
+
+
+function getShortenedListInputAttributes(value=undefined)
+{
+    return {
+        id : `shortenedList${value}Input`,
+        name : 'shortenedListInput',
+        type : 'radio',
+        value
     }
 };
 
@@ -481,8 +602,8 @@ function createRenameTableData(csvHeaderRow)
             "index": index,
             "className": "newNameInput" , 
             "optionsListName": getSelectedControlledVocabularyDataListId(),
-            "changeEventCallback":updateColumnNewName,
-            "defaultValue": element
+            "changeEventCallback": updateColumnNewName,
+            "defaultValue": undefined
         };
         
         td = createTableDataCellWithInput(params);
@@ -490,8 +611,8 @@ function createRenameTableData(csvHeaderRow)
         tr.append(td);
 
         //Create data cell for definition
-        // cellName = "definitionInput_row_" + index;
-        params["className"] = "definitionInput"; params["optionsListName"] = null;
+        params["cellName"] = "definitionInput_row_" + index;
+        params["className"] = "definitionInput";
         params["changeEventCallback"] = undefined; params["defaultValue"] = undefined;
         td = createTableDataCellWithTextArea(params);
         tr.append(td);
@@ -561,8 +682,6 @@ function createTableDataCellWithInput(params)
  * @param params ( Object ) : Contains key-value pairs of parameters
  * @param params.parentRow ( jQuery HTMLElement ) : jQuery reference to <tr> element that the <td><input> elements are under
  * @param params.cellName ( String ) : The name and id of the <input> element within the table cell
- * @param params.optionsListName ( String ) : id of the <datalist> element to use. The <datalist> element contains
- *                                      options to select from 
  * @param params.changeEventCallback ( Function ) : callback function for the change event of the input
  * 
  * @return ( HTMLElement )
@@ -571,7 +690,7 @@ function createTableDataCellWithTextArea(params)
 {
     let td, textarea;
 
-    let { parentRow, cellName, optionsListName, changeEventCallback } = params;
+    let { parentRow, cellName, changeEventCallback } = params;
     td =  $('<td></td>');
     td.css('width', '25vw');
 
@@ -609,7 +728,11 @@ function updateColumnNewName(e)
     //Update Definition
     //Get selected option element
     let option = input.list.options[input.value];
-    e.target.parentElement.nextElementSibling.lastChild.value = option.innerText;
+
+    let rowNumber = e.target.id.split("_").pop();
+
+    //Set definition value
+    $(`#definitionInput_row_${rowNumber}`)[0].value = option.value;
 
     //Resize based on input size
     $(input).attr('size', $(input).val().length);
