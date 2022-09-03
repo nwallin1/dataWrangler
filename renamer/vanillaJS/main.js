@@ -61,7 +61,7 @@ function createLimnoODM2VariableNameDataList()
             //array[index][0] is the variable name
             //array[index][1] is the variable term
             //array[index][2] is the variable definition
-            array[index] = {name: array[index][0], term: array[index][1], definition: array[index][2]};
+            array[index] = {term: array[index][0], name: array[index][1], definition: array[index][2]};
         });
         
         let datalist = createDataList(dataArray, id='ODM2_limno');
@@ -99,7 +99,7 @@ function createFullODM2VariableNameDataList()
             //array[index][0] is the variable name
             //array[index][1] is the variable term
             //array[index][2] is the variable definition
-            array[index] = {name: array[index][0], term: array[index][1], definition: array[index][2]};
+            array[index] = {term: array[index][0], name: array[index][1], definition: array[index][2]};
         });
         
         let datalist = createDataList(dataArray, id='ODM2_full');
@@ -119,7 +119,6 @@ function getSelectedControlledVocabularyDataListId()
     let input = getControlledVocabularyInputElement();
 
     //Check if the full list or limno list should be used
-    //COMEBACK
     let name = getShortenedListInputAttributes().name;
     let isLimno = document.querySelector(`input[name="${name}"]:checked`).value
     if(isLimno)
@@ -144,8 +143,7 @@ function getControlledVocabularyInputElement()
  *  @return HTMLElement <datalist> with <option> elements
  */
 function createDataList(arr, id)
-{
-    
+{   
     let datalist, option;
 
     datalist = $('<datalist></datalist>');
@@ -210,7 +208,8 @@ function handleFiles()
         csvUploaded = true;
 
         createRenameTable(csvRows);
-        createMetadataTable(csvRows);
+        // createMetadataTable(csvRows);
+        createPreviewTable(csvRows);
 
     };
 
@@ -536,6 +535,18 @@ function getRenameTableHeaderElementNames()
                 id: "tableHeaderDefinition",
             },
             text: "Definition"
+        },
+        {
+            attributes: {
+                id: "tableHeaderUnit",
+            },
+            text: "Unit"
+        },
+        {
+            attributes: {
+                id: "tableHeaderDepth",
+            },
+            text: "Depth"
         }
     ];
 };
@@ -603,7 +614,6 @@ function createRenameTableData(csvHeaderRow)
             "changeEventCallback": updateColumnNewName,
             "defaultValue": undefined
         };
-        
         td = createTableDataCellWithInput(params);
 
         tr.append(td);
@@ -613,6 +623,19 @@ function createRenameTableData(csvHeaderRow)
         params["className"] = "definitionInput";
         params["changeEventCallback"] = undefined; params["defaultValue"] = undefined;
         td = createTableDataCellWithTextArea(params);
+        tr.append(td);
+
+        //Create data cell for units
+        params = {
+            "parentRow":tr.attr('id'),
+            "index": index,
+            "className": "unitsInput" , 
+            "optionsListName": "unitsList",
+            "changeEventCallback":undefined,
+            "defaultValue": undefined
+        };        
+
+        td = createTableDataCellWithInput(params);
         tr.append(td);
 
         createdRows.push(tr);
@@ -717,7 +740,6 @@ function createTableDataCellWithTextArea(params)
 function updateColumnNewName(e)
 {
     let input = e.target;
-    
     //Select <tr> element from embeded id
     let tr = $('#' + input.dataset.parentrow);
     tr.attr('data-newname', input.value);
@@ -729,8 +751,9 @@ function updateColumnNewName(e)
 
     let rowNumber = e.target.id.split("_").pop();
 
+    
     //Set definition value
-    $(`#definitionInput_row_${rowNumber}`)[0].value = option.value;
+    $(`#definitionInput_row_${rowNumber}`)[0].value = option.label;
 
     //Resize based on input size
     $(input).attr('size', $(input).val().length);
@@ -775,6 +798,81 @@ function getAllColumnData()
     return csvRowsCopy;
 };
 
+
+/* -------------- Preview Table  ----------------------------- */
+/*  Short Summary: Creates a table that will preview the output of the downloaded file
+ */
+
+function createPreviewTable(csvRows)
+{
+    //Select rename table <div>
+    let div = $('#previewTableDiv');
+
+    //Clear div
+    div.html("");
+
+    //Create Table Element
+    let table = $("<table class='table'></table>");
+
+    //Create one <tr> for each column in the .csv
+    csvHeaderRow = csvRows[0].split(',');
+    
+    //Create <thead> with <tr> and <th> elements
+    let tableHeaderRow = createPreviewTableHead(csvHeaderRow);
+
+    //Append <thead> to <table>
+    table.append(tableHeaderRow);
+
+
+    //Append header and table to the <div>
+    div.append($('<hr><h2>Preview Table</h2>'));
+    div.append(table);
+}
+
+
+function createPreviewTableHead(csvHeaderRow)
+{
+    //Create thead element
+    let thead,tr;
+
+    thead = $("<thead class='thead-light'></thead>");
+
+    //Create <tr> with <th> for the rename table
+    tr = createPreviewTableHeadRow(csvHeaderRow);
+    thead.append(tr);
+
+    return thead;
+}
+
+/* Short Summary: Create <tr> element with all necessary <th> elements for the preview table
+ * 
+ * @return HTMLElement <tr>
+ *                      <th></th> [, <th></th>] //N <th> elements, where N is the length of headerElementsArray
+ *                     </tr>
+ */
+function createPreviewTableHeadRow(csvHeaderRow)
+{
+    let tr = $('<tr></tr>');
+
+    let headerElementsArray = [];
+    
+    csvHeaderRow.forEach( function(value, index) {
+        let obj = {};
+
+        obj.attributes = {
+            id : `previewHeader_${value}_${index}`
+        };
+        obj.text = value;
+
+        this.push(obj);
+    }, headerElementsArray);
+
+    //Create one <th> element per object in the headerElementsArray. Adds each <th> to tr variable
+    headerElementsArray.forEach(createTableHeaderElementAndAppendToTableRow,tr);
+
+    return tr;
+};
+
 /* -------------- Metadata Table  ----------------------------- */
 /*  Short Summary: Creates a table to add additional metadata to each column from the input .csv
  *                  See getMetadataTableHeaderElementNames() function for information on the current columns
@@ -783,181 +881,180 @@ function getAllColumnData()
  *                                        The first row is always the header row. 
  */
 
-function createMetadataTable(csvRows)
-{
-        
-    //Select rename table <div>
-    let div = $('#metadataTableDiv');
+// function createMetadataTable(csvRows)
+// {
+//     //Select rename table <div>
+//     let div = $('#metadataTableDiv');
 
-    //Clear div
-    div.html("");
+//     //Clear div
+//     div.html("");
 
-    //Create Table Element
-    let table = $("<table class='table'></table>");
+//     //Create Table Element
+//     let table = $("<table class='table'></table>");
     
-    //Create <thead> with <tr> and <th> elements
-    let tableHeaderRow = createMetadataTableHead();
+//     //Create <thead> with <tr> and <th> elements
+//     let tableHeaderRow = createMetadataTableHead();
 
-    //Append <thead> to <table>
-    table.append(tableHeaderRow);
+//     //Append <thead> to <table>
+//     table.append(tableHeaderRow);
 
-    //Create one <tr> for each column in the .csv
-    csvHeaderRow = csvRows[0].split(',');
-    //csvDataRows is an array of <tr> elements
-    let csvDataRows = createMetadataTableData(csvHeaderRow);
+//     //Create one <tr> for each column in the .csv
+//     csvHeaderRow = csvRows[0].split(',');
+//     //csvDataRows is an array of <tr> elements
+//     let csvDataRows = createMetadataTableData(csvHeaderRow);
     
-    //Append each <tr> element to the table
-    csvDataRows.forEach(function(element){
-        this.append(element);
-    },table);
+//     //Append each <tr> element to the table
+//     csvDataRows.forEach(function(element){
+//         this.append(element);
+//     },table);
 
-    //Append header and table to the <div>
-    div.append($('<hr><h2>Metadata Table</h2>'));
-    div.append(table);
-
-
-    //Create download button, which downloads a .csv file with renamed columns
-    let downloadButton = createButtonElement({'class':'button','type':'button'}, text="Download");
-    downloadButton.on("click", () => {downloadMetadataFile(); });
-
-    let metadataFileNameInput = createInputElement({'id':'metadataFileNameInput','name':'metadataFileNameInput', 'type':'text'});
-    let metadataFileNameLabel = createLabelElement({'id':'metadataFileNameLabel','for':'metadataFileNameInput'}, text="Metadata File Name:");
-
-    //Add download button and labels to div
-    div.append($('<hr><h2>Download File With Metadata</h2>'));
-    div.append(metadataFileNameLabel);
-    div.append(metadataFileNameInput);
-    div.append(downloadButton);  
-};
+//     //Append header and table to the <div>
+//     div.append($('<hr><h2>Metadata Table</h2>'));
+//     div.append(table);
 
 
-/* Short Summary: Takes in the header row of a csv and turns it into an array of HTMLElement <tr>
- * 
- * @param csvHeaderRow ( Array[String] ) An array containg all of the cells in the header row of an uploaded csv
- *                                  row[0] will be the value of the first cell in the first column,
- *                                  row[1] will be the value of the first cell in the second column
- * @return ( Array [HTMLElement] )
- */
-function createMetadataTableData(csvHeaderRow)
-{
+//     //Create download button, which downloads a .csv file with renamed columns
+//     let downloadButton = createButtonElement({'class':'button','type':'button'}, text="Download");
+//     downloadButton.on("click", () => {downloadMetadataFile(); });
+
+//     let metadataFileNameInput = createInputElement({'id':'metadataFileNameInput','name':'metadataFileNameInput', 'type':'text'});
+//     let metadataFileNameLabel = createLabelElement({'id':'metadataFileNameLabel','for':'metadataFileNameInput'}, text="Metadata File Name:");
+
+//     //Add download button and labels to div
+//     div.append($('<hr><h2>Download File With Metadata</h2>'));
+//     div.append(metadataFileNameLabel);
+//     div.append(metadataFileNameInput);
+//     div.append(downloadButton);  
+// };
+
+
+// /* Short Summary: Takes in the header row of a csv and turns it into an array of HTMLElement <tr>
+//  * 
+//  * @param csvHeaderRow ( Array[String] ) An array containg all of the cells in the header row of an uploaded csv
+//  *                                  row[0] will be the value of the first cell in the first column,
+//  *                                  row[1] will be the value of the first cell in the second column
+//  * @return ( Array [HTMLElement] )
+//  */
+// function createMetadataTableData(csvHeaderRow)
+// {
     
-    let createdRows = [];
+//     let createdRows = [];
 
-    //For every column, create a <tr> element
-    csvHeaderRow.forEach(function(element, index){
-        let tr,td,textContent, cellName, args;
-        tr = $('<tr></tr>');
-        tr.attr('data-originalname', element);
-        tr.attr('data-index', index);
-        tr.attr('id', 'column-' + index);
+//     //For every column, create a <tr> element
+//     csvHeaderRow.forEach(function(element, index){
+//         let tr,td,textContent, cellName, args;
+//         tr = $('<tr></tr>');
+//         tr.attr('data-originalname', element);
+//         tr.attr('data-index', index);
+//         tr.attr('id', 'column-' + index);
 
-        //Create first data cell with column name as the value
-        td = $('<td></td>').text(element);
-        tr.append(td);
+//         //Create first data cell with column name as the value
+//         td = $('<td></td>').text(element);
+//         tr.append(td);
         
         
-        //Create data cell for units
-        params = {
-            "parentRow":tr.attr('id'),
-            "index": index,
-            "className": "unitsInput" , 
-            "optionsListName": "unitsList",
-            "changeEventCallback":undefined,
-            "defaultValue": undefined
-        };        
+//         //Create data cell for units
+//         params = {
+//             "parentRow":tr.attr('id'),
+//             "index": index,
+//             "className": "unitsInput" , 
+//             "optionsListName": "unitsList",
+//             "changeEventCallback":undefined,
+//             "defaultValue": undefined
+//         };        
 
-        td = createTableDataCellWithInput(params);
-        tr.append(td);
+//         td = createTableDataCellWithInput(params);
+//         tr.append(td);
 
-        //Create data cell for data type
-        params["className"] = "dataTypeInput"; params["optionsListName"] = "dataTypeList";
-        params["changeEventCallback"] = undefined; params["defaultValue"] = undefined;
-        td = createTableDataCellWithInput(params);
-        tr.append(td);
+//         //Create data cell for data type
+//         params["className"] = "dataTypeInput"; params["optionsListName"] = "dataTypeList";
+//         params["changeEventCallback"] = undefined; params["defaultValue"] = undefined;
+//         td = createTableDataCellWithInput(params);
+//         tr.append(td);
 
-        createdRows.push(tr);
-    },createdRows);
+//         createdRows.push(tr);
+//     },createdRows);
 
-    return createdRows;
-};
+//     return createdRows;
+// };
 
 
-/* Short Summary: Generate metadata table header row
- * 
- * @return HTMLElement <thead>
- *                          <tr>
- *                              <th></th>? [, <th></th>] //Any number of <th> elements
- *                          </tr>
- *                      <thead>
- */
-function createMetadataTableHead()
-{
-    //Create thead element
-    let thead,tr;
+// /* Short Summary: Generate metadata table header row
+//  * 
+//  * @return HTMLElement <thead>
+//  *                          <tr>
+//  *                              <th></th>? [, <th></th>] //Any number of <th> elements
+//  *                          </tr>
+//  *                      <thead>
+//  */
+// function createMetadataTableHead()
+// {
+//     //Create thead element
+//     let thead,tr;
 
-    thead = $("<thead class='thead-light'></thead>");
+//     thead = $("<thead class='thead-light'></thead>");
 
-    //Create <tr> with <th> for the rename table
-    tr = createMetadataTableHeadRow();
-    thead.append(tr);
+//     //Create <tr> with <th> for the rename table
+//     tr = createMetadataTableHeadRow();
+//     thead.append(tr);
 
-    return thead;
-};
+//     return thead;
+// };
 
-/* Short Summary: Create <tr> element with all necessary <th> elements for the metadata table
- * 
- * @return HTMLElement <tr>
- *                      <th></th> [, <th></th>] //N <th> elements, where N is the length of headerElementsArray
- *                     </tr>
- */
-function createMetadataTableHeadRow()
-{
-    let tr = $('<tr></tr>');
+// /* Short Summary: Create <tr> element with all necessary <th> elements for the metadata table
+//  * 
+//  * @return HTMLElement <tr>
+//  *                      <th></th> [, <th></th>] //N <th> elements, where N is the length of headerElementsArray
+//  *                     </tr>
+//  */
+// function createMetadataTableHeadRow()
+// {
+//     let tr = $('<tr></tr>');
 
-    let headerElementsArray = getMetadataTableHeaderElementNames();
+//     let headerElementsArray = getMetadataTableHeaderElementNames();
 
-    //Create one <th> element per object in the headerElementsArray. Adds each <th> to tr variable
-    headerElementsArray.forEach(createTableHeaderElementAndAppendToTableRow,tr);
+//     //Create one <th> element per object in the headerElementsArray. Adds each <th> to tr variable
+//     headerElementsArray.forEach(createTableHeaderElementAndAppendToTableRow,tr);
 
-    return tr;
-};
+//     return tr;
+// };
 
-/* Short Summary: Contains an array of objects, where each object describes a <th> element to be created
- *                for the metadata table.
- *                Objects are of the form 
- *                { 
- *                  attributes: {
- *                      key : value //Where key must be a valid HTML attribute
- *                  },
- *                  text: //Text Content to be added to the <th> element
- *                }
- * 
- * @return Array[ Objects ] : Returns an array of objects, where each object defines a <th> element
- *                            to be created. 
- */
-function getMetadataTableHeaderElementNames()
-{
-    return [
-        {
-            attributes: {
-                id: "tableHeaderCurrentName",
-            },
-            text: "Current Name"
-        },
-        {
-            attributes: {
-                id: "tableHeaderUnit",
-            },
-            text: "Unit"
-        },
-        {
-            attributes: {
-                id: "tableHeaderDataType",
-            },
-            text: "Data Type"
-        }
-    ];
-};
+// /* Short Summary: Contains an array of objects, where each object describes a <th> element to be created
+//  *                for the metadata table.
+//  *                Objects are of the form 
+//  *                { 
+//  *                  attributes: {
+//  *                      key : value //Where key must be a valid HTML attribute
+//  *                  },
+//  *                  text: //Text Content to be added to the <th> element
+//  *                }
+//  * 
+//  * @return Array[ Objects ] : Returns an array of objects, where each object defines a <th> element
+//  *                            to be created. 
+//  */
+// function getMetadataTableHeaderElementNames()
+// {
+//     return [
+//         {
+//             attributes: {
+//                 id: "tableHeaderCurrentName",
+//             },
+//             text: "Current Name"
+//         },
+//         {
+//             attributes: {
+//                 id: "tableHeaderUnit",
+//             },
+//             text: "Unit"
+//         },
+//         {
+//             attributes: {
+//                 id: "tableHeaderDataType",
+//             },
+//             text: "Data Type"
+//         }
+//     ];
+// };
 
 /* -------------- Fetch Variables ----------------------------- */
 
