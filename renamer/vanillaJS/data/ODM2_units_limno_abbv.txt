@@ -1,0 +1,1001 @@
+Term	UnitsName	UnitsTypeCV	UnitsAbbreviation	UnitsLink	limnoflag	unitabbv
+gray	Gray	Absorbed dose	Gy	http://qudt.org/vocab/unit#Gray; http://unitsofmeasure.org/ucum.html#para-30	NA	gy
+rad	RAD	Absorbed dose	rad	http://qudt.org/vocab/unit#Rad; http://unitsofmeasure.org/ucum.html#para-33	NA	rad
+grayPerSecond	Gray per Second	Absorbed dose rate	Gy/s	http://qudt.org/vocab/unit#GrayPerSecond	NA	gyps
+ban	Ban	Amount of information	ban	http://qudt.org/vocab/unit#Ban	NA	ban
+bit	Bit	Amount of information	bit	http://qudt.org/vocab/unit#Bit; http://unitsofmeasure.org/ucum.html#para-48	NA	bit
+byte	Byte	Amount of information	By	http://qudt.org/vocab/unit#Byte; http://unitsofmeasure.org/ucum.html#para-48	NA	by
+nat	Nat	Amount of information	nat	http://qudt.org/vocab/unit#Nat	NA	nat
+octet	Octet	Amount of information	octet	http://www.unidata.ucar.edu/software/udunits/	NA	octet
+arcMinute	Arc Minute	Angle	arcMin	http://qudt.org/vocab/unit#ArcMinute; http://qudt.org/vocab/unit#MinuteAngle; http://unitsofmeasure.org/ucum.html#para-31; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-accepted.xml; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	arcmin
+arcSecond	Arc Second	Angle	arcSec	http://qudt.org/vocab/unit#ArcSecond; http://qudt.org/vocab/unit#SecondAngle; http://unitsofmeasure.org/ucum.html#para-31; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-accepted.xml; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	arcsec
+circle	Circle	Angle	circ	http://unitsofmeasure.org/ucum.html#para-47; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	circ
+cycle	Cycle	Angle	cycle	https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	cycle
+degree	Degree	Angle	deg	http://qudt.org/vocab/unit#DegreeAngle; http://unitsofmeasure.org/ucum.html#para-31; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-accepted.xml; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	1	deg
+degreeEast	Degree East	Angle	degE	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	1	dege
+degreeMinuteSecond	Degree Minute Second	Angle	dddmmss	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	dddmmss
+degreeNorth	Degree North	Angle	degN	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	1	degn
+degreeSouth	Degree South	Angle	degS	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	1	degs
+degreeTrue	Degree True	Angle	degT	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	degt
+degreeWest	Degree West	Angle	degW	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	1	degw
+gon	Gon	Angle	gon	http://qudt.org/vocab/unit#Gon; http://unitsofmeasure.org/ucum.html#para-31	NA	gon
+grad	Grad	Angle	grad	http://qudt.org/vocab/unit#Grad	NA	grad
+milAngle(Nato)	Mil Angle (Nato)	Angle	mil	http://qudt.org/vocab/unit#MilAngle	NA	mil
+radian	Radian	Angle	rad	http://qudt.org/vocab/unit#Radian; http://unitsofmeasure.org/ucum.html#para-28; http://www.unidata.ucar.edu/software/udunits/	NA	rad
+revolution	Revolution	Angle	rev	http://qudt.org/vocab/unit#Revolution; http://www.unidata.ucar.edu/software/udunits/	NA	rev
+rotation	Rotation	Angle		http://www.unidata.ucar.edu/software/udunits/	NA	
+turn	Turn	Angle		http://www.unidata.ucar.edu/software/udunits/	NA	
+degreePerSecondSquared	Degree per Second Squared	Angular acceleration	deg/(s^2)	http://qudt.org/vocab/unit#DegreePerSecondSquared	NA	degps2
+radianPerSecondSquared	Radian per Second Squared	Angular acceleration	rad/s^2	http://qudt.org/vocab/unit#RadianPerSecondSquared	NA	radps2
+revolutionPerSecondSquared	Revolution per Second Squared	Angular acceleration		http://qudt.org/vocab/unit#RevolutionPerSecondSquared	NA	
+kilogramMeterSquared	Kilogram Meter Squared	Angular mass	kg-m^2	http://qudt.org/vocab/unit#KilogramMeterSquared	NA	kgm2
+electronvoltSecond	ElectronVolt Second	Angular momentum	eV s	http://qudt.org/vocab/unit#ElectronVoltSecond	NA	evs
+ergSecond	Erg Second	Angular momentum	erg s	http://qudt.org/vocab/unit#ErgSecond	NA	ergs
+footPoundForceSecond	Foot Pound Force Second	Angular momentum	lbf*s	http://qudt.org/vocab/unit#FootPoundForceSecond	NA	lbfs
+jouleSecond	Joule Second	Angular momentum	J s	http://qudt.org/vocab/unit#JouleSecond	NA	js
+newtonMeterSecond	Newton Meter Second	Angular momentum	Nms		NA	nms
+degreePerHour	Degree per Hour	Angular velocity or frequency	deg/h	http://qudt.org/vocab/unit#DegreePerHour	NA	degph
+degreePerMinute	Degree per Minute	Angular velocity or frequency	deg/min	http://qudt.org/vocab/unit#DegreePerMinute	NA	degpmin
+degreePerSecond	Degree per Second	Angular velocity or frequency	deg/s	http://qudt.org/vocab/unit#DegreePerSecond	NA	degps
+radianPerHour	Radian per Hour	Angular velocity or frequency	rad/h	http://qudt.org/vocab/unit#RadianPerHour	NA	radph
+radianPerMinute	Radian per Minute	Angular velocity or frequency	rad/m	http://qudt.org/vocab/unit#RadianPerMinute	NA	radpm
+radianPerSecond	Radian per Second	Angular velocity or frequency	rad/s	http://qudt.org/vocab/unit#RadianPerSecond	NA	radps
+revolutionPerHour	Revolution per Hour	Angular velocity or frequency	rev/h	http://qudt.org/vocab/unit#RevolutionPerHour	NA	revph
+revolutionPerMinute	Revolution per Minute	Angular velocity or frequency	rev/min	http://qudt.org/vocab/unit#RevolutionPerMinute	NA	revpmin
+revolutionPerSecond	Revolution per Second	Angular velocity or frequency	rev/s	http://qudt.org/vocab/unit#RevolutionPerSecond	NA	revps
+rotationPerMinute	Rotation per Minute	Angular velocity or frequency	rpm	http://www.unidata.ucar.edu/software/udunits/	NA	rpm
+rotationPerSecond	Rotation per Second	Angular velocity or frequency	rps	http://www.unidata.ucar.edu/software/udunits/	NA	rps
+acre	Acre	Area	acr_us	http://qudt.org/vocab/unit#Acre	NA	acrus
+acre,British	Acre, British	Area	acr_br	http://unitsofmeasure.org/ucum.html#para-36	NA	acrbr
+are	Are	Area	ar	http://qudt.org/vocab/unit#Are	NA	ar
+barn	Barn	Area	b	http://qudt.org/vocab/unit#Barn	NA	b
+circularMil	Circular Mil	Area	cml_i	http://qudt.org/vocab/unit#CircularMil	NA	cmli
+darcy	Darcy	Area	D	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	d
+hectare	Hectare	Area	ha	http://qudt.org/vocab/unit#Hectare	1	ha
+planckArea	Planck Area	Area		http://qudt.org/vocab/unit#PlanckArea	NA	
+section	Section	Area	sct	http://unitsofmeasure.org/ucum.html#para-35	NA	sct
+squareCentimeter	Square Centimeter	Area	cm^2	http://qudt.org/vocab/unit#SquareCentimeter	1	cm2
+squareFoot	Square Foot	Area	sft_i	http://qudt.org/vocab/unit#SquareFoot; http://unitsofmeasure.org/ucum.html#para-34	NA	sfti
+squareInch	Square Inch	Area	sin_i	http://qudt.org/vocab/unit#SquareInch; http://unitsofmeasure.org/ucum.html#para-34	NA	sini
+squareKilometer	Square Kilometer	Area	km^2	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	km2
+squareMeter	Square Meter	Area	m^2	http://qudt.org/vocab/unit#SquareMeter	1	m2
+squareMile	Square Mile	Area	smi_us	http://qudt.org/vocab/unit#SquareMile; http://unitsofmeasure.org/ucum.html#para-35	NA	smius
+squareRod	Square Rod	Area	srd_us	http://unitsofmeasure.org/ucum.html#para-35	NA	srdus
+squareYard	Square Yard	Area	syd_i	http://qudt.org/vocab/unit#SquareYard; http://unitsofmeasure.org/ucum.html#para-34	NA	sydi
+township	Township	Area	twp	http://unitsofmeasure.org/ucum.html#para-35	NA	twp
+squareMeterSteradian	Square Meter Steradian	Area angle	m^2-sr	http://qudt.org/vocab/unit#SquareMeterSteradian	NA	m2sr
+squareMeterPerKilometer	Square Meter per Kilometer	Area per length	m^2/km		NA	m2pkm
+squareMeterPerMeter	Square Meter per Meter	Area per length	m^2/m		NA	m2pm
+squareFootDegreeFahrenheit	Square Foot Degree Fahrenheit	Area temperature	ft^2-degF	http://qudt.org/vocab/unit#SquareFootDegreeFahrenheit	NA	ft2degf
+squareMeterKelvin	Square Meter Kelvin	Area temperature	m^2-K	http://qudt.org/vocab/unit#SquareMeterKelvin	NA	m2k
+squareMeterPerKelvin	Square Meter per Kelvin	Area thermal expansion	m^2/K	http://qudt.org/vocab/unit#SquareMeterPerKelvin	NA	m2pk
+hourSquareFoot	Hour Square Foot	Area time	hr-ft^2	http://qudt.org/vocab/unit#HourSquareFoot	NA	hrft2
+secondSquareFoot	Second Square Foot	Area time	s-ft^2	http://qudt.org/vocab/unit#SecondSquareFoot	NA	sft2
+squareCentimeterMinute	Square Centimeter Minute	Area time	cm^2-m	http://qudt.org/vocab/unit#SquareCentimeterMinute	NA	cm2m
+squareCentimeterSecond	Square Centimeter Second	Area time	cm^2-s	http://qudt.org/vocab/unit#SquareCentimeterSecond	NA	cm2s
+squareFootHourDegreeFahrenheit	Square Foot Hour Degree Fahrenheit	Area time temperature	ft^2-hr-degF	http://qudt.org/vocab/unit#SquareFootHourDegreeFahrenheit	NA	ft2hrdegf
+squareFootSecondDegreeFahrenheit	Square Foot Second Degree Fahrenheit	Area time temperature	ft^2-s-degF	http://qudt.org/vocab/unit#SquareFootSecondDegreeFahrenheit	NA	ft2sdegf
+katal	Katal	Catalytic activity	kat	http://qudt.org/vocab/unit#Katal; http://unitsofmeasure.org/ucum.html#para-45; http://www.unidata.ucar.edu/software/udunits/	NA	kat
+unit	Unit	Catalytic activity	U	http://unitsofmeasure.org/ucum.html#para-45	NA	u
+admiColorUnit	Admi Color Unit	Color	ADMI	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	admi
+hazen	Hazen	Color	HU	http://environment.data.gov.au/def/unit/Hazen	1	hu
+platinumCobaltUnit	Platinum Cobalt Unit	Color	PCU	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	1	pcu
+micromolePerMole	Micromole per Mole	Concentration count per count	umol/mol	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	umolpmol
+millimolePerMole	Millimole per Mole	Concentration count per count	mmol/mol	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	mmolpmol
+molePercent	Mole percent	Concentration count per count	mol%	http://environment.data.gov.au/def/unit/MolPercent; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	molperc
+molePerMole	Mole per Mole	Concentration count per count	mol/mol	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	molpmol
+centimolePerKilogram	Centimole per Kilogram	Concentration count per mass	cmol/kg	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	cmolpkg
+countPerGram	Count per Gram	Concentration count per mass	#/g		NA	npg
+micromolePerKilogram	Micromole per Kilogram	Concentration count per mass	µmol/kg	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	µmolpkg
+millimolePerKilogram	Millimole per Kilogram	Concentration count per mass	mmol/kg	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	mmolpkg
+milliosmolePerKilogram	Milliosmole per Kilogram	Concentration count per mass	mOsm/kg	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	mosmpkg
+molePerKilogram	Mole per Kilogram	Concentration count per mass	mol/kg	http://qudt.org/vocab/unit#MolePerKilogram	NA	molpkg
+molePerTonne	Mole per Tonne	Concentration count per mass	mol/tonne	http://environment.data.gov.au/def/unit/MolePerTonne	NA	molptonne
+mostProbableNumberPerGram	Most Probable Number per Gram	Concentration count per mass	MPN/g	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	mpnpg
+nanomolePerKilogram	Nanomole per Kilogram	Concentration count per mass	nmol/kg	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	nmolpkg
+countPer100Gallon	Count per 100 Gallon	Concentration count per volume	#/100 gal	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	np100gal
+countPer100Liter	Count per 100 Liter	Concentration count per volume	#/100 L	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	np100l
+countPer100Milliliter	Count per 100 Milliliter	Concentration count per volume	#/100 mL	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	np100ml
+countPer10Liter	Count per 10 Liter	Concentration count per volume	#/10 L	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	np10l
+countPer500Milliliter	Count per 500 Milliliter	Concentration count per volume	#/500 ml	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	np500ml
+countPerCubicMeter	Count per Cubic Meter	Concentration count per volume	#/m^3	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	npm3
+countPerDeciliter	Count per Deciliter	Concentration count per volume	#/dl		NA	npdl
+countPerHalfCubicFoot	Count per Half Cubic Foot	Concentration count per volume	#/((ft^3)/2)	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	npft3p2
+countPerLiter	Count per Liter	Concentration count per volume	#/L	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	npl
+countPerMilliliter	Count per Milliliter	Concentration count per volume	#/ml		NA	npml
+internationalUnitPerLiter	International Unit per Liter	Concentration count per volume	IU/L	http://qudt.org/vocab/unit#InternationalUnitPerLiter	NA	iupl
+micromolePerLiter	Micromole per Liter	Concentration count per volume	µmol/L; µM	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	µmolpl;µm
+millimolar	Millimolar	Concentration count per volume	mM	http://environment.data.gov.au/def/unit/MilliMolar; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	mm
+millimolePerCubicMeter	Millimole per Cubic Meter	Concentration count per volume	mmol/m^3	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	mmolpm3
+molar	Molar	Concentration count per volume	M		1	m
+molePerCubicMeter	Mole per Cubic Meter	Concentration count per volume	mol/m^3	http://qudt.org/vocab/unit#MolePerCubicMeter; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	molpm3
+molePerLiter	Mole per Liter	Concentration count per volume	mol/L		1	molpl
+mostProbableNumberPer100Liter	Most Probable Number per 100 Liter	Concentration count per volume	MPN/100 L	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	mpnp100l
+mostProbableNumberPer100Milliliter	Most Probable Number per 100 Milliliter	Concentration count per volume	MPN/100 ml	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	mpnp100ml
+nanomolePerLiter	Nanomole per Liter	Concentration count per volume	nmol/L	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	1	nmolpl
+normal	Normal	Concentration count per volume	N	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	n
+grainPerGallon	Grain per Gallon	Concentration or density mass per volume	gr/gal	http://qudt.org/vocab/unit#GrainPerGallon	NA	grpgal
+gramPerCubicCentimeter	Gram per Cubic Centimeter	Concentration or density mass per volume	g/cm^3	http://environment.data.gov.au/def/unit/GramsPerCubicCentimeter; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	gpcm3
+gramPerCubicMeter	Gram per Cubic Meter	Concentration or density mass per volume	g/m3		NA	gpm3
+gramPerLiter	Gram per Liter	Concentration or density mass per volume	g/L	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	gpl
+gramPerMilliliter	Gram per Milliliter	Concentration or density mass per volume	g/mL	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	gpml
+kilogramPerCubicMeter	Kilogram per Cubic Meter	Concentration or density mass per volume	kg/m^3	http://qudt.org/vocab/unit#KilogramPerCubicMeter; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	kgpm3
+longTonPerCubicYard	Long Ton per Cubic Yard	Concentration or density mass per volume	ton/yd^3	http://qudt.org/vocab/unit#TonLongPerCubicYard	NA	tonpyd3
+microgramPerCubicMeter	Microgram per Cubic Meter	Concentration or density mass per volume	µg/m^3	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	µgpm3
+microgramPerLiter	Microgram per Liter	Concentration or density mass per volume	µg/L	http://environment.data.gov.au/def/unit/MicrogramsPerLitre; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	1	µgpl
+microgramPerMilliliter	Microgram per Milliliter	Concentration or density mass per volume	µg/mL	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	µgpml
+milligramPerCubicMeter	Milligram per Cubic Meter	Concentration or density mass per volume	mg/m^3	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	mgpm3
+milligramPerLiter	Milligram per Liter	Concentration or density mass per volume	mg/L	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	1	mgpl
+milligramPerMilliliter	Milligram per Milliliter	Concentration or density mass per volume	mg/mL	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	mgpml
+nanogramPerCubicMeter	Nanogram per Cubic Meter	Concentration or density mass per volume	ng/m^3	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	ngpm3
+nanogramPerLiter	Nanogram per Liter	Concentration or density mass per volume	ng/L	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	1	ngpl
+nanogramPerMilliliter	Nanogram per Milliliter	Concentration or density mass per volume	ng/mL	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	ngpml
+ouncePerCubicInch	Ounce per Cubic Inch	Concentration or density mass per volume	oz/in^3	http://qudt.org/vocab/unit#OuncePerCubicInch	NA	ozpin3
+ouncePerGallon	Ounce per Gallon	Concentration or density mass per volume	oz/gal	http://qudt.org/vocab/unit#OuncePerGallon	NA	ozpgal
+picogramPerCubicMeter	Picogram per Cubic Meter	Concentration or density mass per volume	pg/m^3	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	pgpm3
+picogramPerLiter	Picogram per Liter	Concentration or density mass per volume	pg/L	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	pgpl
+picogramPerMilliliter	Picogram per Milliliter	Concentration or density mass per volume	pg/ml	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	pgpml
+planckDensity	Planck Density	Concentration or density mass per volume		http://qudt.org/vocab/unit#PlanckDensity	NA	
+poundPerCubicFoot	Pound per Cubic Foot	Concentration or density mass per volume	lb/ft^3	http://qudt.org/vocab/unit#PoundPerCubicFoot	NA	lbpft3
+poundPerCubicInch	Pound per Cubic Inch	Concentration or density mass per volume	lb/in^3	http://qudt.org/vocab/unit#PoundPerCubicInch	NA	lbpin3
+poundPerCubicMeter	Pound per Cubic Meter	Concentration or density mass per volume	lb/m^3	http://qudt.org/vocab/unit#PoundPerCubicMeter	NA	lbpm3
+poundPerCubicYard	Pound per Cubic Yard	Concentration or density mass per volume	lb/yd^3	http://qudt.org/vocab/unit#PoundPerCubicYard	NA	lbpyd3
+poundPerGallon	Pound per Gallon	Concentration or density mass per volume	lb/gal	http://qudt.org/vocab/unit#PoundPerGallon	NA	lbpgal
+shortTonPerAcreFoot	Short Ton per Acre Foot	Concentration or density mass per volume	ton/ac ft	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	tonpacft
+shortTonPerCubicYard	Short Ton per Cubic Yard	Concentration or density mass per volume	ton/yd	http://qudt.org/vocab/unit#TonShortPerCubicYard	NA	tonpyd
+slugPerCubicFoot	Slug per Cubic Foot	Concentration or density mass per volume	slug/ft^3	http://qudt.org/vocab/unit#SlugPerCubicFoot	NA	slugpft3
+cubicFootPerBarrel	Cubic Foot per Barrel	Concentration volume per volume	ft^3/bbl	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	ft3pbbl
+cubicMeterPerCubicMeter	Cubic Meter per Cubic Meter	Concentration volume per volume	m^3/m^3	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	m3pm3
+milliliterPerLiter	Milliliter per Liter	Concentration volume per volume	mL/L	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	mlpl
+percentByVolume	Percent By Volume	Concentration volume per volume	% by vol	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	percbyvol
+perMilleByVolume	Per Mille By Volume	Concentration volume per volume	‰ by vol	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	‰byvol
+count	Count	Count		http://www.unidata.ucar.edu/software/udunits/	1	
+event	Event	Count			NA	
+internationalUnit	International Unit	Count	IU; iU	http://qudt.org/vocab/unit#InternationalUnit; http://unitsofmeasure.org/ucum.html#para-45	NA	iu;iu
+micromole	Micromole	Count	µmol	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	µmol
+millimole	Millimole	Count	mmol		NA	mmol
+mole	Mole	Count	mol	http://qudt.org/vocab/unit#Mole; http://unitsofmeasure.org/ucum.html#para-30; http://www.unidata.ucar.edu/software/udunits/	NA	mol
+mostProbableNumber	Most Probable Number	Count	MPN	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	mpn
+number	Number	Count	#	http://qudt.org/vocab/unit#Number	NA	n
+osmole	Osmole	Count	osm	http://unitsofmeasure.org/ucum.html#para-45	NA	osm
+countPer0.1SquareMeter	Count per 0.1 Square Meter	Count per area	#/0.1 m^2	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	np01m2
+countPer1000SquareMeter	Count per 1000 Square Meter	Count per area	#/1000 m^2	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	np1000m2
+countPerSquareMeter	Count per Square Meter	Count per area	#/m^2	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	npm2
+countPerSquareMillimeter	Count per Square Millimeter	Count per area	#/mm^2	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	npmm2
+countsPerSquareCentimeter	Counts per Square Centimeter	Count per area	#/cm^2	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	npcm2
+dobson	Dobson	Count per area		https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	
+microeinsteinPerSquareMeter	Microeinstein per Square Meter	Count per area	µE/m^2	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	µepm2
+millimoleOfPhotonPerSquareMeter	Millimole of Photon per Square Meter	Count per area	mmol/m^2	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	mmolpm2
+lilangeni	Lilangeni	Currency	SZL	http://qudt.org/vocab/unit#Lilangeni	NA	szl
+lithuanianLitas	Lithuanian Litas	Currency	LTL	http://qudt.org/vocab/unit#LithuanianLitas	NA	ltl
+loti	Loti	Currency	LSL	http://qudt.org/vocab/unit#Loti	NA	lsl
+malagasyAriary	Malagasy Ariary	Currency	MGA	http://qudt.org/vocab/unit#MalagasyAriary	NA	mga
+malawiKwacha	Malawi Kwacha	Currency	MWK	http://qudt.org/vocab/unit#MalawiKwacha	NA	mwk
+malaysianRinggit	Malaysian Ringgit	Currency	MYR	http://qudt.org/vocab/unit#MalaysianRinggit	NA	myr
+malteseLira	Maltese Lira	Currency	MTL	http://qudt.org/vocab/unit#MalteseLira	NA	mtl
+manat	Manat	Currency	TMM	http://qudt.org/vocab/unit#Manat	NA	tmm
+mauritiusRupee	Mauritius Rupee	Currency	MUR	http://qudt.org/vocab/unit#MauritiusRupee	NA	mur
+metical	Metical	Currency	MZN	http://qudt.org/vocab/unit#Metical	NA	mzn
+mexicanPeso	Mexican Peso	Currency	MXN	http://qudt.org/vocab/unit#MexicanPeso	NA	mxn
+mexicanUnidadDeInversion(Udi)(FundsCode)	Mexican Unidad De Inversion (Udi) (Funds Code)	Currency	MXV	http://qudt.org/vocab/unit#MexicanUnidadDeInversion	NA	mxv
+millionUsDollars	Million Us Dollars	Currency	Million USD	http://qudt.org/vocab/unit#MillionUSDollars	NA	millionusd
+moldovanLeu	Moldovan Leu	Currency	MDL	http://qudt.org/vocab/unit#MoldovanLeu	NA	mdl
+moroccanDirham	Moroccan Dirham	Currency	MAD	http://qudt.org/vocab/unit#MoroccanDirham	NA	mad
+naira	Naira	Currency	NGN	http://qudt.org/vocab/unit#Naira	NA	ngn
+nakfa	Nakfa	Currency	ERN	http://qudt.org/vocab/unit#Nakfa	NA	ern
+namibianDollar	Namibian Dollar	Currency	"NAD"	http://qudt.org/vocab/unit#NamibianDollar	NA	nad
+nepaleseRupee	Nepalese Rupee	Currency	NPR	http://qudt.org/vocab/unit#NepaleseRupee	NA	npr
+netherlandsAntillianGuilder	Netherlands Antillian Guilder	Currency	ANG	http://qudt.org/vocab/unit#NetherlandsAntillianGuilder	NA	ang
+newIsraeliShekel	New Israeli Shekel	Currency	ILS	http://qudt.org/vocab/unit#NewIsraeliShekel	NA	ils
+newTaiwanDollar	New Taiwan Dollar	Currency	TWD	http://qudt.org/vocab/unit#NewTaiwanDollar	NA	twd
+newTurkishLira	New Turkish Lira	Currency	TRY	http://qudt.org/vocab/unit#NewTurkishLira	NA	try
+newZealandDollar	New Zealand Dollar	Currency	NZD	http://qudt.org/vocab/unit#NewZealandDollar	NA	nzd
+ngultrum	Ngultrum	Currency	BTN	http://qudt.org/vocab/unit#Ngultrum	NA	btn
+northKoreanWon	North Korean Won	Currency	KPW	http://qudt.org/vocab/unit#NorthKoreanWon	NA	kpw
+norwegianKrone	Norwegian Krone	Currency	NOK	http://qudt.org/vocab/unit#NorwegianKrone	NA	nok
+nuevoSol	Nuevo Sol	Currency	PEN	http://qudt.org/vocab/unit#NuevoSol	NA	pen
+ouguiya	Ouguiya	Currency	MRO	http://qudt.org/vocab/unit#Ouguiya	NA	mro
+pa'Anga	Pa'Anga	Currency	TOP	http://qudt.org/vocab/unit#Paanga	NA	top
+pakistanRupee	Pakistan Rupee	Currency	PKR	http://qudt.org/vocab/unit#PakistanRupee	NA	pkr
+palladium(OneTroyOunce)	Palladium (One Troy Ounce)	Currency	XPD	http://qudt.org/vocab/unit#Palladium-OunceTroy	NA	xpd
+pataca	Pataca	Currency	MOP	http://qudt.org/vocab/unit#Pataca	NA	mop
+pesoUruguayo	Peso Uruguayo	Currency	UYU	http://qudt.org/vocab/unit#UruguayPeso	NA	uyu
+philippinePeso	Philippine Peso	Currency	PHP	http://qudt.org/vocab/unit#PhilippinePeso	NA	php
+platinum(OneTroyOunce)	Platinum (One Troy Ounce)	Currency	XPT	http://qudt.org/vocab/unit#Platinum-OunceTroy	NA	xpt
+poundSterling	Pound Sterling	Currency	GBP	http://qudt.org/vocab/unit#PoundSterling	NA	gbp
+pula	Pula	Currency	BWP	http://qudt.org/vocab/unit#Pula	NA	bwp
+qatariRial	Qatari Rial	Currency	QAR	http://qudt.org/vocab/unit#QatariRial	NA	qar
+quetzal	Quetzal	Currency	GTQ	http://qudt.org/vocab/unit#Quetzal	NA	gtq
+rialOmani	Rial Omani	Currency	OMR	http://qudt.org/vocab/unit#OmaniRial	NA	omr
+riel	Riel	Currency	KHR	http://qudt.org/vocab/unit#Riel	NA	khr
+romanianNewLeu	Romanian New Leu	Currency	RON	http://qudt.org/vocab/unit#RomanianNeLeu	NA	ron
+rufiyaa	Rufiyaa	Currency	MVR	http://qudt.org/vocab/unit#Rufiyaa	NA	mvr
+rupiah	Rupiah	Currency	IDR	http://qudt.org/vocab/unit#Rupiah	NA	idr
+russianRuble	Russian Ruble	Currency	RUB	http://qudt.org/vocab/unit#RussianRuble	NA	rub
+rwandaFranc	Rwanda Franc	Currency	RWF	http://qudt.org/vocab/unit#RwandaFranc	NA	rwf
+saintHelenaPound	Saint Helena Pound	Currency	SHP	http://qudt.org/vocab/unit#SaintHelenaPound	NA	shp
+samoanTala	Samoan Tala	Currency	WST	http://qudt.org/vocab/unit#SamoanTala	NA	wst
+saudiRiyal	Saudi Riyal	Currency	SAR	http://qudt.org/vocab/unit#SaudiRiyal	NA	sar
+serbianDinar	Serbian Dinar	Currency	RSD	http://qudt.org/vocab/unit#SerbianDinar	NA	rsd
+seychellesRupee	Seychelles Rupee	Currency	SCR	http://qudt.org/vocab/unit#SeychellesRupee	NA	scr
+silver(OneTroyOunce)	Silver (One Troy Ounce)	Currency	XAG	http://qudt.org/vocab/unit#Silver-OunceTroy	NA	xag
+singaporeDollar	Singapore Dollar	Currency	SGD	http://qudt.org/vocab/unit#SingaporeDollar	NA	sgd
+slovakKoruna	Slovak Koruna	Currency	SKK	http://qudt.org/vocab/unit#SlovakKoruna	NA	skk
+solomonIslandsDollar	Solomon Islands Dollar	Currency	SBD	http://qudt.org/vocab/unit#SolomonIslandsDollar	NA	sbd
+som	Som	Currency	KGS	http://qudt.org/vocab/unit#Som	NA	kgs
+somaliShilling	Somali Shilling	Currency	SOS	http://qudt.org/vocab/unit#SomaliShilling	NA	sos
+somoni	Somoni	Currency	TJS	http://qudt.org/vocab/unit#Somoni	NA	tjs
+southAfricanRand	South African Rand	Currency	ZAR	http://qudt.org/vocab/unit#SouthAfricanRand	NA	zar
+southKoreanWon	South Korean Won	Currency	KRW	http://qudt.org/vocab/unit#SouthKoreanWon	NA	krw
+specialDrawingRights	Special Drawing Rights	Currency	XDR	http://qudt.org/vocab/unit#SpecialDrawingRights	NA	xdr
+sriLankaRupee	Sri Lanka Rupee	Currency	LKR	http://qudt.org/vocab/unit#SriLankaRupee	NA	lkr
+sudanesePound	Sudanese Pound	Currency	SDG	http://qudt.org/vocab/unit#SudanesePound	NA	sdg
+surinamDollar	Surinam Dollar	Currency	SRD	http://qudt.org/vocab/unit#SurinamDollar	NA	srd
+swedishKrona	Swedish Krona	Currency	SEK	http://qudt.org/vocab/unit#SwedishKrona	NA	sek
+swissFranc	Swiss Franc	Currency	CHF	http://qudt.org/vocab/unit#SwissFranc	NA	chf
+syrianPound	Syrian Pound	Currency	SYP	http://qudt.org/vocab/unit#SyrianPound	NA	syp
+tanzanianShilling	Tanzanian Shilling	Currency	TZS	http://qudt.org/vocab/unit#TanzanianShilling	NA	tzs
+tenge	Tenge	Currency	KZT	http://qudt.org/vocab/unit#Tenge	NA	kzt
+trinidadAndTobagoDollar	Trinidad And Tobago Dollar	Currency	TTD	http://qudt.org/vocab/unit#TrinidadAndTobagoDollar	NA	ttd
+tugrik	Tugrik	Currency	MNT	http://qudt.org/vocab/unit#Tugrik	NA	mnt
+tunisianDinar	Tunisian Dinar	Currency	TND	http://qudt.org/vocab/unit#TunisianDinar	NA	tnd
+ugandaShilling	Uganda Shilling	Currency	UGX	http://qudt.org/vocab/unit#UgandaShilling	NA	ugx
+uicFranc(SpecialSettlementCurrency)	Uic Franc (Special Settlement Currency)	Currency	XFU	http://qudt.org/vocab/unit#UICFranc	NA	xfu
+unidadDeValorReal	Unidad De Valor Real	Currency	COU	http://qudt.org/vocab/unit#UnidadDeValorReal	NA	cou
+unidadesDeFormento(FundsCode)	Unidades De Formento (Funds Code)	Currency	CLF	http://qudt.org/vocab/unit#UnidadesDeFormento	NA	clf
+unitedArabEmiratesDirham	United Arab Emirates Dirham	Currency	AED	http://qudt.org/vocab/unit#UAEDirham	NA	aed
+unitedStatesDollar(NextDay)(FundsCode)	United States Dollar (Next Day) (Funds Code)	Currency	USN	http://qudt.org/vocab/unit#USDollar-NextDay	NA	usn
+unitedStatesDollar(SameDay)(FundsCode)	United States Dollar (Same Day) (Funds Code)	Currency		http://qudt.org/vocab/unit#USDollar-SameDay	NA	
+usDollar	US Dollar	Currency	USD	http://qudt.org/vocab/unit#USDollar	NA	usd
+uzbekistanSom	Uzbekistan Som	Currency	UZS	http://qudt.org/vocab/unit#UzbekistanSom	NA	uzs
+vatu	Vatu	Currency	VUV	http://qudt.org/vocab/unit#Vatu	NA	vuv
+venezuelanBolivar	Venezuelan Bolivar	Currency	VEB	http://qudt.org/vocab/unit#VenezuelanBolvar	NA	veb
+vietnamese??Ng	Vietnamese ??Ng	Currency	VND	http://qudt.org/vocab/unit#VietnameseDong	NA	vnd
+wirEuro(ComplementaryCurrency)	Wir Euro (Complementary Currency)	Currency	CHE	http://qudt.org/vocab/unit#WIREuro	NA	che
+wirFranc(ComplementaryCurrency)	Wir Franc (Complementary Currency)	Currency	CHW	http://qudt.org/vocab/unit#WIRFranc	NA	chw
+yemeniRial	Yemeni Rial	Currency	YER	http://qudt.org/vocab/unit#YemeniRial	NA	yer
+yuanRenminbi	Yuan Renminbi	Currency	CNY	http://qudt.org/vocab/unit#YuanRenminbi	NA	cny
+zambianKwacha	Zambian Kwacha	Currency	ZMK	http://qudt.org/vocab/unit#ZambianKwacha	NA	zmk
+zimbabweDollar	Zimbabwe Dollar	Currency	ZWD	http://qudt.org/vocab/unit#ZimbabweDollar	NA	zwd
+zloty	Zloty	Currency	PLN	http://qudt.org/vocab/unit#Zloty	NA	pln
+afghani	Afghani	Currency	AFN	http://qudt.org/vocab/unit#Afghani	NA	afn
+algerianDinar	Algerian Dinar	Currency	DZD	http://qudt.org/vocab/unit#AlgerianDinar	NA	dzd
+argentinePeso	Argentine Peso	Currency	ARS	http://qudt.org/vocab/unit#ArgentinePeso	NA	ars
+armenianDram	Armenian Dram	Currency	AMD	http://qudt.org/vocab/unit#ArmenianDram	NA	amd
+arubanGuilder	Aruban Guilder	Currency	AWG	http://qudt.org/vocab/unit#ArubanGuilder	NA	awg
+australianDollar	Australian Dollar	Currency	AUD	http://qudt.org/vocab/unit#AustralianDollar	NA	aud
+azerbaijanianManat	Azerbaijanian Manat	Currency	AZN	http://qudt.org/vocab/unit#AzerbaijanianManat	NA	azn
+bahamianDollar	Bahamian Dollar	Currency	BSD	http://qudt.org/vocab/unit#BahamianDollar	NA	bsd
+bahrainiDinar	Bahraini Dinar	Currency	BHD	http://qudt.org/vocab/unit#BahrainiDinar	NA	bhd
+baht	Baht	Currency	THB	http://qudt.org/vocab/unit#Baht	NA	thb
+balboa	Balboa	Currency	PAB	http://qudt.org/vocab/unit#Balboa	NA	pab
+bangladeshiTaka	Bangladeshi Taka	Currency	BDT	http://qudt.org/vocab/unit#BangladeshiTaka	NA	bdt
+barbadosDollar	Barbados Dollar	Currency	BBD	http://qudt.org/vocab/unit#BarbadosDollar	NA	bbd
+belarussianRuble	Belarussian Ruble	Currency	BYR	http://qudt.org/vocab/unit#BelarussianRuble	NA	byr
+belizeDollar	Belize Dollar	Currency	BZD	http://qudt.org/vocab/unit#BelizeDollar	NA	bzd
+bermudaDollar	Bermuda Dollar	Currency	BMD	http://qudt.org/vocab/unit#BermudaDollar	NA	bmd
+bolivianMvdol(FundsCode)	Bolivian Mvdol (Funds Code)	Currency	BOV	http://qudt.org/vocab/unit#BolivianMvdol	NA	bov
+boliviano	Boliviano	Currency	BOB	http://qudt.org/vocab/unit#Boliviano	NA	bob
+brazilianReal	Brazilian Real	Currency	BRL	http://qudt.org/vocab/unit#BrazilianReal	NA	brl
+bruneiDollar	Brunei Dollar	Currency	BND	http://qudt.org/vocab/unit#BruneiDollar	NA	bnd
+bulgarianLev	Bulgarian Lev	Currency	BGN	http://qudt.org/vocab/unit#BulgarianLev	NA	bgn
+burundianFranc	Burundian Franc	Currency	BIF	http://qudt.org/vocab/unit#BurundianFranc	NA	bif
+canadianDollar	Canadian Dollar	Currency	CAD	http://qudt.org/vocab/unit#CanadianDollar	NA	cad
+capeVerdeEscudo	Cape Verde Escudo	Currency	CVE	http://qudt.org/vocab/unit#CapeVerdeEscudo	NA	cve
+caymanIslandsDollar	Cayman Islands Dollar	Currency	KYD	http://qudt.org/vocab/unit#CaymanIslandsDollar	NA	kyd
+cedi	Cedi	Currency	GHS	http://qudt.org/vocab/unit#Cedi	NA	ghs
+cfaFrancBceao	Cfa Franc Bceao	Currency	XOF	http://qudt.org/vocab/unit#CFAFrancBCEAO	NA	xof
+cfaFrancBeac	Cfa Franc Beac	Currency	XAF	http://qudt.org/vocab/unit#CFAFrancBEAC	NA	xaf
+cfpFranc	Cfp Franc	Currency	XPF	http://qudt.org/vocab/unit#CFPFranc	NA	xpf
+chileanPeso	Chilean Peso	Currency	CLP	http://qudt.org/vocab/unit#ChileanPeso	NA	clp
+colombianPeso	Colombian Peso	Currency	COP	http://qudt.org/vocab/unit#ColombianPeso	NA	cop
+comoroFranc	Comoro Franc	Currency	KMF	http://qudt.org/vocab/unit#ComoroFranc	NA	kmf
+convertibleMarks	Convertible Marks	Currency	BAM	http://qudt.org/vocab/unit#ConvertibleMark	NA	bam
+cordobaOro	Cordoba Oro	Currency	NIO	http://qudt.org/vocab/unit#CordobaOro	NA	nio
+costaRicanColon	Costa Rican Colon	Currency	CRC	http://qudt.org/vocab/unit#CostaRicanColon	NA	crc
+croatianKuna	Croatian Kuna	Currency	HRK	http://qudt.org/vocab/unit#CroatianKuna	NA	hrk
+cubanPeso	Cuban Peso	Currency	CUP	http://qudt.org/vocab/unit#CubanPeso	NA	cup
+cyprusPound	Cyprus Pound	Currency	CYP	http://qudt.org/vocab/unit#CyprusPound	NA	cyp
+czechKoruna	Czech Koruna	Currency	CZK	http://qudt.org/vocab/unit#CzechKoruna	NA	czk
+dalasi	Dalasi	Currency	GMD	http://qudt.org/vocab/unit#Dalasi	NA	gmd
+danishKrone	Danish Krone	Currency	DKK	http://qudt.org/vocab/unit#DanishKrone	NA	dkk
+denar	Denar	Currency	MKD	http://qudt.org/vocab/unit#Denar	NA	mkd
+djiboutiFranc	Djibouti Franc	Currency	DJF	http://qudt.org/vocab/unit#DjiboutiFranc	NA	djf
+dobra	Dobra	Currency	STD	http://qudt.org/vocab/unit#Dobra	NA	std
+dominicanPeso	Dominican Peso	Currency	DOP	http://qudt.org/vocab/unit#DominicanPeso	NA	dop
+eastCaribbeanDollar	East Caribbean Dollar	Currency	XCD	http://qudt.org/vocab/unit#EastCaribbeanDollar	NA	xcd
+egyptianPound	Egyptian Pound	Currency	EGP	http://qudt.org/vocab/unit#EgyptianPound	NA	egp
+ethiopianBirr	Ethiopian Birr	Currency	ETB	http://qudt.org/vocab/unit#EthiopianBirr	NA	etb
+euro	Euro	Currency	EUR	http://qudt.org/vocab/unit#Euro	NA	eur
+europeanCompositeUnit(Eurco)(BondsMarketUnit)	European Composite Unit (Eurco) (Bonds Market Unit)	Currency	XBA	http://qudt.org/vocab/unit#EuropeanCompositeUnit	NA	xba
+europeanMonetaryUnit(E.M.U.-6)(BondsMarketUnit)	European Monetary Unit (E.M.U.-6) (Bonds Market Unit)	Currency	XBB	http://qudt.org/vocab/unit#EuropeanMonetaryUnit	NA	xbb
+europeanUnitOfAccount17(E.U.A.-17)(BondsMarketUnit)	European Unit of Account 17 (E.U.A.-17) (Bonds Market Unit)	Currency	XBD	http://qudt.org/vocab/unit#EuropeanUnitOfAccount17	NA	xbd
+europeanUnitOfAccount9(E.U.A.-9)(BondsMarketUnit)	European Unit of Account 9 (E.U.A.-9) (Bonds Market Unit)	Currency	XBC	http://qudt.org/vocab/unit#EuropeanUnitOfAccount9	NA	xbc
+falklandIslandsPound	Falkland Islands Pound	Currency	FKP	http://qudt.org/vocab/unit#FalklandIslandsPound	NA	fkp
+fijiDollar	Fiji Dollar	Currency	FJD	http://qudt.org/vocab/unit#FijiDollar	NA	fjd
+forint	Forint	Currency	HUF	http://qudt.org/vocab/unit#Forint	NA	huf
+francCongolais	Franc Congolais	Currency	CDF	http://qudt.org/vocab/unit#FrancCongolais	NA	cdf
+gibraltarPound	Gibraltar Pound	Currency	GIP	http://qudt.org/vocab/unit#GibraltarPound	NA	gip
+gold(OneTroyOunce)	Gold (One Troy Ounce)	Currency	XAU	http://qudt.org/vocab/unit#Gold-OunceTroy	NA	xau
+goldFranc(SpecialSettlementCurrency)	Gold Franc (Special Settlement Currency)	Currency	XFO	http://qudt.org/vocab/unit#GoldFranc	NA	xfo
+guarani	Guarani	Currency	PYG	http://qudt.org/vocab/unit#Guarani	NA	pyg
+guineaFranc	Guinea Franc	Currency	GNF	http://qudt.org/vocab/unit#GuineaFranc	NA	gnf
+guyanaDollar	Guyana Dollar	Currency	GYD	http://qudt.org/vocab/unit#GuyanaDollar	NA	gyd
+haitiGourde	Haiti Gourde	Currency	HTG	http://qudt.org/vocab/unit#HaitiGourde	NA	htg
+hongKongDollar	Hong Kong Dollar	Currency	HKD	http://qudt.org/vocab/unit#HongKongDollar	NA	hkd
+hryvnia	Hryvnia	Currency	UAH	http://qudt.org/vocab/unit#Hryvnia	NA	uah
+icelandKrona	Iceland Krona	Currency	ISK	http://qudt.org/vocab/unit#IcelandKrona	NA	isk
+indianRupee	Indian Rupee	Currency	INR	http://qudt.org/vocab/unit#IndianRupee	NA	inr
+iranianRial	Iranian Rial	Currency	IRR	http://qudt.org/vocab/unit#IranianRial	NA	irr
+iraqiDinar	Iraqi Dinar	Currency	IQD	http://qudt.org/vocab/unit#IraqiDinar	NA	iqd
+jamaicanDollar	Jamaican Dollar	Currency	JMD	http://qudt.org/vocab/unit#JamaicanDollar	NA	jmd
+japaneseYen	Japanese Yen	Currency	JPY	http://qudt.org/vocab/unit#JapaneseYen	NA	jpy
+jordanianDinar	Jordanian Dinar	Currency	JOD	http://qudt.org/vocab/unit#JordanianDinar	NA	jod
+kenyanShilling	Kenyan Shilling	Currency	KES	http://qudt.org/vocab/unit#KenyanShilling	NA	kes
+kina	Kina	Currency	PGK	http://qudt.org/vocab/unit#Kina	NA	pgk
+kroon	Kroon	Currency	EEK	http://qudt.org/vocab/unit#Kroon	NA	eek
+kuwaitiDinar	Kuwaiti Dinar	Currency	KWD	http://qudt.org/vocab/unit#KuwaitiDinar	NA	kwd
+kwanza	Kwanza	Currency	AOA	http://qudt.org/vocab/unit#Kwanza	NA	aoa
+kyat	Kyat	Currency	MMK	http://qudt.org/vocab/unit#Kyat	NA	mmk
+laosKip	Laos Kip	Currency	LAK	http://qudt.org/vocab/unit#LaosKip	NA	lak
+lari	Lari	Currency	GEL	http://qudt.org/vocab/unit#Lari	NA	gel
+latvianLats	Latvian Lats	Currency	LVL	http://qudt.org/vocab/unit#LatvianLats	NA	lvl
+lebanesePound	Lebanese Pound	Currency	LBP	http://qudt.org/vocab/unit#LebanesePound	NA	lbp
+lek	Lek	Currency	ALL	http://qudt.org/vocab/unit#Lek	NA	all
+lempira	Lempira	Currency	HNL	http://qudt.org/vocab/unit#Lempira	NA	hnl
+leone	Leone	Currency	SLL	http://qudt.org/vocab/unit#Leone	NA	sll
+liberianDollar	Liberian Dollar	Currency	LRD	http://qudt.org/vocab/unit#LiberianDollar	NA	lrd
+libyanDinar	Libyan Dinar	Currency	LYD	http://qudt.org/vocab/unit#LibyanDinar	NA	lyd
+bitsPerSecond	Bits per Second	Data rate	bps	http://qudt.org/vocab/unit#BitsPerSecond	NA	bps
+kilobitPerSecond	Kilobit per Second	Data rate	kbps	http://qudt.org/vocab/unit#KilobitsPerSecond	NA	kbps
+megabitPerSecond	Megabit per Second	Data rate	mbps	http://qudt.org/vocab/unit#MegabitsPerSecond	NA	mbps
+centistokes	Centistokes	Diffusivity	cSt	http://qudt.org/vocab/unit#Centistokes	NA	cst
+squareFootPerHour	Square Foot per Hour	Diffusivity	ft^2/hr	http://qudt.org/vocab/unit#SquareFootPerHour	NA	ft2phr
+squareFootPerSecond	Square Foot per Second	Diffusivity	ft^2/s	http://qudt.org/vocab/unit#SquareFootPerSecond	NA	ft2ps
+squareMeterPerSecond	Square Meter per Second	Diffusivity	m^2 s^-1	http://qudt.org/vocab/unit#SquareMeterPerSecond	NA	m2s1
+stoke	Stoke	Diffusivity	St	http://qudt.org/vocab/unit#Stokes; http://unitsofmeasure.org/ucum.html#para-33; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	st
+code	Code	Dimensionless	code	USGS	NA	code
+dimensionless	Dimensionless	Dimensionless	-	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	
+hounsfieldUnit	Hounsfield Unit	Dimensionless	hnsf'U	http://unitsofmeasure.org/ucum.html#para-44	NA	hnsfu
+mach	Mach	Dimensionless		http://qudt.org/vocab/unit#Mach	NA	
+partPerBillion	Part per Billion	Dimensionless	ppb	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://unitsofmeasure.org/ucum.html#para-29; http://www.unidata.ucar.edu/software/udunits/	1	ppb
+partPerMillion	Part per Million	Dimensionless	ppm	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://unitsofmeasure.org/ucum.html#para-29; http://www.unidata.ucar.edu/software/udunits/	1	ppm
+partPerQuadrillion	Part per Quadrillion	Dimensionless	ppq	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://www.unidata.ucar.edu/software/udunits/	1	ppq
+partPerQuintillion	Part per Quintillion	Dimensionless	ppqt	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	ppqt
+partPerThousand	Part per Thousand	Dimensionless	ppth	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://unitsofmeasure.org/ucum.html#para-29; http://qwwebservices.usgs.gov/service-domains.html	1	ppth
+partPerTrillion	Part per Trillion	Dimensionless	ppt	http://environment.data.gov.au/def/unit/PerTrillion; http://unitsofmeasure.org/ucum.html#para-29; http://www.unidata.ucar.edu/software/udunits/	1	ppt
+percent	Percent	Dimensionless	%	http://qudt.org/vocab/unit#Percent; http://unitsofmeasure.org/ucum.html#para-29; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://www.unidata.ucar.edu/software/udunits/; http://qwwebservices.usgs.gov/service-domains.html	1	perc
+perMille	Per Mille	Dimensionless	per mil	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://environment.data.gov.au/def/unit/PerMil; http://qwwebservices.usgs.gov/service-domains.html	NA	permil
+presenceOrAbsence	Presence or Absence	Dimensionless	PrsAbs	http://qwwebservices.usgs.gov/service-domains.html	1	prsabs
+standardUnit	Standard Unit	Dimensionless	std units	http://qwwebservices.usgs.gov/service-domains.html	NA	stdunits
+thresholdOdorNumber	Threshold Odor Number	Dimensionless	TON	http://qwwebservices.usgs.gov/service-domains.html	NA	ton
+tritiumUnit	Tritium Unit	Dimensionless	TU	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://environment.data.gov.au/def/unit/Tritium_Unit; http://qwwebservices.usgs.gov/service-domains.html	NA	tu
+unitedStatesPharmacopeiaUnit	United States Pharmacopeia Unit	Dimensionless	USP'U	http://unitsofmeasure.org/ucum.html#para-45	NA	uspu
+rem	REM	Dose equivalent	REM	http://qudt.org/vocab/unit#Rem; http://unitsofmeasure.org/ucum.html#para-33; http://www.unidata.ucar.edu/software/udunits/	NA	rem
+sievert	Sievert	Dose equivalent	Sv	http://qudt.org/vocab/unit#Sievert; http://unitsofmeasure.org/ucum.html#para-30; http://www.unidata.ucar.edu/software/udunits/	NA	sv
+centipoise	Centipoise	Dynamic viscosity	cP	http://qudt.org/vocab/unit#Centipoise	NA	cp
+pascalSecond	Pascal Second	Dynamic viscosity	Pa-s	http://qudt.org/vocab/unit#PascalSecond	NA	pas
+poise	Poise	Dynamic viscosity	P	http://qudt.org/vocab/unit#Poise; http://unitsofmeasure.org/ucum.html#para-33; http://www.unidata.ucar.edu/software/udunits/	NA	p
+poundForceSecondPerSquareFoot	Pound Force Second per Square Foot	Dynamic viscosity	lbf-s/ft^2	http://qudt.org/vocab/unit#PoundForceSecondPerSquareFoot	NA	lbfspft2
+poundForceSecondPerSquareInch	Pound Force Second per Square Inch	Dynamic viscosity	lbf-s/in^2	http://qudt.org/vocab/unit#PoundForceSecondPerSquareInch	NA	lbfspin2
+poundPerFootHour	Pound per Foot Hour	Dynamic viscosity	lb/(ft-hr)	http://qudt.org/vocab/unit#PoundPerFootHour	NA	lbpfthr
+poundPerFootSecond	Pound per Foot Second	Dynamic viscosity	lb/(ft-s)	http://qudt.org/vocab/unit#PoundPerFootSecond	NA	lbpfts
+slugPerFootSecond	Slug per Foot Second	Dynamic viscosity	slug/(ft-s)	http://qudt.org/vocab/unit#SlugPerFootSecond	NA	slugpfts
+abfarad	Abfarad	Electrical capacitance	abF	http://qudt.org/vocab/unit#Abfarad	NA	abf
+farad	Farad	Electrical capacitance	F	http://qudt.org/vocab/unit#Farad; http://unitsofmeasure.org/ucum.html#para-30	NA	f
+microfarad	Microfarad	Electrical capacitance	microF	http://qudt.org/vocab/unit#MicroFarad	NA	microf
+nanofarad	Nanofarad	Electrical capacitance	nF	http://qudt.org/vocab/unit#NanoFarad	NA	nf
+picofarad	Picofarad	Electrical capacitance	pF	http://qudt.org/vocab/unit#PicoFarad	NA	pf
+statfarad	Statfarad	Electrical capacitance	statF	http://qudt.org/vocab/unit#Statfarad; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	statf
+abcoulomb	Abcoulomb	Electrical charge	abC	http://qudt.org/vocab/unit#Abcoulomb	NA	abc
+ampereHour	Ampere Hour	Electrical charge	A-hr	http://qudt.org/vocab/unit#AmpereHour	NA	ahr
+c12Faraday	C12 Faraday	Electrical charge		https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	
+chemicalEquivalent	Chemical Equivalent	Electrical charge	eq	http://unitsofmeasure.org/ucum.html#para-45	NA	eq
+chemicalFaraday	Chemical Faraday	Electrical charge		https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	
+coulomb	Coulomb	Electrical charge	C	http://qudt.org/vocab/unit#Coulomb	NA	c
+faraday	Faraday	Electrical charge	F	http://qudt.org/vocab/unit#Faraday	NA	f
+franklin	Franklin	Electrical charge	Fr	http://qudt.org/vocab/unit#Franklin	NA	fr
+milliequivalent	Milliequivalent	Electrical charge	meq	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	meq
+physicalFaraday	Physical Faraday	Electrical charge		http://www.unidata.ucar.edu/software/udunits/	NA	
+planckCharge	Planck Charge	Electrical charge	Q_p	http://qudt.org/vocab/unit#PlanckCharge	NA	qp
+statcoulomb	Statcoulomb	Electrical charge	statC	http://qudt.org/vocab/unit#Statcoulomb; http://www.unidata.ucar.edu/software/udunits/	NA	statc
+coulombPerMeter	Coulomb per Meter	Electrical charge line density	C/m	http://qudt.org/vocab/unit#CoulombPerMeter	NA	cpm
+coulombPerMole	Coulomb per Mole	Electrical charge per count		http://qudt.org/vocab/unit#CoulombPerMole	NA	
+statcoulombPerMole	Statcoulomb per Mole	Electrical charge per count	statC/mol	http://qudt.org/vocab/unit#StatcoulombPerMole	NA	statcpmol
+coulombPerKilogram	Coulomb per Kilogram	Electrical charge per mass	C/kg	http://qudt.org/vocab/unit#CoulombPerKilogram	NA	cpkg
+hertzPerTesla	Hertz per Tesla	Electrical charge per mass	Hz T^-1	http://qudt.org/vocab/unit#HertzPerTesla	NA	hzt1
+megahertzPerTesla	Megahertz per Tesla	Electrical charge per mass	MHz T^-1	http://qudt.org/vocab/unit#MegaHertzPerTesla	NA	mhzt1
+milliequivalentPer100Gram	Milliequivalent per 100 Gram	Electrical charge per mass	meq/100 g	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	meqp100g
+milliequivalentPerHectogram	Milliequivalent per Hectogram	Electrical charge per mass	meq/hg	http://environment.data.gov.au/def/unit/MilliEquivalentPerHectoGram	NA	meqphg
+milliequivalentPerKilogram	Milliequivalent per Kilogram	Electrical charge per mass	meq/kg	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	meqpkg
+perTeslaSecond	Per Tesla Second	Electrical charge per mass	s^-1 T^-1	http://qudt.org/vocab/unit#PerTeslaSecond	NA	s1t1
+roentgen	Roentgen	Electrical charge per mass	R	http://qudt.org/vocab/unit#Roentgen; http://unitsofmeasure.org/ucum.html#para-33; http://www.unidata.ucar.edu/software/udunits/	NA	r
+coulombPerCubicMeter	Coulomb per Cubic Meter	Electrical charge volume density	C/m^3	http://qudt.org/vocab/unit#CoulombPerCubicMeter	NA	cpm3
+microequivalentPerLiter	Microequivalent per Liter	Electrical charge volume density	ueq/L	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	1	ueqpl
+milliequivalentPerLiter	Milliequivalent per Liter	Electrical charge volume density	meq/L	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	1	meqpl
+abmho	Abmho	Electrical conductance		http://www.unidata.ucar.edu/software/udunits/	NA	
+absiemen	Absiemen	Electrical conductance	aS	http://qudt.org/vocab/unit#Absiemen	NA	as
+mho	Mho	Electrical conductance	mho	http://qudt.org/vocab/unit#Mho; http://unitsofmeasure.org/ucum.html#para-47	1	mho
+siemen	Siemen	Electrical conductance	S	http://qudt.org/vocab/unit#Siemens; http://unitsofmeasure.org/ucum.html#para-30; http://www.unidata.ucar.edu/software/udunits/	NA	s
+statmho	Statmho	Electrical conductance	statS	http://qudt.org/vocab/unit#Statmho; http://www.unidata.ucar.edu/software/udunits/	NA	stats
+decisiemenPerCentimeter	Decisiemen per Centimeter	Electrical conductivity	dS/cm	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	dspcm
+decisiemenPerMeter	Decisiemen per Meter	Electrical conductivity	dS/m	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	dspm
+micromhoPerCentimeter	Micromho per Centimeter	Electrical conductivity	µMhos/cm		1	µmhospcm
+microsiemenPerCentimeter	Microsiemen per Centimeter	Electrical conductivity	uS/cm	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	1	uspcm
+millimhoPerCentimeter	Millimho per Centimeter	Electrical conductivity	mMhos/cm		1	mmhospcm
+millisiemenPerCentimeter	Millisiemen per Centimeter	Electrical conductivity	mS/cm	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	mspcm
+siemenPerCentimeter	Siemen per Centimeter	Electrical conductivity	S/cm	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	spcm
+siemenPerMeter	Siemen per Meter	Electrical conductivity	S/m	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	spm
+abampere	Abampere	Electrical current	abA	http://qudt.org/vocab/unit#Abampere	NA	aba
+ampere	Ampere	Electrical current	A	http://qudt.org/vocab/unit#Ampere	NA	a
+biot	Biot	Electrical current	Bi	http://qudt.org/vocab/unit#Biot	NA	bi
+planckCurrent	Planck Current	Electrical current		http://qudt.org/vocab/unit#PlanckCurrent	NA	
+statampere	Statampere	Electrical current	statA	http://qudt.org/vocab/unit#Statampere; http://www.unidata.ucar.edu/software/udunits/	NA	stata
+abamperePerSquareCentimeter	Abampere per Square Centimeter	Electrical current density	abA / cm^2	http://qudt.org/vocab/unit#AbamperePerSquareCentimeter	NA	abapcm2
+amperePerSquareMeter	Ampere per Square Meter	Electrical current density	A/m^2	http://qudt.org/vocab/unit#AmperePerSquareMeter	NA	apm2
+planckCurrentDensity	Planck Current Density	Electrical current density		http://qudt.org/vocab/unit#PlanckCurrentDensity	NA	
+statamperePerSquareCentimeter	Statampere per Square Centimeter	Electrical current density	statA / cm^2	http://qudt.org/vocab/unit#StatamperePerSquareCentimeter	NA	statapcm2
+amperePerDegree	Ampere per Degree	Electrical current per angle	A/deg	http://qudt.org/vocab/unit#AmperePerDegree	NA	apdeg
+amperePerRadian	Ampere per Radian	Electrical current per angle		http://qudt.org/vocab/unit#AmperePerRadian	NA	
+amperePerJoule	Ampere per Joule	Electrical current per energy	A/J	http://qudt.org/vocab/unit#AmperePerJoule	NA	apj
+coulombMeter	Coulomb Meter	Electrical dipole moment	C m	http://qudt.org/vocab/unit#CoulombMeter	NA	cm
+debye	Debye	Electrical dipole moment	D	http://qudt.org/vocab/unit#Debye	NA	d
+abvoltPerCentimeter	Abvolt per Centimeter	Electrical field strength		http://qudt.org/vocab/unit#AbvoltPerCentimeter	NA	
+newtonPerCoulomb	Newton per Coulomb	Electrical field strength	N/C	http://qudt.org/vocab/unit#NewtonPerCoulomb	NA	npc
+statvoltPerCentimeter	Statvolt per Centimeter	Electrical field strength		http://qudt.org/vocab/unit#StatvoltPerCentimeter	NA	
+voltPerMeter	Volt per Meter	Electrical field strength	V/m	http://qudt.org/vocab/unit#VoltPerMeter	NA	vpm
+abvoltCentimeter	Abvolt Centimeter	Electrical flux	abV cm	http://qudt.org/vocab/unit#AbvoltCentimeter	NA	abvcm
+statvoltCentimeter	Statvolt Centimeter	Electrical flux	statV cm	http://qudt.org/vocab/unit#StatvoltCentimeter	NA	statvcm
+voltMeter	Volt Meter	Electrical flux	m V	http://qudt.org/vocab/unit#VoltMeter	NA	mv
+abcoulombPerSquareCentimeter	Abcoulomb per Square Centimeter	Electrical flux density		http://qudt.org/vocab/unit#AbcoulombPerSquareCentimeter	NA	
+coulombPerSquareMeter	Coulomb per Square Meter	Electrical flux density	C/m^2	http://qudt.org/vocab/unit#CoulombPerSquareMeter	NA	cpm2
+statcoulombPerSquareCentimeter	Statcoulomb per Square Centimeter	Electrical flux density		http://qudt.org/vocab/unit#StatcoulombPerSquareCentimeter	NA	
+abfaradPerCentimeter	Abfarad per Centimeter	Electrical permittivity		http://qudt.org/vocab/unit#AbfaradPerCentimeter	NA	
+faradPerMeter	Farad per Meter	Electrical permittivity	F/m	http://qudt.org/vocab/unit#FaradPerMeter	NA	fpm
+coulombSquareMeter	Coulomb Square Meter	Electrical quadrupole moment	C m^2	http://qudt.org/vocab/unit#CoulombSquareMeter	NA	cm2
+abohm	Abohm	Electrical resistance	abOhm	http://qudt.org/vocab/unit#Abohm	NA	abohm
+ohm	Ohm	Electrical resistance	Ohm	http://qudt.org/vocab/unit#Ohm; http://unitsofmeasure.org/ucum.html#para-30; http://www.unidata.ucar.edu/software/udunits/	1	ohm
+planckImpedance	Planck Impedance	Electrical resistance		http://qudt.org/vocab/unit#PlanckResistance	NA	
+planckResistance	Planck Resistance	Electrical resistance		http://qudt.org/vocab/unit#PlanckResistance	NA	
+statohm	Statohm	Electrical resistance	statOhm	http://qudt.org/vocab/unit#Statohm; http://www.unidata.ucar.edu/software/udunits/	NA	statohm
+kiloohmCentimeter	Kiloohm Centimeter	Electrical resistivity	kOhm-cm		NA	kohmcm
+ohmMeter	Ohm Meter	Electrical resistivity	ohm m	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	ohmm
+abvolt	Abvolt	Electromotive force	abV	http://qudt.org/vocab/unit#Abvolt	NA	abv
+millivolt	Millivolt	Electromotive force	mV	http://environment.data.gov.au/def/unit/MilliVolt; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	1	mv
+planckVolt	Planck Volt	Electromotive force		http://qudt.org/vocab/unit#PlanckVolt	NA	
+statvolt	Statvolt	Electromotive force	statV	http://qudt.org/vocab/unit#Statvolt; http://www.unidata.ucar.edu/software/udunits/	NA	statv
+volt	Volt	Electromotive force	V	http://qudt.org/vocab/unit#Volt; http://unitsofmeasure.org/ucum.html#para-30; http://www.unidata.ucar.edu/software/udunits/; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	v
+bev	Bev	Energy		http://www.unidata.ucar.edu/software/udunits/	NA	
+britishThermalUnit	British Thermal Unit	Energy	Btu	http://qudt.org/vocab/unit#BritishThermalUnitThermochemical; http://unitsofmeasure.org/ucum.html#para-43	NA	btu
+britishThermalUnit,InternationalSteamTable	British Thermal Unit, International Steam Table	Energy	BtuIT	http://qudt.org/vocab/unit#BritishThermalUnitInternationalTable; http://unitsofmeasure.org/ucum.html#para-43; http://www.unidata.ucar.edu/software/udunits/	NA	btuit
+britishThermalUnit,Mean	British Thermal Unit, Mean	Energy	Btu_m	http://unitsofmeasure.org/ucum.html#para-43	NA	btum
+britishThermalUnit,ThermochemicalCalorie	British Thermal Unit, Thermochemical Calorie	Energy	Btu, BtuTC, Btu_th	http://qudt.org/vocab/unit#BritishThermalUnitThermochemical; http://unitsofmeasure.org/ucum.html#para-43	NA	btu,btutc,btuth
+britishThermalUnitAt39 °F	British Thermal Unit At 39 °F	Energy	Btu_39	http://unitsofmeasure.org/ucum.html#para-43	NA	btu39
+britishThermalUnitAt59 °F	British Thermal Unit At 59 °F	Energy	Btu_59	http://unitsofmeasure.org/ucum.html#para-43	NA	btu59
+britishThermalUnitAt60 °F	British Thermal Unit At 60 °F	Energy	Btu_60	http://unitsofmeasure.org/ucum.html#para-43	NA	btu60
+calorie	Calorie	Energy	cal	http://qudt.org/vocab/unit#CalorieThermochemical; http://unitsofmeasure.org/ucum.html#para-43; http://www.unidata.ucar.edu/software/udunits/; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	cal
+calorie,InternationalTable	Calorie, International Table	Energy	cal_IT	http://unitsofmeasure.org/ucum.html#para-43; http://www.unidata.ucar.edu/software/udunits/	NA	calit
+calorie,Mean	Calorie, Mean	Energy	cal_m	http://unitsofmeasure.org/ucum.html#para-43	NA	calm
+calorie,Thermochemical	Calorie, Thermochemical	Energy	cal	http://qudt.org/vocab/unit#CalorieThermochemical; http://unitsofmeasure.org/ucum.html#para-43; http://www.unidata.ucar.edu/software/udunits/; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	cal
+calorieAt15 °C	Calorie At 15 °C	Energy	cal_15	http://unitsofmeasure.org/ucum.html#para-43	NA	cal15
+calorieAt20 °C	Calorie At 20 °C	Energy	cal_20	http://unitsofmeasure.org/ucum.html#para-43	NA	cal20
+electronvolt	ElectronVolt	Energy	eV	http://qudt.org/vocab/unit#ElectronVolt	NA	ev
+erg	Erg	Energy	erg	http://qudt.org/vocab/unit#Erg; http://unitsofmeasure.org/ucum.html#para-33	NA	erg
+footPoundal	Foot Poundal	Energy	ft-pdl	http://qudt.org/vocab/unit#FootPoundal	NA	ftpdl
+footPoundForce	Foot Pound Force	Energy	ft-lbf	http://qudt.org/vocab/unit#FootPoundForce	NA	ftlbf
+gigaelectronvolt	GigaElectronVolt	Energy	GeV	http://qudt.org/vocab/unit#GigaElectronVolt	NA	gev
+gigajoule	Gigajoule	Energy	GJ		NA	gj
+hartree	Hartree	Energy	E_h	http://qudt.org/vocab/unit#Hartree	NA	eh
+inchPoundForce	Inch Pound Force	Energy	in-lbf	http://qudt.org/vocab/unit#InchPoundForce	NA	inlbf
+joule	Joule	Energy	J	http://qudt.org/vocab/unit#Joule; http://unitsofmeasure.org/ucum.html#para-30http://www.unidata.ucar.edu/software/udunits/; 	1	j
+kilocalorie	Kilocalorie	Energy	kcal	http://qudt.org/vocab/unit#Kilocalorie	NA	kcal
+kiloelectronvolt	KiloElectronVolt	Energy	keV	http://qudt.org/vocab/unit#KiloElectronVolt	NA	kev
+kilowattHour	Kilowatt Hour	Energy	kW-hr	http://qudt.org/vocab/unit#Kilowatthour	NA	kwhr
+megaelectronvolt	MegaElectronVolt	Energy	MeV	http://qudt.org/vocab/unit#MegaElectronVolt	NA	mev
+megajoule	Megajoule	Energy	MJ	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	mj
+megawattHour	Megawatt Hour	Energy	MW-hr		NA	mwhr
+nutritionalCalorie	Nutritional Calorie	Energy	Cal	http://qudt.org/vocab/unit#CalorieNutritional; http://unitsofmeasure.org/ucum.html#para-43	NA	cal
+planckEnergy	Planck Energy	Energy		http://qudt.org/vocab/unit#PlanckEnergy	NA	
+quad	Quad	Energy	quad	http://qudt.org/vocab/unit#Quad	NA	quad
+thermEc	Therm EC	Energy	therm (EC)	http://qudt.org/vocab/unit#ThermEEC	NA	thermec
+thermUs	Therm US	Energy	therm (US)	http://qudt.org/vocab/unit#ThermUS; http://www.unidata.ucar.edu/software/udunits/	NA	thermus
+tonOfOilEquivalent	Ton of Oil Equivalent	Energy	toe	http://qudt.org/vocab/unit#TonOfOilEquivalent	NA	toe
+tonTnt	Ton TNT	Energy	t/lbf	http://qudt.org/vocab/unit#TonEnergy; http://www.unidata.ucar.edu/software/udunits/	NA	tplbf
+wattHour	Watt Hour	Energy	W-hr	http://qudt.org/vocab/unit#Watthour; http://www.unidata.ucar.edu/software/udunits/	NA	whr
+ergPerCubicCentimeter	Erg per Cubic Centimeter	Energy density		http://qudt.org/vocab/unit#ErgPerCubicCentimeter	NA	
+joulePerCubicMeter	Joule per Cubic Meter	Energy density	J/m^3	http://qudt.org/vocab/unit#JoulePerCubicMeter	1	jpm3
+planckEnergyDensity	Planck Energy Density	Energy density			NA	
+kilocaloriePerSquareCentimeter	Kilocalorie per Square Centimeter	Energy per area	kcal/cm^2	http://qudt.org/vocab/unit#KilocaloriePerSquareCentimeter	1	kcalpcm2
+langley	Langley	Energy per area	Ly	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://www.unidata.ucar.edu/software/udunits/	1	ly
+megajoulePerSquareMeter	Megajoule per Square Meter	Energy per area	MJ/m^2	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	mjpm2
+btuPerSquareFoot	Btu per Square Foot	Energy per area	Btu/ft^2	http://qudt.org/vocab/unit#BtuPerSquareFoot	NA	btupft2
+footPoundForcePerSquareFoot	Foot Pound Force per Square Foot	Energy per area	ft-lbf/ft^2	http://qudt.org/vocab/unit#FootPoundForcePerSquareFoot	NA	ftlbfpft2
+footPoundForcePerSquareMeter	Foot Pound Force per Square Meter	Energy per area	ft-lbf/m^2	http://qudt.org/vocab/unit#FootPoundForcePerSquareMeter	NA	ftlbfpm2
+joulePerSquareCentimeter	Joule per Square Centimeter	Energy per area	J/cm^2	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	jpcm2
+joulePerSquareMeter	Joule per Square Meter	Energy per area	J/m^2	http://qudt.org/vocab/unit#JoulePerSquareMeter; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	jpm2
+voltPerSquareMeter	Volt per Square Meter	Energy per area electrical charge	V m^-2	http://qudt.org/vocab/unit#VoltPerSquareMeter	NA	vm2
+joulePerSquareTesla	Joule per Square Tesla	Energy per square magnetic flux density	J T^-2	http://qudt.org/vocab/unit#JoulePerSquareTesla	NA	jt2
+kilogramPerPascalPerSecondPerMeterSquared	Kilogram per Pascal per Second per Meter Squared	Fluid permeance	kg/(Pa.s.m^2)		NA	kgppasm2
+perm0C	Perm 0C	Fluid permeance	Perm 0C	https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	perm0c
+perm23C	Perm 23C	Fluid permeance	Perm 23C	https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	perm23c
+peripheralVascularResistanceUnit	Peripheral Vascular Resistance Unit	Fluid resistance	PRU	http://unitsofmeasure.org/ucum.html#para-44	NA	pru
+woodUnit	Wood Unit	Fluid resistance	wood'U	http://unitsofmeasure.org/ucum.html#para-44	NA	woodu
+rhe	Rhe	Fluidity		https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	
+inVivoFluorescenceUnit	In Vivo Fluorescence Unit	Fluorescence	IVFU	http://qwwebservices.usgs.gov/service-domains.html	NA	ivfu
+relativeFluorescenceUnit	Relative Fluorescence Unit	Fluorescence	RFU	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	1	rfu
+dyne	Dyne	Force	dyn	http://qudt.org/vocab/unit#Dyne; http://unitsofmeasure.org/ucum.html#para-33	NA	dyn
+gramForce	Gram Force	Force	gf	http://unitsofmeasure.org/ucum.html#para-32; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	gf
+kilogramForce	Kilogram Force	Force	kgf	http://qudt.org/vocab/unit#KilogramForce; http://www.unidata.ucar.edu/software/udunits/	NA	kgf
+kilopond	Kilopond	Force	kp	http://qudt.org/vocab/unit#KiloPond	NA	kp
+kip	Kip	Force	kip	http://qudt.org/vocab/unit#Kip; http://www.unidata.ucar.edu/software/udunits/; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	kip
+newton	Newton	Force	N	http://qudt.org/vocab/unit#Newton; http://unitsofmeasure.org/ucum.html#para-30; http://www.unidata.ucar.edu/software/udunits/	NA	n
+ounceForce	Ounce Force	Force	ozf	http://qudt.org/vocab/unit#OunceForce; http://www.unidata.ucar.edu/software/udunits/	NA	ozf
+planckForce	Planck Force	Force		http://qudt.org/vocab/unit#PlanckForce	NA	
+pond	Pond	Force		http://www.unidata.ucar.edu/software/udunits/	NA	
+poundal	Poundal	Force	pdl	http://qudt.org/vocab/unit#Poundal; http://www.unidata.ucar.edu/software/udunits/	NA	pdl
+poundForce	Pound Force	Force	lbf_av	http://qudt.org/vocab/unit#PoundForce; http://unitsofmeasure.org/ucum.html#para-32; http://www.unidata.ucar.edu/software/udunits/	NA	lbfav
+tonForce	Ton Force	Force		http://www.unidata.ucar.edu/software/udunits/	NA	
+newtonPerMeter	Newton per Meter	Force per length	N/m	http://qudt.org/vocab/unit#NewtonPerMeter	NA	npm
+poundForcePerFoot	Pound Force per Foot	Force per length	lbf/ft	http://qudt.org/vocab/unit#PoundForcePerFoot	NA	lbfpft
+poundForcePerInch	Pound Force per Inch	Force per length	lbf/in	http://qudt.org/vocab/unit#PoundForcePerInch	NA	lbfpin
+baud	Baud	Frequency	Bd	http://unitsofmeasure.org/ucum.html#para-48; http://www.unidata.ucar.edu/software/udunits/	NA	bd
+countPerMinute	Count per Minute	Frequency	#/min		NA	npmin
+countPerSecond	Count per Second	Frequency	#/s	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	nps
+countPerYear	Count per Year	Frequency	#/yr	http://qudt.org/vocab/unit#NumberPerYear	NA	npyr
+gigahertz	Gigahertz	Frequency	GHz	http://qudt.org/vocab/unit#GigaHertz	NA	ghz
+hertz	Hertz	Frequency	Hz	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://unitsofmeasure.org/ucum.html#para-30	NA	hz
+inverseSecond	Inverse Second	Frequency	s^-1	http://qudt.org/vocab/unit#PerSecond	NA	s1
+kilohertz	Kilohertz	Frequency	KHz	http://qudt.org/vocab/unit#KiloHertz	NA	khz
+megahertz	Megahertz	Frequency	MHz	http://qudt.org/vocab/unit#MegaHertz	NA	mhz
+perDay	Per Day	Frequency	1/d	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	1pd
+planckFrequency	Planck Frequency	Frequency		http://qudt.org/vocab/unit#PlanckFrequency	NA	
+cubicMeterPerKilogramSecondSquared	Cubic Meter per Kilogram Second Squared	Gravitational attraction	m^3 kg^-1 s^-2	http://qudt.org/vocab/unit#CubicMeterPerKilogramSecondSquared	NA	m3kg1s2
+btuPerDegreeFahrenheit	Btu per Degree Fahrenheit	Heat capacity	Btu/degF	http://qudt.org/vocab/unit#BtuPerDegreeFahrenheit	NA	btupdegf
+btuPerDegreeRankine	Btu per Degree Rankine	Heat capacity	Btu/degR	http://qudt.org/vocab/unit#BtuPerDegreeRankine	NA	btupdegr
+electronvoltPerKelvin	ElectronVolt per Kelvin	Heat capacity	eV K^-1	http://qudt.org/vocab/unit#ElectronVoltPerKelvin	NA	evk1
+joulePerKelvin	Joule per Kelvin	Heat capacity	J/K	http://qudt.org/vocab/unit#JoulePerKelvin	NA	jpk
+btuPerSquareFootHourDegreeFahrenheit	Btu per Square Foot Hour Degree Fahrenheit	Heat transfer coefficient	Btu/(hr-ft^2-degF)	http://qudt.org/vocab/unit#BtuPerSquareFootHourDegreeFahrenheit	NA	btuphrft2degf
+btuPerSquareFootSecondDegreeFahrenheit	Btu per Square Foot Second Degree Fahrenheit	Heat transfer coefficient	Btu/(ft^2-s-degF)	http://qudt.org/vocab/unit#BtuPerSquareFootSecondDegreeFahrenheit	NA	btupft2sdegf
+wattPerSquareMeterKelvin	Watt per Square Meter Kelvin	Heat transfer coefficient	W/(m^2-K)	http://qudt.org/vocab/unit#WattPerSquareMeterKelvin	NA	wpm2k
+cubicCoulombMeterPerSquareJoule	Cubic Coulomb Meter per Square Joule	Hyperpolarizability	C^3 m^3 J^-2	http://qudt.org/vocab/unit#CubicCoulombMeterPerSquareJoule	NA	c3m3j2
+footcandle	Footcandle	Illuminance	fc	http://qudt.org/vocab/unit#FootCandle; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	fc
+lumenPerSquareFoot	Lumen per Square Foot	Illuminance	lm/ft^2	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	lmpft2
+lux	Lux	Illuminance	lx	http://qudt.org/vocab/unit#Lux; http://unitsofmeasure.org/ucum.html#para-30; http://www.unidata.ucar.edu/software/udunits/; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	lx
+phot	Phot	Illuminance	ph	http://qudt.org/vocab/unit#Phot; http://unitsofmeasure.org/ucum.html#para-33; http://www.unidata.ucar.edu/software/udunits/	NA	ph
+abhenry	Abhenry	Inductance	abH	http://qudt.org/vocab/unit#Abhenry	NA	abh
+henry	Henry	Inductance	H	http://qudt.org/vocab/unit#Henry; http://unitsofmeasure.org/ucum.html#para-30	NA	h
+microhenry	Microhenry	Inductance	microH	http://qudt.org/vocab/unit#MicroHenry	NA	microh
+millihenry	Millihenry	Inductance	milliH	http://qudt.org/vocab/unit#MilliHenry	NA	millih
+stathenry	Stathenry	Inductance	statH	http://qudt.org/vocab/unit#Stathenry; http://www.unidata.ucar.edu/software/udunits/	NA	stath
+perMole	Per Mole	Inverse count	mol^-1	http://qudt.org/vocab/unit#PerMole	NA	mol1
+absorbanceUnitPerCentimeter	Absorbance Unit per Centimeter	Inverse length	AU/cm	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	aupcm
+diopter	Diopter	Inverse length	diop	http://qudt.org/vocab/unit#Diopter	NA	diop
+kayser	Kayser	Inverse length	Ky	https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml; http://unitsofmeasure.org/ucum.html#para-33	NA	ky
+mesh	Mesh	Inverse length	mesh_i	http://unitsofmeasure.org/ucum.html#para-44	NA	meshi
+perMeter	Per Meter	Inverse length	/m	http://qudt.org/vocab/unit#PerMeter; http://environment.data.gov.au/def/unit/Reciprocal_Meter; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	pm
+reciprocalMeter	Reciprocal Meter	Inverse length	m^-1		NA	m1
+unitPerCentimeter	Unit per Centimeter	Inverse length	units/cm	http://qwwebservices.usgs.gov/service-domains.html	NA	unitspcm
+perMeterKelvin	Per Meter Kelvin	Inverse length temperature	m^-1 K^-1	http://qudt.org/vocab/unit#PerMeterKelvin	NA	m1k1
+hertzPerVolt	Hertz per Volt	Inverse magnetic flux	Hz V^-1	http://qudt.org/vocab/unit#HertzPerVolt	NA	hzv1
+meterPerFarad	Meter per Farad	Inverse permittivity		http://qudt.org/vocab/unit#MeterPerFarad	NA	
+perSquareGigaElectronvolt	Per Square Giga ElectronVolt	Inverse square energy	GeV^-2	http://qudt.org/vocab/unit#PerSquareGigaElectronVolt	NA	gev2
+hertzPerKelvin	Hertz per Kelvin	Inverse time temperature	Hz K^-1	http://qudt.org/vocab/unit#HertzPerKelvin	NA	hzk1
+megahertzPerKelvin	Megahertz per Kelvin	Inverse time temperature	MHz K^-1	http://qudt.org/vocab/unit#MegaHertzPerKelvin	NA	mhzk1
+perCubicMeter	Per Cubic Meter	Inverse volume	/m^3	http://qudt.org/vocab/unit#PerCubicMeter	NA	pm3
+perLiter	Per Liter	Inverse volume	1/L	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	1pl
+meterPerSecondCubed	Meter per Second Cubed	Jerk	m/s^3		NA	mps3
+angstrom	Angstrom	Length	Ao	http://qudt.org/vocab/unit#Angstrom	NA	ao
+arpentlin	Arpentlin	Length		http://www.unidata.ucar.edu/software/udunits/	NA	
+astronomicalUnit	Astronomical Unit	Length	AU	http://qudt.org/vocab/unit#AstronomicalUnit; http://unitsofmeasure.org/ucum.html#para-31	NA	au
+barleycorn	Barleycorn	Length		https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	
+bigPoint	Big Point	Length		https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	
+centimeter	Centimeter	Length	cm	http://qudt.org/vocab/unit#Centimeter	1	cm
+charrièreFrench	Charrière French	Length	Ch	http://unitsofmeasure.org/ucum.html#para-44	NA	ch
+cicero	Cicero	Length	cicero	http://unitsofmeasure.org/ucum.html#para-42	NA	cicero
+decimeter	Decimeter	Length	decimeter	http://qudt.org/vocab/unit#Decimeter	NA	decimeter
+didot	Didot	Length	didot	http://unitsofmeasure.org/ucum.html#para-42	NA	didot
+fathom	Fathom	Length	fth_i	http://qudt.org/vocab/unit#Fathom; http://unitsofmeasure.org/ucum.html#para-34	NA	fthi
+fathom,British	Fathom, British	Length	fth_br	http://unitsofmeasure.org/ucum.html#para-36	NA	fthbr
+fathom,UsSurvey	Fathom, US Survey	Length	fth_us	http://unitsofmeasure.org/ucum.html#para-35	NA	fthus
+femtometer	Femtometer	Length	fm	http://qudt.org/vocab/unit#Femtometer	NA	fm
+fermi	Fermi	Length	fm	http://qudt.org/vocab/unit#Fermi	NA	fm
+foot	Foot	Length	ft_i	http://qudt.org/vocab/unit#Foot; http://unitsofmeasure.org/ucum.html#para-34; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml; http://qwwebservices.usgs.gov/service-domains.html	1	fti
+foot,British	Foot, British	Length	ft_br	http://unitsofmeasure.org/ucum.html#para-36	NA	ftbr
+foot,UsSurvey	Foot, US Survey 	Length	ft_us	http://unitsofmeasure.org/ucum.html#para-35; http://qudt.org/vocab/unit#FootUSSurvey; http://www.unidata.ucar.edu/software/udunits/	NA	ftus
+furlong,UsSurvey	Furlong, US Survey	Length	fur_us	http://qudt.org/vocab/unit#Furlong; http://unitsofmeasure.org/ucum.html#para-35	NA	furus
+gunter'SChain,British	Gunter's Chain, British	Length	ch_br	http://unitsofmeasure.org/ucum.html#para-36	NA	chbr
+gunter'SChain,UsSurveyor'SChain	Gunter's Chain, US Surveyor's Chain	Length	ch_us	http://unitsofmeasure.org/ucum.html#para-35; http://qudt.org/vocab/unit#Chain	NA	chus
+hand	Hand	Length	hd_i	http://unitsofmeasure.org/ucum.html#para-34	NA	hdi
+inch	Inch	Length	in_i	http://qudt.org/vocab/unit#Inch; http://unitsofmeasure.org/ucum.html#para-34; http://qwwebservices.usgs.gov/service-domains.html	1	ini
+inch,British	Inch, British	Length	in_br	http://unitsofmeasure.org/ucum.html#para-36	NA	inbr
+inch,UsSurvey	Inch, US Survey	Length	in_us	http://unitsofmeasure.org/ucum.html#para-35	NA	inus
+kilometer	Kilometer	Length	km	http://qudt.org/vocab/unit#Kilometer	1	km
+lightYear	Light Year	Length	ly	http://qudt.org/vocab/unit#LightYear; http://www.unidata.ucar.edu/software/udunits/; http://unitsofmeasure.org/ucum.html#para-32	NA	ly
+ligne	Ligne	Length	ligne	http://unitsofmeasure.org/ucum.html#para-42	NA	ligne
+line	Line	Length	lne	http://unitsofmeasure.org/ucum.html#para-42	NA	lne
+linkForGunter'SChain,British	Link for Gunter's Chain, British	Length	lk_br	http://unitsofmeasure.org/ucum.html#para-36	NA	lkbr
+linkForGunter'SChain,UsSurvey	Link for Gunter's Chain, US Survey	Length	lk_us	http://unitsofmeasure.org/ucum.html#para-35	NA	lkus
+linkForRamden'SChain	Link for Ramden's Chain	Length	rlk_us	http://unitsofmeasure.org/ucum.html#para-35	NA	rlkus
+meter	Meter	Length	m	http://qudt.org/vocab/unit#Meter; mhttp://unitsofmeasure.org/ucum.html#para-28; http://www.unidata.ucar.edu/software/udunits/; http://qwwebservices.usgs.gov/service-domains.html	1	m
+microinch	Microinch	Length	in^-6	http://qudt.org/vocab/unit#MicroInch	NA	in6
+micrometer	Micrometer	Length	µm	http://qudt.org/vocab/unit#Micrometer	NA	µm
+micron	Micron	Length	um	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://www.unidata.ucar.edu/software/udunits/	NA	um
+mil	Mil	Length	mil_i	http://unitsofmeasure.org/ucum.html#para-34; http://qudt.org/vocab/unit#MilLength; http://www.unidata.ucar.edu/software/udunits/	NA	mili
+mil,UsSurvey	Mil, US Survey	Length	mil_us	http://unitsofmeasure.org/ucum.html#para-35	NA	milus
+mile	Mile	Length	mi_i	http://qudt.org/vocab/unit#MileInternational; http://unitsofmeasure.org/ucum.html#para-34; http://www.unidata.ucar.edu/software/udunits/	NA	mii
+mile,British	Mile, British	Length	mi_br	http://unitsofmeasure.org/ucum.html#para-36	NA	mibr
+mile,UsSurvey	Mile, US Survey 	Length	mi_us	http://qudt.org/vocab/unit#MileUSStatute; http://unitsofmeasure.org/ucum.html#para-35	NA	mius
+millimeter	Millimeter	Length	mm	http://qudt.org/vocab/unit#Millimeter; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	1	mm
+nanometer	Nanometer	Length	nm		NA	nm
+nauticalMile	Nautical Mile	Length	nmi_i	http://qudt.org/vocab/unit#NauticalMile; http://unitsofmeasure.org/ucum.html#para-34; http://www.unidata.ucar.edu/software/udunits/	NA	nmii
+nauticalMile,British	Nautical Mile, British	Length	nmi_br	http://unitsofmeasure.org/ucum.html#para-36	NA	nmibr
+pace	Pace	Length	pc_br	http://unitsofmeasure.org/ucum.html#para-36	NA	pcbr
+parsec	Parsec	Length	pc	http://qudt.org/vocab/unit#Parsec; http://unitsofmeasure.org/ucum.html#para-31; http://www.unidata.ucar.edu/software/udunits/	NA	pc
+perch	Perch	Length		http://www.unidata.ucar.edu/software/udunits/	NA	
+pica	Pica	Length	pca	http://qudt.org/vocab/unit#Pica; http://unitsofmeasure.org/ucum.html#para-42; http://www.unidata.ucar.edu/software/udunits/	NA	pca
+pied	Pied	Length	pied	http://unitsofmeasure.org/ucum.html#para-42	NA	pied
+planckLength	Planck Length	Length		http://qudt.org/vocab/unit#PlanckLength	NA	
+point	Point	Length	pnt	http://qudt.org/vocab/unit#Point; http://unitsofmeasure.org/ucum.html#para-42	NA	pnt
+pole	Pole	Length		http://www.unidata.ucar.edu/software/udunits/	NA	
+pouce	Pouce	Length	pouce	http://unitsofmeasure.org/ucum.html#para-42	NA	pouce
+printersPica	Printers Pica	Length	pca_pr	http://unitsofmeasure.org/ucum.html#para-42; http://www.unidata.ucar.edu/software/udunits/	NA	pcapr
+printersPoint	Printers Point	Length	pnt_pr	http://unitsofmeasure.org/ucum.html#para-42; http://www.unidata.ucar.edu/software/udunits/	NA	pntpr
+ramden'SChain	Ramden's Chain	Length	rch_us	http://unitsofmeasure.org/ucum.html#para-35	NA	rchus
+rod	Rod	Length	rd	http://qudt.org/vocab/unit#Rod; http://unitsofmeasure.org/ucum.html#para-35; http://www.unidata.ucar.edu/software/udunits/	NA	rd
+rod,British	Rod, British	Length	rd_br	http://unitsofmeasure.org/ucum.html#para-36	NA	rdbr
+smoot	Smoot	Length	smoot	http://unitsofmeasure.org/ucum.html#para-47	NA	smoot
+yard	Yard	Length	yd_i	http://qudt.org/vocab/unit#Yard; http://unitsofmeasure.org/ucum.html#para-34; http://www.unidata.ucar.edu/software/udunits/	NA	ydi
+yard,British	Yard, British	Length	yd_br	http://unitsofmeasure.org/ucum.html#para-36	NA	ydbr
+yard,UsSurvey	Yard, US Survey 	Length	yd_us	http://unitsofmeasure.org/ucum.html#para-35; http://www.unidata.ucar.edu/software/udunits/	NA	ydus
+btuFoot	Btu Foot	Length energy	Btu-ft	http://qudt.org/vocab/unit#BtuFoot	NA	btuft
+btuInch	Btu Inch	Length energy	Btu-in	http://qudt.org/vocab/unit#BtuInch	NA	btuin
+megaelectronvoltFemtometer	Megaelectronvolt Femtometer	Length energy	MeV fm	http://qudt.org/vocab/unit#MegaElectronVoltFemtometer	NA	mevfm
+meterPerMeter	Meter per Meter	Length fraction	-	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	
+percentSlope	Percent Slope	Length fraction	%slope	http://unitsofmeasure.org/ucum.html#para-44	NA	percslope
+microgramMeterPerLiter	Microgram Meter per Liter	Length integrated mass concentration	µg m/L	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	µgmpl
+meterKilogram	Meter Kilogram	Length mass	m-kg	http://qudt.org/vocab/unit#MeterKilogram	NA	mkg
+jouleMeterPerMole	Joule Meter per Mole	Length molar energy	J m mol^-1	http://qudt.org/vocab/unit#JouleMeterPerMole	NA	jmmol1
+perTeslaMeter	Per Tesla Meter	Length per magnetic flux	m^-1 T^-1	http://qudt.org/vocab/unit#PerTeslaMeter	NA	m1t1
+degreeCelsiusCentimeter	Degree Celsius Centimeter	Length temperature	cm-degC	http://qudt.org/vocab/unit#DegreeCelsiusCentimeter	NA	cmdegc
+meterKelvin	Meter Kelvin	Length temperature	m K	http://qudt.org/vocab/unit#MeterKelvin	NA	mk
+centimeterSecondDegreeCelsius	Centimeter Second Degree Celsius	Length temperature time	cm-s-degC	http://qudt.org/vocab/unit#CentimeterSecondDegreeCelsius	NA	cmsdegc
+bel	Bel	Level	B	http://unitsofmeasure.org/ucum.html#para-46	NA	b
+bel10Nanovolt	Bel 10 Nanovolt	Level	B10.nV	http://unitsofmeasure.org/ucum.html#para-46	NA	b10nv
+belKilowatt	Bel Kilowatt	Level	BkW	http://unitsofmeasure.org/ucum.html#para-46	NA	bkw
+belMicrovolt	Bel Microvolt	Level	BuV	http://unitsofmeasure.org/ucum.html#para-46	NA	buv
+belMillivolt	Bel Millivolt	Level	BmV	http://unitsofmeasure.org/ucum.html#para-46	NA	bmv
+belSoundPressure	Bel Sound Pressure	Level	BSPL	http://unitsofmeasure.org/ucum.html#para-46; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	bspl
+belVolt	Bel Volt	Level	BV	http://unitsofmeasure.org/ucum.html#para-46; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	bv
+belWatt	Bel Watt	Level	BW	http://unitsofmeasure.org/ucum.html#para-46; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	bw
+bm	Bm	Level		http://www.unidata.ucar.edu/software/udunits/	NA	
+bv	Bv	Level		https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	
+bz	Bz	Level		http://www.unidata.ucar.edu/software/udunits/	NA	
+decibel	Decibel	Level	dB	http://qudt.org/vocab/unit#Decibel	NA	db
+decibelCarrierUnit	Decibel Carrier Unit	Level	dBc	http://qudt.org/vocab/unit#DecibelCarrier	NA	dbc
+decibelMiliwatt	Decibel miliWatt	Level	dBm	http://qudt.org/vocab/unit#DecibelReferredToOneMilliwatt	NA	dbm
+neper	Neper	Level	Np	http://unitsofmeasure.org/ucum.html#para-46	NA	np
+centimeterPerSecondSquared	Centimeter per Second Squared	Linear acceleration		http://qudt.org/vocab/unit#CentimeterPerSecondSquared	NA	
+footPerSecondSquared	Foot per Second Squared	Linear acceleration	ft/s^2	http://qudt.org/vocab/unit#FootPerSecondSquared	NA	ftps2
+gal	Gal	Linear acceleration	Gal	http://qudt.org/vocab/unit#Gal; http://unitsofmeasure.org/ucum.html#para-33	NA	gal
+gravity	Gravity	Linear acceleration	g	http://qudt.org/vocab/unit#Gravity; http://unitsofmeasure.org/ucum.html#para-32; http://www.unidata.ucar.edu/software/udunits/	NA	g
+inchPerSecondSquared	Inch per Second Squared	Linear acceleration	in/s^2	http://qudt.org/vocab/unit#InchPerSecondSquared	NA	inps2
+knotPerSecond	Knot per Second	Linear acceleration	kt/s	http://qudt.org/vocab/unit#KnotPerSecond	NA	ktps
+meterPerSecondSquared	Meter per Second Squared	Linear acceleration	m/s^2	http://qudt.org/vocab/unit#MeterPerSecondSquared	NA	mps2
+microgravity	Microgravity	Linear acceleration	microG	http://qudt.org/vocab/unit#Microgravity	NA	microg
+milligravity	Milligravity	Linear acceleration	mG	http://qudt.org/vocab/unit#Milligravity	NA	mg
+kiloelectronvoltPerMicrometer	KiloelectronVolt per Micrometer	Linear energy transfer	keV/microM	http://qudt.org/vocab/unit#KiloElectronVoltPerMicrometer	NA	kevpmicrom
+megaelectronvoltPerCentimeter	Megaelectronvolt per Centimeter	Linear energy transfer	MeV/cm	http://qudt.org/vocab/unit#MegaElectronVoltPerCentimeter	NA	mevpcm
+kilogramMeterPerSecond	Kilogram Meter per Second	Linear momentum	kg-m/s	http://qudt.org/vocab/unit#KilogramMeterPerSecond	NA	kgmps
+newtonSeconds	Newton Seconds	Linear momentum	N-s		NA	ns
+planckMomentum	Planck Momentum	Linear momentum		http://qudt.org/vocab/unit#PlanckMomentum	NA	
+meterPerKelvin	Meter per Kelvin	Linear thermal expansion		http://qudt.org/vocab/unit#MeterPerKelvin	NA	
+centimeterPerHour	Centimeter per Hour	Linear velocity	cm/hr	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	cmphr
+centimeterPerSecond	Centimeter per Second	Linear velocity		http://qudt.org/vocab/unit#CentimeterPerSecond; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	
+footPerHour	Foot per Hour	Linear velocity	ft/hr	http://qudt.org/vocab/unit#FootPerHour	NA	ftphr
+footPerMinute	Foot per Minute	Linear velocity	ft/min	http://qudt.org/vocab/unit#FootPerMinute	NA	ftpmin
+footPerSecond	Foot per Second	Linear velocity	ft/s	http://qudt.org/vocab/unit#FootPerSecond; http://qwwebservices.usgs.gov/service-domains.html	NA	ftps
+inchPerDay	Inch per Day	Linear velocity	in/d	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	inpd
+inchPerHour	Inch per Hour	Linear velocity	in/hr	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	inphr
+inchPerSecond	Inch per Second	Linear velocity		http://qudt.org/vocab/unit#InchPerSecond	NA	
+inchPerWeek	Inch per Week	Linear velocity	in/week	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	inpweek
+kilometerPerHour	Kilometer per Hour	Linear velocity	km/hr	http://qudt.org/vocab/unit#KilometerPerHour; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	kmphr
+kilometerPerSecond	Kilometer per Second	Linear velocity	km/s	http://qudt.org/vocab/unit#KilometerPerSecond	NA	kmps
+knot	Knot	Linear velocity	kn_i	http://qudt.org/vocab/unit#Knot; http://unitsofmeasure.org/ucum.html#para-34; http://www.unidata.ucar.edu/software/udunits/	NA	kni
+knot,British	Knot, British	Linear velocity	kn_br	http://unitsofmeasure.org/ucum.html#para-36	NA	knbr
+meterPerDay	Meter per Day	Linear velocity	m/d	http://environment.data.gov.au/def/unit/MeterPerDay	NA	mpd
+meterPerHour	Meter per Hour	Linear velocity	m/h	http://qudt.org/vocab/unit#MeterPerHour	NA	mph
+meterPerMinute	Meter per Minute	Linear velocity	m/min	http://qudt.org/vocab/unit#MeterPerMinute	NA	mpmin
+meterPerSecond	Meter per Second	Linear velocity	m/s	http://qudt.org/vocab/unit#MeterPerSecond; http://qwwebservices.usgs.gov/service-domains.html	NA	mps
+milePerHour	Mile per Hour	Linear velocity	mph	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qudt.org/vocab/unit#MilePerHour	NA	mph
+milePerMinute	Mile per Minute	Linear velocity	mi/min	http://qudt.org/vocab/unit#MilePerMinute	NA	mipmin
+millimeterPerDay	Millimeter per Day	Linear velocity	mm/day	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	mmpday
+millimeterPerHour	Millimeter per Hour	Linear velocity	mm/hr	http://environment.data.gov.au/def/unit/MillimeterPerHour	NA	mmphr
+millimeterPerSecond	Millimeter per Second	Linear velocity	mm/s	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	mmps
+nauticalMilePerHour	Nautical Mile per Hour	Linear velocity	knot	http://qudt.org/vocab/unit#NauticalMilePerHour; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	knot
+nauticalMilePerMinute	Nautical Mile per Minute	Linear velocity	nmi/min	http://qudt.org/vocab/unit#NauticalMilePerMinute	NA	nmipmin
+apostilb	Apostilb	Luminance		http://www.unidata.ucar.edu/software/udunits/	NA	
+blondel	Blondel	Luminance		http://www.unidata.ucar.edu/software/udunits/	NA	
+candelaPerSquareInch	Candela per Square Inch	Luminance	cd/in^2	http://qudt.org/vocab/unit#CandelaPerSquareInch	NA	cdpin2
+candelaPerSquareMeter	Candela per Square Meter	Luminance	cd/m^2	http://qudt.org/vocab/unit#CandelaPerSquareMeter	NA	cdpm2
+footLambert	Foot Lambert	Luminance	ft-L	http://qudt.org/vocab/unit#FootLambert; http://www.unidata.ucar.edu/software/udunits/	NA	ftl
+lambert	Lambert	Luminance	Lmb	http://qudt.org/vocab/unit#Lambert; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://unitsofmeasure.org/ucum.html#para-33http://www.unidata.ucar.edu/software/udunits/; https://en.wikipedia.org/wiki/Lambert_%28unit%29	NA	lmb
+nit	Nit	Luminance	nt	http://www.unidata.ucar.edu/software/udunits/	NA	nt
+stilb	Stilb	Luminance	sb	http://qudt.org/vocab/unit#Stilb; http://unitsofmeasure.org/ucum.html#para-33; http://www.unidata.ucar.edu/software/udunits/	NA	sb
+lumenPerWatt	Lumen per Watt	Luminous efficacy		http://qudt.org/vocab/unit#LumenPerWatt	NA	
+lumenSecond	Lumen Second	Luminous energy	lm s	http://qudt.org/vocab/unit#LumenSecond	NA	lms
+lumen	Lumen	Luminous flux	lm	http://qudt.org/vocab/unit#Lumen; http://unitsofmeasure.org/ucum.html#para-30; http://www.unidata.ucar.edu/software/udunits/	NA	lm
+candela	Candela	Luminous intensity	cd	http://qudt.org/vocab/unit#Candela	NA	cd
+candle	Candle	Luminous intensity	cd	http://qudt.org/vocab/unit#Candle	NA	cd
+candlepower	Candlepower	Luminous intensity	cd	http://qudt.org/vocab/unit#Candlepower	NA	cd
+electronvoltPerTesla	ElectronVolt per Tesla	Magnetic dipole moment	eV T^-1	http://qudt.org/vocab/unit#ElectronVoltPerTesla	NA	evt1
+joulePerTesla	Joule per Tesla	Magnetic dipole moment	J/T	http://qudt.org/vocab/unit#JoulePerTesla	NA	jpt
+amperePerMeter	Ampere per Meter	Magnetic field strength	A/m	http://qudt.org/vocab/unit#AmperePerMeter	NA	apm
+ampereTurnPerInch	Ampere Turn per Inch	Magnetic field strength	At/in	http://qudt.org/vocab/unit#AmpereTurnPerInch	NA	atpin
+ampereTurnPerMeter	Ampere Turn per Meter	Magnetic field strength	At/m	http://qudt.org/vocab/unit#AmpereTurnPerMeter	NA	atpm
+oersted	Oersted	Magnetic field strength	Oe	http://qudt.org/vocab/unit#Oersted; http://unitsofmeasure.org/ucum.html#para-33; http://www.unidata.ucar.edu/software/udunits/	NA	oe
+abvoltSecond	Abvolt Second	Magnetic flux		http://qudt.org/vocab/unit#AbvoltSecond	NA	
+maxwell	Maxwell	Magnetic flux	Mx	http://qudt.org/vocab/unit#Maxwell; http://unitsofmeasure.org/ucum.html#para-33; http://www.unidata.ucar.edu/software/udunits/	NA	mx
+unitPole	Unit Pole	Magnetic flux	U/nWb	http://qudt.org/vocab/unit#UnitPole; http://www.unidata.ucar.edu/software/udunits/	NA	upnwb
+weber	Weber	Magnetic flux	Wb	http://qudt.org/vocab/unit#Weber; http://unitsofmeasure.org/ucum.html#para-30; http://www.unidata.ucar.edu/software/udunits/	NA	wb
+abtesla	Abtesla	Magnetic flux density		http://qudt.org/vocab/unit#Abtesla	NA	
+gamma	Gamma	Magnetic flux density	gamma	http://qudt.org/vocab/unit#Gamma	NA	gamma
+gauss	Gauss	Magnetic flux density	G	http://qudt.org/vocab/unit#Gauss; http://unitsofmeasure.org/ucum.html#para-33	NA	g
+tesla	Tesla	Magnetic flux density	T	http://qudt.org/vocab/unit#Tesla; http://unitsofmeasure.org/ucum.html#para-30; http://www.unidata.ucar.edu/software/udunits/	NA	t
+teslaMeter	Tesla Meter	Magnetic flux per length	m T	http://qudt.org/vocab/unit#TeslaMeter	NA	mt
+henryPerMeter	Henry per Meter	Magnetic permeability	H/m	http://qudt.org/vocab/unit#HenryPerMeter	NA	hpm
+stathenryPerCentimeter	Stathenry per Centimeter	Magnetic permeability		http://qudt.org/vocab/unit#StathenryPerCentimeter	NA	
+ampereTurn	Ampere Turn	Magnetomotive force	At	http://qudt.org/vocab/unit#AmpereTurn	NA	at
+gilbert	Gilbert	Magnetomotive force	Gi; Gb	http://qudt.org/vocab/unit#Gilbert; http://unitsofmeasure.org/ucum.html#para-33	NA	gi;gb
+oerstedCentimeter	Oersted Centimeter	Magnetomotive force	Oe-cm	http://qudt.org/vocab/unit#OerstedCentimeter	NA	oecm
+ounce,UsApothecary	Ounce, US Apothecary	Mass	oz_ap	http://unitsofmeasure.org/ucum.html#para-41; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	ozap
+pennyweight	Pennyweight	Mass	pwt_tr	http://qudt.org/vocab/unit#PennyWeight; http://unitsofmeasure.org/ucum.html#para-40; http://www.unidata.ucar.edu/software/udunits/	NA	pwttr
+picogram	Picogram	Mass	pg	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	pg
+planckMass	Planck Mass	Mass		http://qudt.org/vocab/unit#PlanckMass	NA	
+pound	Pound	Mass	lb_av	http://unitsofmeasure.org/ucum.html#para-39; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml; http://qudt.org/vocab/unit#PoundMass; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	lbav
+pound,Troy	Pound, Troy	Mass	lb_tr	http://qudt.org/vocab/unit#PoundTroy; http://unitsofmeasure.org/ucum.html#para-40; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	lbtr
+pound,UsApothecary	Pound, US Apothecary	Mass	lb_ap	http://unitsofmeasure.org/ucum.html#para-41; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	lbap
+scruple	Scruple	Mass	sc_ap	http://unitsofmeasure.org/ucum.html#para-41; http://www.unidata.ucar.edu/software/udunits/	NA	scap
+shortHundredweight	Short Hundredweight	Mass	scwt_av	http://unitsofmeasure.org/ucum.html#para-39; http://www.unidata.ucar.edu/software/udunits/	NA	scwtav
+shortTon	Short Ton	Mass	ston_av	http://unitsofmeasure.org/ucum.html#para-39; http://www.unidata.ucar.edu/software/udunits/; http://qudt.org/vocab/unit#TonShort	NA	stonav
+slug	Slug	Mass	slug	http://qudt.org/vocab/unit#Slug; http://www.unidata.ucar.edu/software/udunits/	NA	slug
+stone	Stone	Mass	stone_av	http://unitsofmeasure.org/ucum.html#para-39	NA	stoneav
+tonne	Tonne	Mass	t	http://unitsofmeasure.org/ucum.html#para-31; http://qudt.org/vocab/unit#TonMetric; http://qudt.org/vocab/unit#MetricTon; http://www.unidata.ucar.edu/software/udunits/	NA	t
+unifiedAtomicMassUnit	Unified Atomic Mass Unit	Mass	u	http://qudt.org/vocab/unit#UnifiedAtomicMassUnit; http://unitsofmeasure.org/ucum.html#para-31; http://www.unidata.ucar.edu/software/udunits/	NA	u
+assayTon	Assay Ton	Mass	AT	http://qudt.org/vocab/unit#TonAssay; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	at
+atomicMassUnit	Atomic Mass Unit	Mass	amu	http://qudt.org/vocab/unit#AtomicMassUnit	NA	amu
+bag	Bag	Mass		https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	
+carat	Carat	Mass	car_m	http://qudt.org/vocab/unit#Carat, http://unitsofmeasure.org/ucum.html#para-47	NA	carm
+dalton	Dalton	Mass	Da	http://qudt.org/vocab/unit#Dalton	NA	da
+drachm	Drachm	Mass	dr_ap	http://unitsofmeasure.org/ucum.html#para-41; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	drap
+dram,Avoirdupois	Dram, Avoirdupois	Mass	dr_av	http://unitsofmeasure.org/ucum.html#para-39	NA	drav
+grain	Grain	Mass	gr	http://qudt.org/vocab/unit#Grain; http://unitsofmeasure.org/ucum.html#para-39	NA	gr
+gram	Gram	Mass	g	http://qudt.org/vocab/unit#Gram; http://unitsofmeasure.org/ucum.html#para-28	NA	g
+kilogram	Kilogram	Mass	kg	http://qudt.org/vocab/unit#Kilogram; http://www.unidata.ucar.edu/software/udunits/	1	kg
+longHundredweight	Long Hundredweight	Mass	lcwt_av	http://unitsofmeasure.org/ucum.html#para-39; http://www.unidata.ucar.edu/software/udunits/; http://qudt.org/vocab/unit#HundredWeightLong	NA	lcwtav
+longTon	Long Ton	Mass	lton_av	http://unitsofmeasure.org/ucum.html#para-39; http://www.unidata.ucar.edu/software/udunits/; http://qudt.org/vocab/unit#TonLong	NA	ltonav
+metricTon	Metric Ton	Mass	mT	http://qudt.org/vocab/unit#MetricTon; http://www.unidata.ucar.edu/software/udunits/	NA	mt
+microgram	Microgram	Mass	µg	http://environment.data.gov.au/def/unit/Microgram; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	µg
+milligram	Milligram	Mass	mg	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	mg
+nanogram	Nanogram	Mass	ng	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	ng
+ounce,Avoirdupois	Ounce, Avoirdupois	Mass	oz_av	http://qudt.org/vocab/unit#OunceMass; http://unitsofmeasure.org/ucum.html#para-39; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	ozav
+ounce,Metric	Ounce, Metric	Mass	oz_m	http://unitsofmeasure.org/ucum.html#para-41	NA	ozm
+ounce,Troy	Ounce, Troy	Mass	oz_tr	http://qudt.org/vocab/unit#OunceTroy; http://unitsofmeasure.org/ucum.html#para-40; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	oztr
+kilogramMole	Kilogram Mole	Mass count	kg-mol		NA	kgmol
+poundMole	Pound Mole	Mass count	lb-mol	http://qudt.org/vocab/unit#PoundMole	NA	lbmol
+kilogramMoleKelvin	Kilogram Mole Kelvin	Mass count temperature	kg-mol-K		NA	kgmolk
+poundMoleDegreeFahrenheit	Pound Mole Degree Fahrenheit	Mass count temperature	lb-mol-degF	http://qudt.org/vocab/unit#PoundMoleDegreeFahrenheit	NA	lbmoldegf
+gramPerSquareMeterPerDay	Gram per Square Meter per Day	Mass flux	g/m2/day	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	gpm2pday
+gramPerSquareMeterPerHour	Gram per Square Meter per Hour	Mass flux	g/m^2 hr	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	gpm2hr
+kilogramPerHectarePerDay	Kilogram per Hectare per Day	Mass flux	kg/ha d	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	kgphad
+kilogramPerSquareMeterPerSecond	Kilogram per Square Meter per Second	Mass flux	kg/m^2/s	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	kgpm2ps
+milligramPerSquareMeterPerDay	Milligram per Square Meter per Day	Mass flux	mg/m^2 d	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	1	mgpm2d
+milligramPerSquareMeterPerSecond	Milligram per Square Meter per Second	Mass flux	mg/m^2/s	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	mgpm2ps
+nanogramPerSquareMeterPerHour	Nanogram per Square Meter per Hour	Mass flux	ng/m^2 hr	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	ngpm2hr
+nanogramPerSquareMeterPerWeek	Nanogram per Square Meter per Week	Mass flux	ng/m^2 week	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	ngpm2week
+caratOfGoldAlloys	Carat of Gold Alloys	Mass fraction	car_Au	http://unitsofmeasure.org/ucum.html#para-47	NA	carau
+femtogramPerKilogram	Femtogram per Kilogram	Mass fraction	fg/kg		NA	fgpkg
+gramPercent	Gram percent	Mass fraction	g%	http://unitsofmeasure.org/ucum.html#para-45	NA	gperc
+gramPerKilogram	Gram per Kilogram	Mass fraction	g/kg	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	gpkg
+microgramPerGram	Microgram per Gram	Mass fraction	µg/g	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	µgpg
+microgramPerKilogram	Microgram per Kilogram	Mass fraction	µg/kg	http://environment.data.gov.au/def/unit/MicrogramsPerKilogram; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	µgpkg
+microgramPerMilligram	Microgram per Milligram	Mass fraction	µg/mg	http://qwwebservices.usgs.gov/service-domains.html	NA	µgpmg
+milligramPerKilogram	Milligram per Kilogram	Mass fraction	mg/kg	http://environment.data.gov.au/def/unit/MilligramsPerKilogram; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	mgpkg
+nanogramPerGram	Nanogram per Gram	Mass fraction	ng/g	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	ngpg
+nanogramPerKilogram	Nanogram per Kilogram	Mass fraction	ng/kg		NA	ngpkg
+percentByWeight	Percent by Weight	Mass fraction	% by wt	http://qwwebservices.usgs.gov/service-domains.html	NA	percbywt
+picogramPerGram	Picogram per Gram	Mass fraction	pg/g	http://qwwebservices.usgs.gov/service-domains.html	NA	pgpg
+picogramPerKilogram	Picogram per Kilogram	Mass fraction	pg/kg	http://qwwebservices.usgs.gov/service-domains.html	NA	pgpkg
+tonPerKiloton	Ton per Kiloton	Mass fraction	tCaCO3/Kt	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	tcaco3pkt
+nanomolePerMinutePerMilligram	Nanomole per Minute per Milligram	Mass normalized particle loading	nmol/min mg	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	nmolpminmg
+picomolePerMinutePerMilligram	Picomole per Minute per Milligram	Mass normalized particle loading	pmol/min mg	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	pmolpminmg
+superoxideDismutaseUnitPerMinutePerMilligram	Superoxide Dismutase Unit per Minute per Milligram	Mass normalized particle loading	U/min mg	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	upminmg
+gramPer0.1SquareMeter	Gram per 0.1 Square Meter	Mass per area	g/0.1 m^2	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	gp01m2
+gramPerSquareMeter	Gram per Square Meter	Mass per area	g/m2	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	gpm2
+kilogramPer1000SquareMeter	Kilogram per 1000 Square Meter	Mass per area	kg/1000 m^2	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	kgp1000m2
+kilogramPerHectare	Kilogram per Hectare	Mass per area	kg/ha	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://environment.data.gov.au/def/unit/KilogramsPerHectare	NA	kgpha
+kilogramPerSquareMeter	Kilogram per Square Meter	Mass per area	kg/m^2	http://qudt.org/vocab/unit#KilogramPerSquareMeter; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	kgpm2
+microgramPerSquareMeter	Microgram per Square Meter	Mass per area	µg/m^2	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	µgpm2
+milligramPerSquareMeter	Milligram per Square Meter	Mass per area	mg/m^2	http://environment.data.gov.au/def/unit/MilligramsPerSquareMeter; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	mgpm2
+ouncePerSquareFoot	Ounce per Square Foot	Mass per area	oz/ft^2	http://qudt.org/vocab/unit#OuncePerSquareFoot	NA	ozpft2
+ouncePerSquareYard	Ounce per Square Yard	Mass per area	oz/yd^2	http://qudt.org/vocab/unit#OuncePerSquareYard	NA	ozpyd2
+poundPerSquareFoot	Pound per Square Foot	Mass per area	lb/ft^2	http://qudt.org/vocab/unit#PoundPerSquareFoot	NA	lbpft2
+slugPerSquareFoot	Slug per Square Foot	Mass per area	slug/ft^2	http://qudt.org/vocab/unit#SlugPerSquareFoot	NA	slugpft2
+tonnesPerHectare	Tonnes per Hectare	Mass per area	t/ha	http://environment.data.gov.au/def/unit/TonnesPerHectare	NA	tpha
+teslaSecond	Tesla Second	Mass per electrical charge	s T	http://qudt.org/vocab/unit#TeslaSecond	NA	st
+denier	Denier	Mass per length	den	http://qudt.org/vocab/unit#Denier	NA	den
+kilogramPerMeter	Kilogram per Meter	Mass per length	kg/m	http://qudt.org/vocab/unit#KilogramPerMeter	NA	kgpm
+poundPerFoot	Pound per Foot	Mass per length	lb/ft	http://qudt.org/vocab/unit#PoundPerFoot	NA	lbpft
+poundPerInch	Pound per Inch	Mass per length	lb/in	http://qudt.org/vocab/unit#PoundPerInch	NA	lbpin
+poundPerMile	Pound per Mile	Mass per length	lb/mi	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	lbpmi
+slugPerFoot	Slug per Foot	Mass per length	slug/ft	http://qudt.org/vocab/unit#SlugPerFoot	NA	slugpft
+tex	Tex	Mass per length	tex	http://qudt.org/vocab/unit#Tex; http://unitsofmeasure.org/ucum.html#para-43; http://www.unidata.ucar.edu/software/udunits/	NA	tex
+gramPerDay	Gram per Day	Mass per time	g/d	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	gpd
+gramPerMinute	Gram per Minute	Mass per time	g/min	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	gpmin
+gramPerSecond	Gram per Second	Mass per time	g/s	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	gps
+kilogramPerHour	Kilogram per Hour	Mass per time	kg/h	http://qudt.org/vocab/unit#KilogramPerHour	NA	kgph
+kilogramPerMonth	Kilogram per Month	Mass per time	kg/month	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	kgpmonth
+kilogramPerSecond	Kilogram per Second	Mass per time	kg/s	http://qudt.org/vocab/unit#KilogramPerSecond	NA	kgps
+metricTonPerDay	Metric ton per day	Mass per time	tonne/day		NA	tonnepday
+metricTonPerSecond	Metric ton per Second	Mass per time	tonne/s		NA	tonneps
+milligramPerDay	Milligram per Day	Mass per time	mg/d	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	mgpd
+poundPerDay	Pound per Day	Mass per time	lb/d	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	lbpd
+poundPerHour	Pound per Hour	Mass per time	lb/hr	http://qudt.org/vocab/unit#PoundPerHour	NA	lbphr
+poundPerMinute	Pound per Minute	Mass per time	lb/min	http://qudt.org/vocab/unit#PoundPerMinute	NA	lbpmin
+shortTonPerDay	Short Ton per Day	Mass per time	ton/d	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	tonpd
+shortTonPerHour	Short Ton per Hour	Mass per time	ton/hr	http://qudt.org/vocab/unit#TonShortPerHour	NA	tonphr
+shortTonPerMonth	Short Ton per Month	Mass per time	ton/month	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	tonpmonth
+slugPerSecond	Slug per Second	Mass per time	slug/s	http://qudt.org/vocab/unit#SlugPerSecond	NA	slugps
+gramDegreeCelsius	Gram Degree Celsius	Mass temperature	g-degC	http://qudt.org/vocab/unit#GramDegreeCelsius	NA	gdegc
+kilogramKelvin	Kilogram Kelvin	Mass temperature	kg-K	http://qudt.org/vocab/unit#KilogramKelvin	NA	kgk
+poundDegreeFahrenheit	Pound Degree Fahrenheit	Mass temperature	lb-degF	http://qudt.org/vocab/unit#PoundDegreeFahrenheit	NA	lbdegf
+poundDegreeRankine	Pound Degree Rankine	Mass temperature	lb-degR	http://qudt.org/vocab/unit#PoundDegreeRankine	NA	lbdegr
+jouleSecondPerMole	Joule Second per Mole	Molar angular momentum	J s mol^-1	http://qudt.org/vocab/unit#JouleSecondPerMole	NA	jsmol1
+siemensSquareMeterPerMole	Siemens Square Meter per Mole	Molar conductivity	Sm^2/mol		NA	sm2pmol
+btuPerPoundMole	BTU per Pound Mole	Molar energy	Btu/(lb-mol)	http://qudt.org/vocab/unit#BtuPerPoundMole	NA	btuplbmol
+joulePerMole	Joule per Mole	Molar energy	J/mol	http://qudt.org/vocab/unit#JoulePerMole	NA	jpmol
+kilocaloriePerMole	Kilocalorie per Mole	Molar energy	kcal/mol	http://qudt.org/vocab/unit#KilocaloriePerMole	NA	kcalpmol
+btuPerPoundMoleDegreeFahrenheit	Btu per Pound Mole Degree Fahrenheit	Molar heat capacity	Btu/(lb-mol-degF)	http://qudt.org/vocab/unit#BtuPerPoundMoleDegreeFahrenheit	NA	btuplbmoldegf
+joulePerMoleKelvin	Joule per Mole Kelvin	Molar heat capacity	J/(mol-K)	http://qudt.org/vocab/unit#JoulePerMoleKelvin	NA	jpmolk
+kilocaloriePerMoleDegreeCelsius	Kilocalorie per Mole Degree Celsius	Molar heat capacity	kcal/(mol-degC)	http://qudt.org/vocab/unit#KilocaloriePerMoleDegreeCelsius	NA	kcalpmoldegc
+kilogramPerMole	Kilogram per Mole	Molar mass	kg mol^-1	http://qudt.org/vocab/unit#KilogramPerMole	NA	kgmol1
+cubicMeterPerMole	Cubic Meter per Mole	Molar volume	m^3 mol^-1	http://qudt.org/vocab/unit#CubicMeterPerMole	NA	m3mol1
+degreeCelsiusMillimolePerCubicMeter	Degree Celsius Millimole per Cubic Meter	Other	DegC mmol/m^3	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	degcmmolpm3
+kilogramSecondSquared	Kilogram Second Squared	Other		http://qudt.org/vocab/unit#KilogramSecondSquared	NA	
+meterPerSecondDegreeCelsius	Meter per Second Degree Celsius	Other	m/s DegC	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	mpsdegc
+micromolePerLiterPerHour	Micromole per Liter per Hour	Other	µmol/L hr	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	µmolplhr
+milligramPerCubicMeterSquared	Milligram per Cubic Meter Squared	Other	(mg/m^3)^2	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	mgpm32
+milliliterPerLiterPerHour	Milliliter per Liter per Hour	Other	mL/L/hr	http://qwwebservices.usgs.gov/service-domains.html	NA	mlplphr
+millimolePerCubicMeterSquared	Millimole per Cubic Meter Squared	Other	(mmol/m^3)^2	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	mmolpm32
+shortTonPerDayPerFoot	Short Ton per Day per Foot	Other	ton/d/ft	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	tonpdpft
+squaredDegreeCelsius	Squared Degree Celsius	Other	(DegC)^2	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	degc2
+microeinsteinPerSquareMeterPerDay	Microeinstein per Square Meter per Day	Particle flux	uE/m^2 d	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	uepm2d
+microeinsteinPerSquareMeterPerSecond	Microeinstein per Square Meter per Second	Particle flux	uE/m^2 s	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	uepm2s
+micromolePerSquareMeterPerSecond	Micromole per Square Meter per Second	Particle flux	µmol/m^2 s	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://environment.data.gov.au/def/unit/MicroMolPerSecondPerMetreSquared; http://qwwebservices.usgs.gov/service-domains.html	1	µmolpm2s
+millimolePerSquareMeterPerDay	Millimole per Square Meter per Day	Particle flux	mmol/m^2 d	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	mmolpm2d
+millimolePerSquareMeterPerHour	Millimole per Square Meter per Hour	Particle flux	mmol/m^2 hr	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	mmolpm2hr
+millimolePerSquareMeterPerSecond	Millimole per Square Meter per Second	Particle flux	mmol/m^2 s	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	mmolpm2s
+ph	pH	pH	pH	"http://environment.data.gov.au/def/unit/pH"";""http://environment.data.gov.au/def/unit/pH; http://unitsofmeasure.org/ucum.html#para-45"	1	ph
+squareCoulombMeterPerJoule	Square Coulomb Meter per Joule	Polarizability	C^2 m^2 J^-1	http://qudt.org/vocab/unit#SquareCoulombMeterPerJoule	NA	c2m2j1
+potentialVorticityUnit	Potential Vorticity Unit	Potential vorticity		http://www.unidata.ucar.edu/software/udunits/	NA	
+btuPerHour	Btu per Hour	Power	Btu/hr	http://qudt.org/vocab/unit#BtuPerHour	NA	btuphr
+btuPerSecond	Btu per Second	Power	Btu/s	http://qudt.org/vocab/unit#BtuPerSecond	NA	btups
+ergPerSecond	Erg per Second	Power	erg/s	http://qudt.org/vocab/unit#ErgPerSecond	NA	ergps
+footPoundForcePerHour	Foot Pound Force per Hour	Power	ft-lbf/hr	http://qudt.org/vocab/unit#FootPoundForcePerHour	NA	ftlbfphr
+footPoundForcePerMinute	Foot Pound Force per Minute	Power	ft-lbf/min	http://qudt.org/vocab/unit#FootPoundForcePerMinute	NA	ftlbfpmin
+footPoundForcePerSecond	Foot Pound Force per Second	Power	ft-lbf/s	http://qudt.org/vocab/unit#FootPoundForcePerSecond	NA	ftlbfps
+gigawatt	Gigawatt	Power	GW		NA	gw
+horsepower	Horsepower	Power	HP	http://qudt.org/vocab/unit#Horsepower; http://unitsofmeasure.org/ucum.html#para-43; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	hp
+horsepower,Boiler	Horsepower, Boiler	Power	hp/boiler	http://qudt.org/vocab/unit#HorsepowerBoiler; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	hppboiler
+horsepower,British	Horsepower, British	Power		http://www.unidata.ucar.edu/software/udunits/	NA	
+horsepower,Electric	Horsepower, Electric	Power	hp/V	http://qudt.org/vocab/unit#HorsepowerElectric; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	hppv
+horsepower,Imperial	Horsepower, Imperial	Power	HP	http://unitsofmeasure.org/ucum.html#para-43	NA	hp
+horsepower,Metric	Horsepower, Metric	Power	hp/m	http://qudt.org/vocab/unit#HorsepowerMetric; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	hppm
+horsepower,Water	Horsepower, Water	Power	hp/H2O	http://qudt.org/vocab/unit#HorsepowerWater; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	hpph2o
+kilocaloriePerMinute	Kilocalorie per Minute	Power	kcal/min	http://qudt.org/vocab/unit#KilocaloriePerMinute	NA	kcalpmin
+kilocaloriePerSecond	Kilocalorie per Second	Power	kcal/s	http://qudt.org/vocab/unit#KilocaloriePerSecond	NA	kcalps
+kilovolt-Ampere	Kilovolt-ampere	Power	kVA		NA	kva
+kilowatt	Kilowatt	Power	kW	http://qudt.org/vocab/unit#Kilowatt; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	kw
+megavolt-Ampere	Megavolt-ampere	Power	MVA		NA	mva
+megawatt	Megawatt	Power	MW		NA	mw
+planckPower	Planck Power	Power		http://qudt.org/vocab/unit#PlanckPower	NA	
+tonOfRefrigeration	Ton of Refrigeration	Power	t/fg	http://qudt.org/vocab/unit#TonOfRefrigeration; http://www.unidata.ucar.edu/software/udunits/	NA	tpfg
+volt-Ampere	Volt-ampere	Power	VA	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://www.unidata.ucar.edu/software/udunits/	NA	va
+watt	Watt	Power	W	http://qudt.org/vocab/unit#Watt; http://unitsofmeasure.org/ucum.html#para-30;http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://www.unidata.ucar.edu/software/udunits/	NA	w
+wattSquareMeter	Watt Square Meter	Power area	W m^2	http://qudt.org/vocab/unit#WattSquareMeter	NA	wm2
+wattSquareMeterPerSteradian	Watt Square Meter per Steradian	Power area per solid angle	W m^2 sr^-1	http://qudt.org/vocab/unit#WattSquareMeterPerSteradian	NA	wm2sr1
+btuPerHourSquareFoot	Btu per Hour Square Foot	Power per area		http://qudt.org/vocab/unit#BtuPerHourSquareFoot	NA	
+btuPerSecondSquareFoot	Btu per Second Square Foot	Power per area	Btu/(s-ft^2)	http://qudt.org/vocab/unit#BtuPerSecondSquareFoot	NA	btupsft2
+caloriePerSquareCentimeterPerDay	Calorie per Square Centimeter per Day	Power per area	cal/cm^2 d	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	calpcm2d
+caloriePerSquareCentimeterPerMinute	Calorie per Square Centimeter per Minute	Power per area	cal/cm^2 min	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	calpcm2min
+ergPerSquareCentimeterSecond	Erg per Square Centimeter Second	Power per area	erg/(cm^2-s)	http://qudt.org/vocab/unit#ErgPerSquareCentimeterSecond	NA	ergpcm2s
+footPoundForcePerSquareFootSecond	Foot Pound Force per Square Foot Second	Power per area	ft-lbf(ft^2-s)	http://qudt.org/vocab/unit#FootPoundForcePerSquareFootSecond	NA	ftlbfft2s
+kilocaloriePerSquareCentimeterMinute	Kilocalorie per Square Centimeter Minute	Power per area	kcal/(cm^2-min)	http://qudt.org/vocab/unit#KilocaloriePerSquareCentimeterMinute	NA	kcalpcm2min
+kilocaloriePerSquareCentimeterSecond	Kilocalorie per Square Centimeter Second	Power per area	kcal/(cm^2-s)	http://qudt.org/vocab/unit#KilocaloriePerSquareCentimeterSecond	NA	kcalpcm2s
+kilowattPerSquareMeter	Kilowatt per Square Meter	Power per area	kW/m^2	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	kwpm2
+langleyPerDay	Langley per Day	Power per area	Ly/d	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	lypd
+langleyPerHour	Langley per Hour	Power per area	Ly/hr	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	lyphr
+langleyPerMinute	Langley per Minute	Power per area	Ly/min	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	lypmin
+langleyPerSecond	Langley per Second	Power per area	Ly/s	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	lyps
+megajoulePerSquareMeterPerDay	Megajoule per Square Meter per Day	Power per area	MJ/m^2 d	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	mjpm2d
+planckIntensity	Planck Intensity	Power per area			NA	
+wattPerSquareCentimeter	Watt per Square Centimeter	Power per area	W/cm^2	http://qudt.org/vocab/unit#WattPerSquareCentimeter; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	wpcm2
+wattPerSquareFoot	Watt per Square Foot	Power per area	W/ft^2	http://qudt.org/vocab/unit#WattPerSquareFoot	NA	wpft2
+wattPerSquareInch	Watt per Square Inch	Power per area	W/in^2	http://qudt.org/vocab/unit#WattPerSquareInch	NA	wpin2
+wattPerSquareMeter	Watt per Square Meter	Power per area	W/m^2	http://qudt.org/vocab/unit#WattPerSquareMeter; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	wpm2
+wattPerSquareMeterQuarticKelvin	Watt per Square Meter Quartic Kelvin	Power per area quartic temperature	W m^-2 K^-4	http://qudt.org/vocab/unit#WattPerSquareMeterQuarticKelvin	NA	wm2k4
+voltPerSecond	Volt per Second	Power per electrical charge	V / sec	http://qudt.org/vocab/unit#VoltPerSecond	NA	vpsec
+atmosphere	Atmosphere	Pressure or stress		http://www.unidata.ucar.edu/software/udunits/	NA	
+bar	Bar	Pressure or stress	bar	http://qudt.org/vocab/unit#Bar	NA	bar
+barie	Barie	Pressure or stress	barie	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	barie
+centimeterOfMercury	Centimeter of Mercury	Pressure or stress	cm Hg	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	cmhg
+centimeterOfWater	Centimeter of Water	Pressure or stress	cmH2O	http://qudt.org/vocab/unit#CentimeterOfWater; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	cmh2o
+decibar	Decibar	Pressure or stress	dbar	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	dbar
+dynePerSquareCentimeter	Dyne per Square Centimeter	Pressure or stress	dyn/cm^2	http://qudt.org/vocab/unit#DynePerSquareCentimeter	NA	dynpcm2
+footOfWater	Foot of Water	Pressure or stress	ftH2O	http://qudt.org/vocab/unit#FootOfWater; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	fth2o
+hectopascal	Hectopascal	Pressure or stress	hPa	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	1	hpa
+inchOfMercury	Inch of Mercury	Pressure or stress	in_i'Hg	http://qudt.org/vocab/unit#InchOfMercury; http://unitsofmeasure.org/ucum.html#para-44; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml; http://qwwebservices.usgs.gov/service-domains.html	NA	inihg
+inchOfMercury(60F)	Inch of Mercury (60F)	Pressure or stress		https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	
+inchOfWater	Inch of Water	Pressure or stress	in_i'H2O	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://unitsofmeasure.org/ucum.html#para-44; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml; http://qwwebservices.usgs.gov/service-domains.html	NA	inih2o
+inchOfWater(60F)	Inch of Water (60F)	Pressure or stress		https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml	NA	
+kilogramForcePerSquareCentimeter	Kilogram Force per Square Centimeter	Pressure or stress	kgf/cm^2	http://qudt.org/vocab/unit#KilogramForcePerSquareCentimeter	NA	kgfpcm2
+kilopascal	Kilopascal	Pressure or stress	KPa	http://qudt.org/vocab/unit#KiloPascal; http://qudt.org/vocab/unit#KiloPascalAbsolute; http://qwwebservices.usgs.gov/service-domains.html	1	kpa
+kipPerSquareInch	Kip per Square Inch	Pressure or stress	kip/in^2	http://qudt.org/vocab/unit#KipPerSquareInch	NA	kippin2
+ksi	ksi	Pressure or stress		http://www.unidata.ucar.edu/software/udunits/	NA	
+megapascal	Megapascal	Pressure or stress	MPa	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	mpa
+meterOfMercury	Meter of Mercury	Pressure or stress	mHg	http://unitsofmeasure.org/ucum.html#para-44	NA	mhg
+meterOfWater	Meter of Water	Pressure or stress	m H2O; mH2O	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://unitsofmeasure.org/ucum.html#para-44	NA	mh2o;mh2o
+microtorr	Microtorr	Pressure or stress	µtorr	http://qudt.org/vocab/unit#MicroTorr	NA	µtorr
+millibar	Millibar	Pressure or stress	mbar	http://qudt.org/vocab/unit#Millibar; http://qwwebservices.usgs.gov/service-domains.html	1	mbar
+millimeterOfMercury	Millimeter of Mercury	Pressure or stress	mmHg	http://qudt.org/vocab/unit#MillimeterOfMercury; http://qudt.org/vocab/unit#MillimeterOfMercuryAbsolute; https://www.unidata.ucar.edu/software/udunits/udunits-current/udunits/udunits2-common.xml; http://qwwebservices.usgs.gov/service-domains.html	1	mmhg
+millimeterOfWater	Millimeter of Water	Pressure or stress	mm H2O	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	mmh2o
+millitorr	Millitorr	Pressure or stress	utorr	http://qudt.org/vocab/unit#MilliTorr	NA	utorr
+newtonPerSquareMeter	Newton per Square Meter	Pressure or stress	Newton/m^2	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	newtonpm2
+pascal	Pascal	Pressure or stress	Pa	http://qudt.org/vocab/unit#Pascal; http://unitsofmeasure.org/ucum.html#para-30; http://www.unidata.ucar.edu/software/udunits/	NA	pa
+planckPressure	Planck Pressure	Pressure or stress		http://qudt.org/vocab/unit#PlanckPressure	NA	
+poundalPerSquareFoot	Poundal per Square Foot	Pressure or stress	pdl/ft^2	http://qudt.org/vocab/unit#PoundalPerSquareFoot	NA	pdlpft2
+poundForcePerSquareFoot	Pound Force per Square Foot	Pressure or stress	lbf/ft^2	http://qudt.org/vocab/unit#PoundForcePerSquareFoot	NA	lbfpft2
+poundForcePerSquareInch	Pound Force per Square Inch	Pressure or stress	psi	http://qudt.org/vocab/unit#PoundForcePerSquareInch; http://unitsofmeasure.org/ucum.html#para-47	NA	psi
+psi	psi	Pressure or stress	psi	http://www.unidata.ucar.edu/software/udunits/	NA	psi
+standardAtmosphere	Standard Atmosphere	Pressure or stress	atm	http://qudt.org/vocab/unit#AtmosphereStandard; http://unitsofmeasure.org/ucum.html#para-32	NA	atm
+technicalAtmosphere	Technical Atmosphere	Pressure or stress	at	http://qudt.org/vocab/unit#AtmosphereTechnical; http://unitsofmeasure.org/ucum.html#para-47; http://www.unidata.ucar.edu/software/udunits/	NA	at
+torr	Torr	Pressure or stress	torr	http://qudt.org/vocab/unit#Torr; http://www.unidata.ucar.edu/software/udunits/	NA	torr
+pascalPerHour	Pascal per Hour	Pressure or stress rate	P / hr	http://qudt.org/vocab/unit#PascalPerHour	NA	pphr
+pascalPerMinute	Pascal per Minute	Pressure or stress rate	P / min	http://qudt.org/vocab/unit#PascalPerMinute	NA	ppmin
+pascalPerSecond	Pascal per Second	Pressure or stress rate	P / s	http://qudt.org/vocab/unit#PascalPerSecond	NA	pps
+poundForcePerSquareInchSecond	Pound Force per Square Inch Second	Pressure or stress rate	lbf / in^2-s	http://qudt.org/vocab/unit#PoundForcePerSquareInchSecond	NA	lbfpin2s
+quarticCoulombMeterPerCubicEnergy	Quartic Coulomb Meter per Cubic Energy	Quartic electrical dipole moment per cubic energy	C^4 m^4 J^-3	http://qudt.org/vocab/unit#QuarticCoulombMeterPerCubicEnergy	NA	c4m4j3
+wattPerSquareMeterSteradian	Watt per Square Meter Steradian	Radiance	W/(m^2-sr)	http://qudt.org/vocab/unit#WattPerSquareMeterSteradian	NA	wpm2sr
+wattPerSteradian	Watt per Steradian	Radiant intensity	W sr^-1	http://qudt.org/vocab/unit#WattPerSteradian	NA	wsr1
+becquerel	Becquerel	Radioactivity	Bq	http://qudt.org/vocab/unit#Becquerel	NA	bq
+curie	Curie	Radioactivity	Ci	http://qudt.org/vocab/unit#Curie	NA	ci
+picocurie	Picocurie	Radioactivity	pCi	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	pci
+becquerelPerLiter	Becquerel per Liter	Radioactivity per volume	Bq/L	http://environment.data.gov.au/def/unit/BecquerelPerLitre	NA	bqpl
+disintegrationPerMinutePerLiter	Disintegration per Minute per Liter	Radioactivity per volume	dpm/l	http://qwwebservices.usgs.gov/service-domains.html	NA	dpmpl
+millibecquerelPerLiter	Millibecquerel per Liter	Radioactivity per volume	mBq/L	http://environment.data.gov.au/def/unit/MilliBecquerelPerLitre	NA	mbqpl
+picocuriePerLiter	Picocurie per Liter	Radioactivity per volume	pCi/L	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	pcipl
+picocuriePerMilliliter	Picocurie per Milliliter	Radioactivity per volume	pCi/ml	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	pcipml
+practicalSalinityScale	Practical Salinity Scale	Salinity	pss	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	pss
+practicalSalinityUnit	Practical Salinity Unit	Salinity	PSU	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://environment.data.gov.au/def/unit/PSU	NA	psu
+meterPerPixel	Meter per Pixel	Satellite resolution	meters per pixel	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	metersperpixel
+meterPerQuarticSecond	Meter per Quartic Second	Snap	m/s^4		NA	mps4
+fractionalArea	Fractional Area	Solid angle	fa	http://qudt.org/vocab/unit#FractionalArea	NA	fa
+sphere	Sphere	Solid angle	sph	http://unitsofmeasure.org/ucum.html#para-47	NA	sph
+squareDegree	Square Degree	Solid angle	deg^2	http://qudt.org/vocab/unit#SquareDegree	NA	deg2
+steradian	Steradian	Solid angle	sr	http://qudt.org/vocab/unit#Steradian; http://unitsofmeasure.org/ucum.html#para-30; http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://www.unidata.ucar.edu/software/udunits/	NA	sr
+btuPerPound	Btu per Pound	Specific energy	Btu/lb	http://qudt.org/vocab/unit#BtuPerPound	NA	btuplb
+ergPerGram	Erg per Gram	Specific energy		http://qudt.org/vocab/unit#ErgPerGram	NA	
+geopotential	Geopotential	Specific energy		http://www.unidata.ucar.edu/software/udunits/	NA	
+joulePerKilogram	Joule per Kilogram	Specific energy	J/kg	http://qudt.org/vocab/unit#JoulePerKilogram	NA	jpkg
+kilocaloriePerGram	Kilocalorie per Gram	Specific energy	kcal/gm	http://qudt.org/vocab/unit#KilocaloriePerGram	NA	kcalpgm
+meterSquaredPerSecondSquared	Meter Squared per Second Squared	Specific energy	m^2/s^2	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	m2ps2
+btuPerPoundDegreeFahrenheit	Btu per Pound Degree Fahrenheit	Specific heat capacity	Btu/(lb-degF)	http://qudt.org/vocab/unit#BtuPerPoundDegreeFahrenheit	NA	btuplbdegf
+btuPerPoundDegreeRankine	Btu per Pound Degree Rankine	Specific heat capacity	Btu/(lb-degR)	http://qudt.org/vocab/unit#BtuPerPoundDegreeRankine	NA	btuplbdegr
+caloriePerGramDegreeCelsius	Calorie per Gram Degree Celsius	Specific heat capacity	kcal/(gm-degC)	http://qudt.org/vocab/unit#KilocaloriePerGramDegreeCelsius	NA	kcalpgmdegc
+joulePerKilogramKelvin	Joule per Kilogram Kelvin	Specific heat capacity	J/(kg-K)	http://qudt.org/vocab/unit#JoulePerKilogramKelvin	NA	jpkgk
+joulePerKilogramKelvinPerPascal	Joule per Kilogram Kelvin per Pascal	Specific heat pressure		http://qudt.org/vocab/unit#JoulePerKilogramKelvinPerPascal	NA	
+joulePerKilogramKelvinPerCubicMeter	Joule per Kilogram Kelvin per Cubic Meter	Specific heat volume		http://qudt.org/vocab/unit#JoulePerKilogramKelvinPerCubicMeter	NA	
+becquerelPerGram	Becquerel per Gram	Specific radioactivity	Bq/g	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	bqpg
+disintegrationPerMinutePerGram	Disintegration per Minute per Gram	Specific radioactivity	dpm/g	http://qwwebservices.usgs.gov/service-domains.html	NA	dpmpg
+picocuriePerGram	Picocurie per Gram	Specific radioactivity	pCi/g	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	pcipg
+squareMeterPerGram	Square Meter per Gram	Specific surface area	m^2/g	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html	NA	m2pg
+cubicCentimeterPerGram	Cubic Centimeter per Gram	Specific volume	cm^3/g	http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048	NA	cm3pg
