@@ -1,10 +1,96 @@
-/* ---------------- Input File Element */
-var csvUploaded = false;
+
+
+/**
+ * Short Summary: Keep track of global variables
+ * 
+ * Fields:
+ *  csvUploaded: (Boolean) True if a csv file has been uploaded
+ *  
+ */
+var globalFile = {
+    csvUploaded: false,
+    csvRows: null,
+    csvHeadersArray: null,
+    output: [],
+    previewTableHeadersArray: null,
+};
+
+function setCsvRows(rows)
+{
+    globalFile.csvRows = rows
+}
+
+/* Short Summary: Preferred method of getting global column data object
+ * 
+ * @return Array[String] : All csv data
+ */
+function getCsvRows()
+{
+    return globalFile.csvRows;
+};
+
+function setCsvUploaded(bool)
+{
+    globalFile.csvUploaded = bool;
+}
+
+function getCsvUploaded()
+{
+    return globalFile.csvUploaded;
+}
+
+function setCsvHeadersArray(row)
+{
+    globalFile.csvHeadersArray = row;
+}
+
+function getCsvHeadersArray()
+{
+    return globalFile.csvHeadersArray;
+}
+
+function setPreviewTableHeadersArray(row)
+{
+    globalFile.previewTableHeadersArray = row;
+}
+
+function getPreviewTableHeadersArray()
+{
+    return globalFile.previewTableHeadersArray;
+}
+
+/* Short Summary: Update given index with a new name in the global columndata object
+ *
+ * @param params (object) : Object containing function parameters
+ *      @param params.index : Index of the value to change
+ *      @param params.originalname : originalname of the column
+ *      @param params.newname : newname of the column
+ * 
+ * @return undefined
+ */
+function setHeaderColumnName(params)
+{
+    let columnData = getCsvHeadersArray();
+    columnData[params.index] = params.newname;
+    setCsvHeadersArray(columnData);
+};
+
+
+function setOutputValue(index, key, value)
+{
+    globalFile.output.at(index) ? globalFile.output.at(index)[key] = value : globalFile.output[index] = {[key]: value};
+};
+
+function getOutput()
+{
+    return globalFile.output;
+}
 
 
 /*--------- Events Pre Document Load -------------- */
 createLimnoODM2VariableNameDataList();
 createFullODM2VariableNameDataList();
+createUnitDataList();
 
 
 if (document.readyState === 'loading') 
@@ -29,6 +115,107 @@ function handleDOMContentLoaded()
     
 };
 
+
+
+/**
+ * 
+ * @param { String } relativePathToText 
+ *          Relative path to the text file to be read. Path is relative from the file
+ *             this function is in.
+ * @param { Bool } isLimno
+ *          True if the file should be filtered for limno variables 
+ * @param { String } fileType
+ *          A string for the file type. Either '.csv' or '.txt'
+ * @param { String } listElementId
+ *          The id of the datalist element to be created
+ * @param { Bool } unitsFile
+ *          true if the file is a units file
+ */
+function prepareFileForDatalist(relativePathToText, isLimno, fileType, unitsFile='false', listElementId)
+{
+    const getFileRequest = new Request(relativePathToText);
+
+    fetch(getFileRequest)
+    .then((response) => {
+        return response.text();
+    }).then((data) => {
+        
+        //shift() removes first element of the array because it is the header row
+        let dataArray = data.split("\n");
+        dataArray.shift();
+
+        //Filter out rows that are not needed for Limno
+        if(isLimno)
+        {
+            dataArray = filterRowsForLimno(dataArray);
+        }
+
+        dataArray.forEach((value, index, array) => {
+            
+            switch (fileType) {
+                case '.csv':
+                    array[index] = value.split(/"?,(?![\d\w])"?|(?<=,),/, 7);
+                    break;
+                case '.txt':
+                    value = value.replaceAll('"', '');
+                    array[index] = value.split("\t");
+                    break;
+                default:
+                    break;
+            }
+
+            if( unitsFile === true )
+            {
+                array[index] = {
+                    term: array[index][0], 
+                    name: array[index][1],
+                    unitsTypeCV: array[index][2],
+                    unitsLink: array[index][4],
+                    unitAbbreviation: array[index][6],
+                }
+            }
+            else
+            {
+                array[index] = {
+                    term: array[index][0], 
+                    name: array[index][1], 
+                    definition: array[index][2],
+                    provenance: array[index][4],
+                };
+            }
+            
+        });
+
+        let datalist;
+        if( unitsFile === true )
+        {
+            datalist = createUnitDataListElements(dataArray, id=listElementId);
+        }
+        else
+        {
+            datalist = createVariablesDataListElements(dataArray, id=listElementId);
+        }
+
+        $('#datalists').append(datalist);
+    });
+};
+
+/**
+ * Short Summary: Returns a filtered array of rows.
+ *                  If a row has a 1 at the end of the row, it is included in the array
+ * Parameters:
+ *  @param dataArray (Array[String]) : Array of rows to filter
+ */
+function filterRowsForLimno(dataArray)
+{            
+    //Filter out rows that are not needed
+        return dataArray.filter(
+        (value, index, array) => 
+        {
+            return value.endsWith("1\r");
+        });
+};
+
 /* -------------- Data List Creation ----------------- */
 
 /*  Short Summary: Fetches local .csv with odm2 variable names, and converts the list
@@ -36,38 +223,8 @@ function handleDOMContentLoaded()
  */
 function createLimnoODM2VariableNameDataList()
 {
-    //REWRITE
-    //REFACTOR this code is not great. the forEach look is only designed to work with one specific csv
-
-    //Read in .csv file
-    //Current location is 'data/odm2_variable_names.csv'
-    // const request = new Request('data/odm2_variable_names.csv');
-    const request = new Request('data/limno_list/ODM2_varname_limno.csv');
-
-    fetch(request)
-    .then((response) => {
-        return response.text();
-    }).then((data) => {
-        //Create rows
-        //shift() removes first element of the array
-        //Remove first element because it is the header row
-        let dataArray = data.split("\n");
-        dataArray.shift();
-
-        //Create columns
-        dataArray.forEach((value, index, array) => {
-        //    array[index] = value.split(/,"|","|",,?|,(?![\d\w])|(?<=,),/, 7);
-        array[index] = value.split(/"?,(?![\d\w])"?|(?<=,),/, 7);
-            //array[index][0] is the variable name
-            //array[index][1] is the variable term
-            //array[index][2] is the variable definition
-            array[index] = {term: array[index][0], name: array[index][1], definition: array[index][2]};
-        });
-        
-        let datalist = createDataList(dataArray, id='ODM2_limno');
-        $('#datalists').append(datalist);
-
-    });
+    // let listElementId = getLimnoListElementId();
+    prepareFileForDatalist(relativePathToText='data/limno_list/ODM2_varname_limno.txt', isLimno=true, fileType='.txt', unitsFile=false, listElementId=getLimnoListElementId());
 };
 
 /*  Short Summary: Fetches local .csv with odm2 variable names, and converts the list
@@ -75,38 +232,46 @@ function createLimnoODM2VariableNameDataList()
  */
 function createFullODM2VariableNameDataList()
 {
-    //REWRITE
-    //REFACTOR this code is not great. the forEach look is only designed to work with one specific csv
+    // let listElementId = getFullListElementId();
+    prepareFileForDatalist(relativePathToText='data/full_list/ODM2_varname_full.csv', isLimno=false, fileType='.txt', unitsFile=false, listElementId=getFullListElementId());
+};
 
-    //Read in .csv file
-    //Current location is 'data/odm2_variable_names.csv'
-    // const request = new Request('data/odm2_variable_names.csv');
-    const request = new Request('data/full_list/ODM2_varname_full.csv');
+function createUnitDataList()
+{
+    prepareFileForDatalist(relativePathToText='data/limno_list/ODM2_units_limno_abbv.txt', isLimno=false, fileType='.txt', unitsFile=true, listElementId=getUnitListElementId());
+};
 
-    fetch(request)
-    .then((response) => {
-        return response.text();
-    }).then((data) => {
-        //Create rows
-        //shift() removes first element of the array
-        //Remove first element because it is the header row
-        let dataArray = data.split("\n");
-        dataArray.shift();
+/*  Short Summary: Selects the controlled unit input, and returns the value
+ * 
+ * @return ( String ) : id of the datalist that should be used in the table
+ */
+function getSelectedControlledUnitDataListId()
+{
+    //Return value of selected datalist name
+    let input = getUnitListElement();
 
-        //Create columns
-        dataArray.forEach((value, index, array) => {
-            array[index] = value.split(/"?,(?![\d\w])"?|(?<=,),/, 7);
-            //array[index][0] is the variable name
-            //array[index][1] is the variable term
-            //array[index][2] is the variable definition
-            array[index] = {term: array[index][0], name: array[index][1], definition: array[index][2]};
-        });
-        
-        let datalist = createDataList(dataArray, id='ODM2_full');
-        
-        $('#datalists').append(datalist);
+    return input.id;    
+}
 
-    });
+function getUnitListElement()
+{
+    let id = getUnitListElementId();
+    return $(`#${id}`)[0];
+}
+
+function getUnitListElementId()
+{
+    return 'ODM2_units';
+};
+
+function getLimnoListElementId()
+{
+    return 'ODM2_limno';
+};
+
+function getFullListElementId()
+{
+    return 'ODM2_full';
 };
 
 /*  Short Summary: Selects the controlled vocabulary input, and returns the value
@@ -121,17 +286,18 @@ function getSelectedControlledVocabularyDataListId()
     //Check if the full list or limno list should be used
     let name = getShortenedListInputAttributes().name;
     let isLimno = document.querySelector(`input[name="${name}"]:checked`).value
+
     if(isLimno)
     {
-        return input[0].value + '_limno';
+        return input.value + '_limno';
     };
-    return input[0].value + '_full';
+    return input.value + '_full';
 
 }
 
 function getControlledVocabularyInputElement()
 {
-    return $('#controlledVocabularyInput');
+    return $('#controlledVocabularyInput')[0];
 }
 
 /*  Short Summary: Creates a datalist HTMLElement based on the given array
@@ -142,7 +308,7 @@ function getControlledVocabularyInputElement()
  *  
  *  @return HTMLElement <datalist> with <option> elements
  */
-function createDataList(arr, id)
+function createVariablesDataListElements(arr, id)
 {   
     let datalist, option;
 
@@ -151,10 +317,48 @@ function createDataList(arr, id)
 
     arr.forEach(function(value, index, array){
         option = $('<option></option');
-        option.attr('value', value.name);
-        option.attr('id', value.name);
+        option.attr('value', value.term);
+        option.attr('id', value.term); 
         option.attr('data-term', value.term);
-        option.attr('label', value.definition);
+        option.attr('data-description', value.definition);
+        option.attr('data-provenance', value.provenance);
+        option.attr('data-name', value.name);
+        option.attr('label', value.name);
+
+        //this === datalist
+        //Add option to datalist
+        this.append(option);
+        
+    }, datalist);
+
+    return datalist;
+};
+
+
+/*  Short Summary: Creates a datalist HTMLElement based on the given array
+ *  
+ *  @params arr ( Array[String] ) :  Array of elements to add as options in a datalist.
+ *                                     arr[0] = [Variable Name, Variable Definition]
+ *  @params id (String) : id attribute to be set for the datalist element
+ *  
+ *  @return HTMLElement <datalist> with <option> elements
+ */
+function createUnitDataListElements(arr, id)
+{   
+    let datalist, option;
+
+    datalist = $('<datalist></datalist>');
+    datalist.attr('id', id);
+
+    arr.forEach(function(value, index, array){
+        option = $('<option></option');
+        option.attr('value', value.term);
+        option.attr('id', value.term); 
+        option.attr('data-term', value.term);
+        option.attr('data-description', value.unitsTypeCV);
+        option.attr('data-provenance', value.unitsLink);
+        option.attr('data-name', value.name);
+        option.attr('label', value.name);
 
         //this === datalist
         //Add option to datalist
@@ -203,13 +407,19 @@ function handleFiles()
         rawFileData = e.target.result;
 
         let csvRows = e.target.result.split("\n");
-        csvRowsCopy = csvRows;
+        
+        setCsvRows(csvRows);
+        setCsvUploaded(true);
 
-        csvUploaded = true;
+        let csvHeadersArray = csvRows[0].replaceAll('\r', '').split(',');
 
-        createRenameTable(csvRows);
-        // createMetadataTable(csvRows);
-        createPreviewTable(csvRows);
+        //Initialize global variables for header arrays
+        
+        setCsvHeadersArray(csvHeadersArray);
+        setPreviewTableHeadersArray(csvHeadersArray);
+
+        createRenameTable(getCsvRows());
+        createPreviewTable(getCsvRows());
 
     };
 
@@ -279,10 +489,9 @@ function createRenameTable(csvRows)
     //Append <thead> to <table>
     table.append(tableHeaderRow);
 
-    //Create one <tr> for each column in the .csv
-    csvHeaderRow = csvRows[0].split(',');
+    //Create one <tr> for each column in the .csv file
     //csvDataRows is an array of <tr> elements
-    let csvDataRows = createRenameTableData(csvHeaderRow);
+    let csvDataRows = createRenameTableData(getCsvHeadersArray());
     
     //Append each <tr> element to the table
     csvDataRows.forEach(function(element){
@@ -294,18 +503,33 @@ function createRenameTable(csvRows)
     div.append(table);
 
 
-    //Create download button, which downloads a .csv file with renamed columns
-    let downloadButton = createButtonElement({'class':'button','type':'button'}, text="Download");
-    downloadButton.on("click", () => {download(); });
+    let downloadButtonDiv = $('#downloadButtonDiv');
 
-    let fileNameInput = createInputElement({'id':'fileNameInput','name':'fileNameInput', 'type':'text'});
-    let fileNameLabel = createLabelElement({'id':'fileNameLabel','for':'fileNameInput'}, text="New File Name:");
+    //Create download button, which downloads a .csv file with renamed columns
+    let renameFileDownloadButton = createButtonElement({'class':'button','type':'button'}, text="Download");
+    renameFileDownloadButton.on("click", () => {downloadRenameFile(); });
+
+    let renameFileNameInput = createInputElement({'id':'renameFileNameInput','name':'renameFileNameInput', 'type':'text'});
+    let renameFileNameLabel = createLabelElement({'id':'renameFileNameLabel','for':'renameFileNameInput'}, text="New File Name:");
+
+    let descriptionFileNameInput = createInputElement({'id':'descriptionFileNameInput','name':'descriptionFileNameInput', 'type':'text'});
+    let descriptionFileNameLabel = createLabelElement({'id':'descriptionFileNameLabel','for':'descriptionFileNameInput'}, text="New File Name:");
+
+    let descriptionFileDownloadButton = createButtonElement({'class':'button','type':'button'}, text="Download");
+    descriptionFileDownloadButton.on("click", () => {downloadDescriptionFile(); });
 
     //Add download button and labels to div
-    div.append($('<hr><h2>Download File With Renamed Columns</h2>'));
-    div.append(fileNameLabel);
-    div.append(fileNameInput);
-    div.append(downloadButton);
+    downloadButtonDiv.append($('<h4>Download File With Renamed Columns</h4>'));
+    downloadButtonDiv.append(renameFileNameLabel);
+    downloadButtonDiv.append(renameFileNameInput);
+    downloadButtonDiv.append(renameFileDownloadButton);
+
+    downloadButtonDiv.append('<br><br>');
+    //Add download button and labels to div
+    downloadButtonDiv.append($('<h4>Download Description File</h4>'));
+    downloadButtonDiv.append(descriptionFileNameLabel);
+    downloadButtonDiv.append(descriptionFileNameInput);
+    downloadButtonDiv.append(descriptionFileDownloadButton);
 };
 
 function createShortenedListInput(value)
@@ -582,23 +806,23 @@ function createElementWithValues(element, attributes, text)
 
 /* Short Summary: Takes in the header row of a csv and turns it into an array of HTMLElement <tr>
  * 
- * @param csvHeaderRow ( Array[String] ) An array containg all of the cells in the header row of an uploaded csv
+ * @param csvHeadersArray ( Array[String] ) An array containg all of the cells in the header row of an uploaded csv
  *                                  row[0] will be the value of the first cell in the first column,
  *                                  row[1] will be the value of the first cell in the second column
  * @return ( Array [HTMLElement] )
  */
-function createRenameTableData(csvHeaderRow)
+function createRenameTableData(csvHeadersArray)
 {
     
     let createdRows = [];
 
     //For every column, create a <tr> element
-    csvHeaderRow.forEach(function(element, index){
+    csvHeadersArray.forEach(function(element, index){
         let tr,td,textContent, cellName, args;
         tr = $('<tr></tr>');
         tr.attr('data-originalname', element);
         tr.attr('data-index', index);
-        tr.attr('id', 'column-' + index);
+        tr.attr('id', 'row_' + index);
 
         //Create data cell for original column name
         td = $('<td></td>').text(element);
@@ -611,7 +835,7 @@ function createRenameTableData(csvHeaderRow)
             "index": index,
             "className": "newNameInput" , 
             "optionsListName": getSelectedControlledVocabularyDataListId(),
-            "changeEventCallback": updateColumnNewName,
+            "changeEventCallback": handleNewColumnNameInput,
             "defaultValue": undefined
         };
         td = createTableDataCellWithInput(params);
@@ -626,12 +850,13 @@ function createRenameTableData(csvHeaderRow)
         tr.append(td);
 
         //Create data cell for units
+        
         params = {
             "parentRow":tr.attr('id'),
             "index": index,
             "className": "unitsInput" , 
-            "optionsListName": "unitsList",
-            "changeEventCallback":undefined,
+            "optionsListName": getSelectedControlledUnitDataListId(),
+            "changeEventCallback": handleNewUnitInput,
             "defaultValue": undefined
         };        
 
@@ -687,7 +912,7 @@ function createTableDataCellWithInput(params)
     }
 
     //Add an onChange event
-    input.on('change', changeEventCallback);
+    input.on('input', changeEventCallback);
 
     //Add input as child of td
     td.append(input);
@@ -717,87 +942,123 @@ function createTableDataCellWithTextArea(params)
 
     textarea = $('<textarea></textarea>').attr('id', cellName).attr('name', cellName).attr('data-parentrow', parentRow);
 
-    textarea.css('display', 'inline-table');
-    textarea.css('border', 'none');
-    textarea.css('width', 'inherit');
-
-    //Disable editing
-    textarea.attr('disabled', true);
+    // textarea.css('display', 'inline-table');
+    // textarea.css('width', 'inherit');
 
     //Add row index and row name to input element
-    textarea.on('change', changeEventCallback);
+    textarea.on('input', changeEventCallback);
     td.append(textarea);
 
     return td;
 };
 
-/* Short Summary: Function triggered on 'change' event. 
+/* Short Summary: Function triggered on 'input' event when there is a new column name
+ *                This function will update the column name in the table and the column name in the csv header row  
  *
- * @param e (jQuery Event) : Event object from the 'change' event
+ * @param e (jQuery Event) : Event object from the 'input' event
  * 
  * @return undefined
  */
-function updateColumnNewName(e)
+function handleNewColumnNameInput(e)
 {
     let input = e.target;
-    //Select <tr> element from embeded id
-    let tr = $('#' + input.dataset.parentrow);
-    tr.attr('data-newname', input.value);
-    setColumnName(tr.data());
 
-    //Update Definition
-    //Get selected option element
-    let option = input.list.options[input.value];
-
-    let rowNumber = e.target.id.split("_").pop();
-
-    
-    //Set definition value
-    $(`#definitionInput_row_${rowNumber}`)[0].value = option.label;
+    updateHeaderName(input);
+    updateDefinitionColumn(input);
+    updatePreviewColumn(input);
+    updateOutput(input);
 
     //Resize based on input size
     $(input).attr('size', $(input).val().length);
 };
 
-/* Short Summary: Update given index with a new name in the global columndata object
- *
- * @param params (object) : Object containing function parameters
- *      @param params.index : Index of the value to change
- *      @param params.originalname : originalname of the column
- *      @param params.newname : newname of the column
- * 
- * @return undefined
- */
-function setColumnName(params)
+
+function handleNewUnitInput(e)
 {
-    let columnData = getHeaderColumnData();
-    columnData[params.index] = params.newname;
+    let input = e.target;
+    updatePreviewColumn(input);
 };
 
-function setHeaderColumnData(data)
+function updateHeaderName(input)
 {
-    //TODO make this the preferred way to set column data
-}
+    //Select element from embeded id
+    let tr = $('#' + input.dataset.parentrow);
+    tr.attr('data-newname', input.value);
+    setHeaderColumnName(tr.data());
+};
 
-/* Short Summary: Preferred method of getting global header column data object
- * 
- * @return Array[String] : Header Row of column data
- */
-function getHeaderColumnData()
+function updateDefinitionColumn(input)
 {
-    return csvHeaderRow;
+    //Update Definition
+    //Get selected option element
+    let rowNumber = input.id.split("_").pop();
+    let option = input.list.options[input.value];
+
+    //Set definition value to definition value of selected option
+
+    //If option is defined, set the definition value to the option's label
+    $(`#definitionInput_row_${rowNumber}`)[0].value = option ? `${option.label}` : '';
+
+};
+
+function updateOutput(input)
+{
+    let parentRow = $(`#${input.dataset.parentrow}`)[0];
+    let originalname = parentRow.dataset.originalname;
+    let index = parentRow.dataset.index;
+
+    let option = input.list.options[input.value];
+    
+    // setOutputValue(index,'controlled_vocabulary_variable_term', option.dataset.term );
+    
+    //TODO finish setting these things in the output
+
+    let previewTableHeadersArray = getPreviewTableHeadersArray();
+    setOutputValue(index,'column_name', previewTableHeadersArray[index]);
+    
+    
+    let unitsInputElement = $(`#unitsInput_row_${index}`)[0];
+    let units = unitsInputElement.value;
+    let unitsString = units ? `_${units}` : '';
+    setOutputValue(index,'units', unitsString);
+
+};
+
+function updatePreviewColumn(input)
+{
+    let parentRow = $(`#${input.dataset.parentrow}`)[0];
+    let originalname = parentRow.dataset.originalname;
+    let index = parentRow.dataset.index;
+
+    
+    //Select Preview Table <th> element
+    let th = $(`#previewHeader_${originalname}_${index}`)[0];
+    
+    let newNameElement = $(`#newNameInput_row_${index}`)[0];
+    let newNameString = newNameElement.value;
+
+    let unitsInputElement = $(`#unitsInput_row_${index}`)[0];
+
+    let units = unitsInputElement.value;
+    
+
+    let unitsString = units ? `_${units}` : '';
+
+    let newPreviewName = newNameString + unitsString;
+    th.innerText = newPreviewName;
+
+    updatePreviewColumnHeadersArray(index, newPreviewName);
 };
 
 
-/* Short Summary: Preferred method of getting global column data object
- * 
- * @return Array[String] : All csv data
- */
-function getAllColumnData()
-{
-    return csvRowsCopy;
-};
 
+
+function updatePreviewColumnHeadersArray(index, newPreviewName)
+{
+    let previewTableHeadersArray = getPreviewTableHeadersArray();
+    previewTableHeadersArray[index] = newPreviewName;
+    setPreviewTableHeadersArray(previewTableHeadersArray);
+};
 
 /* -------------- Preview Table  ----------------------------- */
 /*  Short Summary: Creates a table that will preview the output of the downloaded file
@@ -814,23 +1075,26 @@ function createPreviewTable(csvRows)
     //Create Table Element
     let table = $("<table class='table'></table>");
 
-    //Create one <tr> for each column in the .csv
-    csvHeaderRow = csvRows[0].split(',');
-    
+    table.css('display', 'block');
+
+    //Create one <tr> for each column in the .csv file
     //Create <thead> with <tr> and <th> elements
-    let tableHeaderRow = createPreviewTableHead(csvHeaderRow);
+    let tableHeaderRow = createPreviewTableHead(getCsvHeadersArray());
 
     //Append <thead> to <table>
     table.append(tableHeaderRow);
 
 
     //Append header and table to the <div>
-    div.append($('<hr><h2>Preview Table</h2>'));
+    let previewText = $('<hr><h2>Preview</h2>');
+    previewText.css('text-align', 'center');
+
+    div.append(previewText);
     div.append(table);
 }
 
 
-function createPreviewTableHead(csvHeaderRow)
+function createPreviewTableHead(csvHeadersArray)
 {
     //Create thead element
     let thead,tr;
@@ -838,7 +1102,7 @@ function createPreviewTableHead(csvHeaderRow)
     thead = $("<thead class='thead-light'></thead>");
 
     //Create <tr> with <th> for the rename table
-    tr = createPreviewTableHeadRow(csvHeaderRow);
+    tr = createPreviewTableHeadRow(csvHeadersArray);
     thead.append(tr);
 
     return thead;
@@ -847,16 +1111,16 @@ function createPreviewTableHead(csvHeaderRow)
 /* Short Summary: Create <tr> element with all necessary <th> elements for the preview table
  * 
  * @return HTMLElement <tr>
- *                      <th></th> [, <th></th>] //N <th> elements, where N is the length of headerElementsArray
+ *                      <th></th> [, <th></th>] //N <th> elements, where N is the length of previewTableHeadersArray
  *                     </tr>
  */
-function createPreviewTableHeadRow(csvHeaderRow)
+function createPreviewTableHeadRow(csvHeadersArray)
 {
     let tr = $('<tr></tr>');
 
-    let headerElementsArray = [];
+    let previewTableHeadersArray = [];
     
-    csvHeaderRow.forEach( function(value, index) {
+    csvHeadersArray.forEach( function(value, index) {
         let obj = {};
 
         obj.attributes = {
@@ -865,241 +1129,18 @@ function createPreviewTableHeadRow(csvHeaderRow)
         obj.text = value;
 
         this.push(obj);
-    }, headerElementsArray);
+    }, previewTableHeadersArray);
 
-    //Create one <th> element per object in the headerElementsArray. Adds each <th> to tr variable
-    headerElementsArray.forEach(createTableHeaderElementAndAppendToTableRow,tr);
+    //Create one <th> element per object in the previewTableHeadersArray. Adds each <th> to tr variable
+    previewTableHeadersArray.forEach(createTableHeaderElementAndAppendToTableRow,tr);
 
     return tr;
 };
 
-/* -------------- Metadata Table  ----------------------------- */
-/*  Short Summary: Creates a table to add additional metadata to each column from the input .csv
- *                  See getMetadataTableHeaderElementNames() function for information on the current columns
- *     
- * @params csvRows {Array[String][String]}  An array containing the rows of the csv file.
- *                                        The first row is always the header row. 
- */
-
-// function createMetadataTable(csvRows)
-// {
-//     //Select rename table <div>
-//     let div = $('#metadataTableDiv');
-
-//     //Clear div
-//     div.html("");
-
-//     //Create Table Element
-//     let table = $("<table class='table'></table>");
-    
-//     //Create <thead> with <tr> and <th> elements
-//     let tableHeaderRow = createMetadataTableHead();
-
-//     //Append <thead> to <table>
-//     table.append(tableHeaderRow);
-
-//     //Create one <tr> for each column in the .csv
-//     csvHeaderRow = csvRows[0].split(',');
-//     //csvDataRows is an array of <tr> elements
-//     let csvDataRows = createMetadataTableData(csvHeaderRow);
-    
-//     //Append each <tr> element to the table
-//     csvDataRows.forEach(function(element){
-//         this.append(element);
-//     },table);
-
-//     //Append header and table to the <div>
-//     div.append($('<hr><h2>Metadata Table</h2>'));
-//     div.append(table);
 
 
-//     //Create download button, which downloads a .csv file with renamed columns
-//     let downloadButton = createButtonElement({'class':'button','type':'button'}, text="Download");
-//     downloadButton.on("click", () => {downloadMetadataFile(); });
 
-//     let metadataFileNameInput = createInputElement({'id':'metadataFileNameInput','name':'metadataFileNameInput', 'type':'text'});
-//     let metadataFileNameLabel = createLabelElement({'id':'metadataFileNameLabel','for':'metadataFileNameInput'}, text="Metadata File Name:");
-
-//     //Add download button and labels to div
-//     div.append($('<hr><h2>Download File With Metadata</h2>'));
-//     div.append(metadataFileNameLabel);
-//     div.append(metadataFileNameInput);
-//     div.append(downloadButton);  
-// };
-
-
-// /* Short Summary: Takes in the header row of a csv and turns it into an array of HTMLElement <tr>
-//  * 
-//  * @param csvHeaderRow ( Array[String] ) An array containg all of the cells in the header row of an uploaded csv
-//  *                                  row[0] will be the value of the first cell in the first column,
-//  *                                  row[1] will be the value of the first cell in the second column
-//  * @return ( Array [HTMLElement] )
-//  */
-// function createMetadataTableData(csvHeaderRow)
-// {
-    
-//     let createdRows = [];
-
-//     //For every column, create a <tr> element
-//     csvHeaderRow.forEach(function(element, index){
-//         let tr,td,textContent, cellName, args;
-//         tr = $('<tr></tr>');
-//         tr.attr('data-originalname', element);
-//         tr.attr('data-index', index);
-//         tr.attr('id', 'column-' + index);
-
-//         //Create first data cell with column name as the value
-//         td = $('<td></td>').text(element);
-//         tr.append(td);
-        
-        
-//         //Create data cell for units
-//         params = {
-//             "parentRow":tr.attr('id'),
-//             "index": index,
-//             "className": "unitsInput" , 
-//             "optionsListName": "unitsList",
-//             "changeEventCallback":undefined,
-//             "defaultValue": undefined
-//         };        
-
-//         td = createTableDataCellWithInput(params);
-//         tr.append(td);
-
-//         //Create data cell for data type
-//         params["className"] = "dataTypeInput"; params["optionsListName"] = "dataTypeList";
-//         params["changeEventCallback"] = undefined; params["defaultValue"] = undefined;
-//         td = createTableDataCellWithInput(params);
-//         tr.append(td);
-
-//         createdRows.push(tr);
-//     },createdRows);
-
-//     return createdRows;
-// };
-
-
-// /* Short Summary: Generate metadata table header row
-//  * 
-//  * @return HTMLElement <thead>
-//  *                          <tr>
-//  *                              <th></th>? [, <th></th>] //Any number of <th> elements
-//  *                          </tr>
-//  *                      <thead>
-//  */
-// function createMetadataTableHead()
-// {
-//     //Create thead element
-//     let thead,tr;
-
-//     thead = $("<thead class='thead-light'></thead>");
-
-//     //Create <tr> with <th> for the rename table
-//     tr = createMetadataTableHeadRow();
-//     thead.append(tr);
-
-//     return thead;
-// };
-
-// /* Short Summary: Create <tr> element with all necessary <th> elements for the metadata table
-//  * 
-//  * @return HTMLElement <tr>
-//  *                      <th></th> [, <th></th>] //N <th> elements, where N is the length of headerElementsArray
-//  *                     </tr>
-//  */
-// function createMetadataTableHeadRow()
-// {
-//     let tr = $('<tr></tr>');
-
-//     let headerElementsArray = getMetadataTableHeaderElementNames();
-
-//     //Create one <th> element per object in the headerElementsArray. Adds each <th> to tr variable
-//     headerElementsArray.forEach(createTableHeaderElementAndAppendToTableRow,tr);
-
-//     return tr;
-// };
-
-// /* Short Summary: Contains an array of objects, where each object describes a <th> element to be created
-//  *                for the metadata table.
-//  *                Objects are of the form 
-//  *                { 
-//  *                  attributes: {
-//  *                      key : value //Where key must be a valid HTML attribute
-//  *                  },
-//  *                  text: //Text Content to be added to the <th> element
-//  *                }
-//  * 
-//  * @return Array[ Objects ] : Returns an array of objects, where each object defines a <th> element
-//  *                            to be created. 
-//  */
-// function getMetadataTableHeaderElementNames()
-// {
-//     return [
-//         {
-//             attributes: {
-//                 id: "tableHeaderCurrentName",
-//             },
-//             text: "Current Name"
-//         },
-//         {
-//             attributes: {
-//                 id: "tableHeaderUnit",
-//             },
-//             text: "Unit"
-//         },
-//         {
-//             attributes: {
-//                 id: "tableHeaderDataType",
-//             },
-//             text: "Data Type"
-//         }
-//     ];
-// };
-
-/* -------------- Fetch Variables ----------------------------- */
-
-// function fetchOdm2VariableNames(){
-//     fetchFromUrl("http://vocabulary.odm2.org/api/v1/variablename/?format=csv");
-// }
-// function fetchFromUrl(url){
-//     fetch(url,
-//         {
-//             mode: "cors",
-//             // mode: "cors-with-forced-preflight",
-//             headers: {
-//                 'Access-Control-Allow-Origin':'*'
-//             }
-//         }
-//     ).then(response => {
-//         
-//     });
-// }
-
-
-/* ----------------------- Download ------------------ */
-
-
-/*  Short Summary: Performs the steps to download information from the metadata table
- *                  into a file.
- *      
- */
-function downloadMetadataFile()
-{
-    //TODO prepareMetadataTableDataForDownload() function does not do anything
-    let data = prepareMetadataTableDataForDownload();
-    let filename = $('#metadataFileNameInput')[0].value;
-    download(data=data,filename=filename);
-};
-
-/*  Short Summary: Fetch data from the metadata table, convert the data into a URI string, fetch the desired
- *                 filename, then call download() to download the data into a desired filename
- *      
- */
-function prepareMetadataTableDataForDownload()
-{
-    //TODO use prepareRenameTableDataForDownload() as a guide
-};
-
+///############## DOWNLOADING #################### ///
 /*  Short Summary: Performs the steps to download information from the rename table
  *                  into a file.
  *      
@@ -1107,10 +1148,67 @@ function prepareMetadataTableDataForDownload()
 function downloadRenameFile()
 {
     let data = prepareRenameTableDataForDownload();
-    let filename = $('#fileNameInput')[0].value;
+    let filename = $('#renameFileNameInput')[0].value;
     download(data=data,filename=filename);
 };
 
+function downloadDescriptionFile()
+{
+    let data = prepareDescriptionDataForDownload();
+    let filename = $('#descriptionFileNameInput')[0].value;
+    download(data=data,filename=filename);
+};
+
+function prepareDescriptionDataForDownload()
+{
+    debugger;
+    /*
+       {
+        "column_name" : ...,
+        "column_units" : ...,
+        "depth_value" : ...,
+        "depth_units" : ...,
+        "controlled_vocabulary_variable_name": ...,
+        "controlled_vocabulary_variable_term": ...,
+        "controlled_vocabulary_variable-definition": ...,
+        "controlled_vocabulary_variable_provenance": ...,
+        "controlled_vocabulary_units_abbreviation": ...,
+        "controlled_vocabulary_units_term": ...,
+        "controlled_vocabulary_units_definition": ...,
+        "controlled_vocabulary_units_provenance": ...,
+       }
+
+    */
+
+    let output = JSON.stringify(getOutput(), null, 2);
+
+    //Encode and return updated global object
+    return encodeURIComponent(output)
+};
+
+/*  Short Summary: Fetch data from the rename table, convert the data into a URI string, fetch the desired
+ *                 filename, then call download() to download the data into a desired filename
+ *      
+ */
+function prepareRenameTableDataForDownload(){
+   
+    //Get global data object
+    let dataArray = getCsvRows();
+    //Get global header object
+    let headersArray = getPreviewTableHeadersArray();
+
+    //Join headers array into string
+    let headersString = headersArray.join(",")
+
+    //Replace old headers with new headers
+    dataArray[0] = headersString;
+
+    //Join array of rows into string, reversing String.split("\n");
+    let dataString = dataArray.join("\n");
+
+    //Encode and return updated global object
+    return encodeURIComponent(dataString)
+}
 
 /*  Short Summary: Given data and a filename, download the data into a file of the given name
  *  
@@ -1131,25 +1229,3 @@ function download(data, filename) {
   
     document.body.removeChild(element);
   }
-
-/*  Short Summary: Fetch data from the rename table, convert the data into a URI string, fetch the desired
- *                 filename, then call download() to download the data into a desired filename
- *      
- */
-function prepareRenameTableDataForDownload(){
-    //Get global data object
-    let dataArray = getAllColumnData();
-    //Get global header object
-    let headersArray = getHeaderColumnData();
-
-    //Join headers array into string
-    let headersString = headersArray.join(",")
-    //Update data object with header object
-    dataArray[0] = headersString;
-
-    //Join array of rows into string, reversing String.split("\n");
-    let dataString = dataArray.join("\n");
-
-    //Encode and return updated global object
-    return encodeURIComponent(dataString)
-}
