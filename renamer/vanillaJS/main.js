@@ -81,7 +81,7 @@ function setOutputValue(index, key, value)
     globalFile.output.at(index) ? globalFile.output.at(index)[key] = value : globalFile.output[index] = {[key]: value};
 };
 
-function getOutput()
+function getDescriptiveOutput()
 {
     return globalFile.output;
 }
@@ -284,7 +284,7 @@ function getSelectedControlledVocabularyDataListId()
     let input = getControlledVocabularyInputElement();
 
     //Check if the full list or limno list should be used
-    let name = getShortenedListInputAttributes().name;
+    let name = getLimnoQuestionInputAttributes().name;
     let isLimno = document.querySelector(`input[name="${name}"]:checked`).value
 
     if(isLimno)
@@ -352,7 +352,7 @@ function createUnitDataListElements(arr, id)
 
     arr.forEach(function(value, index, array){
         option = $('<option></option');
-        option.attr('value', value.term);
+        option.attr('value', value.unitAbbreviation);
         option.attr('id', value.term); 
         option.attr('data-term', value.term);
         option.attr('data-description', value.unitsTypeCV);
@@ -461,25 +461,10 @@ function createRenameTable(csvRows)
     div.append(controlledVocabularyLabel);
     div.append(controlledVocabularyInput);
 
-    //Create an input to select the controlled vocabulary
-    let shortenedListYesInput = createShortenedListInput("Yes");
-    shortenedListYesInput.attr("checked", "checked");
-    let shortenedListNoInput = createShortenedListInput("No");
 
-    let shortenedListYesLabel = createShortenedListLabel("Yes");
-    let shortenedListNoLabel = createShortenedListLabel("No");
-
-    let shortenedListQuestionLabel = createLabelElement({'id':'shortenedListLabel'}, text="Is this limnological data? (Selecting 'Yes' will display filtered lists of variable names and units):");
-
-    //Adds created elements to the <div>
-    div.append("<br>");
-    div.append(shortenedListQuestionLabel);
-    div.append("<br>");
-    div.append(shortenedListYesLabel);
-    div.append(shortenedListYesInput);
-    div.append(shortenedListNoLabel);
-    div.append(shortenedListNoInput);
-
+    createLimnoQuestionAndAppendToDiv(div);
+    createDepthQuestionAndAppendToDiv(div);
+    
     //Create Table Element
     let table = $("<table class='table'></table>");
     
@@ -532,42 +517,106 @@ function createRenameTable(csvRows)
     downloadButtonDiv.append(descriptionFileDownloadButton);
 };
 
-function createShortenedListInput(value)
+
+function createLimnoQuestionAndAppendToDiv(div)
 {
-    //Create input to select controlled vocabulary
-    let attributes = getShortenedListInputAttributes(value);
+    let limnoQuestionYesInput = createLimnoQuestionRadioInput(value="Yes");
+    limnoQuestionYesInput.attr("checked", "checked");
+    let limnoQuestionNoInput = createLimnoQuestionRadioInput(value="No");
 
-    let shortenedListInput = createInputElement(attributes, text="");
+    let limnoQuestionYesLabel = createLimnoQuestionRadioLabel("Yes");
+    let limnoQuestionNoLabel = createLimnoQuestionRadioLabel("No");
 
-    //Create on change event
-    shortenedListInput.on('change', function(e){
-        //Update 'list' attribute of <input> elements with the class type 'newNameInput
+    let limnoQuestionLabel = createLabelElement({'id':'depthQuestionLabel'}, text="Is this limnological data? (Selecting 'Yes' will display filtered lists of variable names and units):");
 
-        let currentListBaseName = $('#controlledVocabularyInput')[0].value;
-
-        //If "Yes", show shortened list
-        if(e.target.value == "Yes")
-        {          
-
-            //Change value from <listname>_full to <listname>_limno
-            $('.newNameInput').attr('list', currentListBaseName + '_limno');
-            return;
-        }
-
-        //Change value from <listname>_limno to <listname>_full
-        $('.newNameInput').attr('list', currentListBaseName + '_full');
-        return;
-    });
-
-    return shortenedListInput;
+    //Adds created elements to the <div>
+    div.append("<br>");
+    div.append(limnoQuestionLabel);
+    div.append("<br>");
+    div.append(limnoQuestionYesLabel);
+    div.append(limnoQuestionYesInput);
+    div.append(limnoQuestionNoLabel);
+    div.append(limnoQuestionNoInput);
 };
 
-function createShortenedListLabel(value)
+function createDepthQuestionAndAppendToDiv(div)
 {
-    let inputElementAttributes = getShortenedListInputAttributes(value);
+    let depthQuestionYesInput = createDepthQuestionRadioInput(value="Yes");
+    depthQuestionYesInput.attr("checked", "checked");
+    let depthQuestionNoInput = createDepthQuestionRadioInput(value="No");
+
+    let depthQuestionYesLabel = createDepthQuestionRadioLabel("Yes");
+    let depthQuestionNoLabel = createDepthQuestionRadioLabel("No");
+
+    let depthQuestionLabel = createLabelElement({'id':'depthQuestionLabel'}, text="Test");
+
+    //Adds created elements to the <div>
+    div.append("<br>");
+    div.append(depthQuestionLabel);
+    div.append("<br>");
+    div.append(depthQuestionYesLabel);
+    div.append(depthQuestionYesInput);
+    div.append(depthQuestionNoLabel);
+    div.append(depthQuestionNoInput);
+};
+
+function createLimnoQuestionRadioInput(value)
+{
+    let input = createInputElement(getLimnoQuestionInputAttributes(value), text="");
+    input.on('change', handleLimnoOnlyInput);
+
+    return input;
+};
+
+function createDepthQuestionRadioInput(value)
+{
+    let input = createInputElement(getDepthQuestionInputAttributes(value), text="");
+    input.on('change', handleDepthInput);
+
+    return input;
+};
+
+function handleLimnoOnlyInput(e){
+    //Update 'list' attribute of <input> elements with the class type 'newNameInput
+
+    let currentListBaseName = $('#controlledVocabularyInput')[0].value;
+
+    //If "Yes", show shortened list
+    if(e.target.value == "Yes")
+    {          
+
+        //Change value from <listname>_full to <listname>_limno
+        $('.newNameInput').attr('list', currentListBaseName + '_limno');
+        return;
+    }
+
+    //Change value from <listname>_limno to <listname>_full
+    $('.newNameInput').attr('list', currentListBaseName + '_full');
+};
+
+function handleDepthInput(e){
+    //TODO
+    debugger;
+};
+
+function createLimnoQuestionRadioLabel(value)
+{
+    let inputElementAttributes = getLimnoQuestionInputAttributes(value);
 
     let labelElementAttributes = {
-        id : 'shortenedListLabel',
+        id : `limnoQuestion${value}Label`,
+        for : inputElementAttributes.id
+    }
+
+    return createLabelElement(labelElementAttributes, text=value)
+};
+
+function createDepthQuestionRadioLabel(value)
+{
+    let inputElementAttributes = getDepthQuestionInputAttributes(value);
+
+    let labelElementAttributes = {
+        id : `depthQuestion${value}Label`,
         for : inputElementAttributes.id
     }
 
@@ -633,7 +682,7 @@ function getControlledVocabularyInputAttributes(attribute=undefined)
 };
 
 
-function getShortenedListInputAttributes(value=undefined)
+function getLimnoQuestionInputAttributes(value=undefined)
 {
     return {
         id : `shortenedList${value}Input`,
@@ -642,6 +691,17 @@ function getShortenedListInputAttributes(value=undefined)
         value
     }
 };
+
+
+function getDepthQuestionInputAttributes(value=undefined)
+{
+    return {
+        id : `depth${value}Input`,
+        name : 'depthInput',
+        type : 'radio',
+        value
+    }
+}
 
 /* Short Summary: Create a <label> element for the controlled vocabulary input
  *
@@ -982,9 +1042,13 @@ function handleNewUnitInput(e)
 function updateHeaderName(input)
 {
     //Select element from embeded id
-    let tr = $('#' + input.dataset.parentrow);
-    tr.attr('data-newname', input.value);
-    setHeaderColumnName(tr.data());
+    let tr = $('#' + input.dataset.parentrow)[0];
+
+    let newvalue = input.value;
+    if(input.value == "") newvalue = tr.dataset.originalname;
+
+    tr.dataset.newname = newvalue;
+    setHeaderColumnName(tr.dataset);
 };
 
 function updateDefinitionColumn(input)
@@ -995,7 +1059,6 @@ function updateDefinitionColumn(input)
     let option = input.list.options[input.value];
 
     //Set definition value to definition value of selected option
-
     //If option is defined, set the definition value to the option's label
     $(`#definitionInput_row_${rowNumber}`)[0].value = option ? `${option.label}` : '';
 
@@ -1008,8 +1071,6 @@ function updateOutput(input)
     let index = parentRow.dataset.index;
 
     let option = input.list.options[input.value];
-    
-    // setOutputValue(index,'controlled_vocabulary_variable_term', option.dataset.term );
     
     //TODO finish setting these things in the output
 
@@ -1030,7 +1091,6 @@ function updatePreviewColumn(input)
     let originalname = parentRow.dataset.originalname;
     let index = parentRow.dataset.index;
 
-    
     //Select Preview Table <th> element
     let th = $(`#previewHeader_${originalname}_${index}`)[0];
     
@@ -1038,16 +1098,15 @@ function updatePreviewColumn(input)
     let newNameString = newNameElement.value;
 
     let unitsInputElement = $(`#unitsInput_row_${index}`)[0];
-
     let units = unitsInputElement.value;
-    
-
     let unitsString = units ? `_${units}` : '';
 
+    if(newNameString == "") newNameString = originalname;
+
     let newPreviewName = newNameString + unitsString;
-    th.innerText = newPreviewName;
 
     updatePreviewColumnHeadersArray(index, newPreviewName);
+    th.innerText = newPreviewName;
 };
 
 
@@ -1068,14 +1127,15 @@ function createPreviewTable(csvRows)
 {
     //Select rename table <div>
     let div = $('#previewTableDiv');
+    div.css('margin-bottom', '3em');
 
     //Clear div
     div.html("");
 
     //Create Table Element
-    let table = $("<table class='table'></table>");
+    let table = $("<table class='table'></table><br>");
 
-    table.css('display', 'block');
+    table.css('display', 'inline');
 
     //Create one <tr> for each column in the .csv file
     //Create <thead> with <tr> and <th> elements
@@ -1161,7 +1221,6 @@ function downloadDescriptionFile()
 
 function prepareDescriptionDataForDownload()
 {
-    debugger;
     /*
        {
         "column_name" : ...,
@@ -1180,7 +1239,7 @@ function prepareDescriptionDataForDownload()
 
     */
 
-    let output = JSON.stringify(getOutput(), null, 2);
+    let output = JSON.stringify(getDescriptiveOutput(), null, 2);
 
     //Encode and return updated global object
     return encodeURIComponent(output)
