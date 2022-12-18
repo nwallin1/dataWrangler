@@ -488,33 +488,15 @@ function createRenameTable(csvRows)
     div.append(table);
 
 
+    
+
+    //Add Event Handlers
+    $('#renameDownloadButton').on("click", () => {downloadRenameFile(); });
+    $('#descriptionDownloadButton').on("click", () => {downloadDescriptionFile(); });
+    
+    //Unhide Div
     let downloadButtonDiv = $('#downloadButtonDiv');
-
-    //Create download button, which downloads a .csv file with renamed columns
-    let renameFileDownloadButton = createButtonElement({'class':'button','type':'button'}, text="Download");
-    renameFileDownloadButton.on("click", () => {downloadRenameFile(); });
-
-    let renameFileNameInput = createInputElement({'id':'renameFileNameInput','name':'renameFileNameInput', 'type':'text'});
-    let renameFileNameLabel = createLabelElement({'id':'renameFileNameLabel','for':'renameFileNameInput'}, text="New File Name:");
-
-    let descriptionFileNameInput = createInputElement({'id':'descriptionFileNameInput','name':'descriptionFileNameInput', 'type':'text'});
-    let descriptionFileNameLabel = createLabelElement({'id':'descriptionFileNameLabel','for':'descriptionFileNameInput'}, text="New File Name:");
-
-    let descriptionFileDownloadButton = createButtonElement({'class':'button','type':'button'}, text="Download");
-    descriptionFileDownloadButton.on("click", () => {downloadDescriptionFile(); });
-
-    //Add download button and labels to div
-    downloadButtonDiv.append($('<h4>Download File With Renamed Columns</h4>'));
-    downloadButtonDiv.append(renameFileNameLabel);
-    downloadButtonDiv.append(renameFileNameInput);
-    downloadButtonDiv.append(renameFileDownloadButton);
-
-    downloadButtonDiv.append('<br><br>');
-    //Add download button and labels to div
-    downloadButtonDiv.append($('<h4>Download Description File</h4>'));
-    downloadButtonDiv.append(descriptionFileNameLabel);
-    downloadButtonDiv.append(descriptionFileNameInput);
-    downloadButtonDiv.append(descriptionFileDownloadButton);
+    downloadButtonDiv[0].removeAttribute('hidden');
 };
 
 
@@ -1209,7 +1191,7 @@ function downloadRenameFile()
 {
     let data = prepareRenameTableDataForDownload();
     let filename = $('#renameFileNameInput')[0].value;
-    download(data=data,filename=filename);
+    downloadAsCsv(data=data,filename=filename);
 };
 
 function downloadDescriptionFile()
@@ -1278,6 +1260,26 @@ function download(data, filename) {
     let element = document.createElement('a');
 
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + data);
+
+    element.setAttribute('download', filename);
+  
+    element.style.display = 'none';
+    document.body.appendChild(element);
+  
+    element.click();
+  
+    document.body.removeChild(element);
+  }
+
+  /*  Short Summary: Given data and a filename, download the data into a file of the given name
+ *  
+ * @param data (String) : URI encoded string returned from encodeURIComponent(string)
+ * @param filename (String) : name of the file to download the data into
+ */
+function downloadAsCsv(data, filename) {
+    let element = document.createElement('a');
+
+    element.setAttribute('href', 'data:text/csv;charset=utf-8,' + data);
 
     element.setAttribute('download', filename);
   
