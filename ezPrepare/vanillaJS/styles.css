@@ -9,3 +9,11 @@ button{
 label{
     padding: 10px;
 }
+
+#previewTableDiv{
+    margin-bottom: 3em;
+}
+
+#previewTable{
+    display: inline-table
+}

@@ -13,7 +13,20 @@ var globalFile = {
     csvHeadersArray: null,
     output: [],
     previewTableHeadersArray: null,
+    depthInputDisabled: true
 };
+
+
+
+function setDepthInputDisabled(value)
+{
+    globalFile.depthInputDisabled = value;
+}
+
+function getDepthInputDisabled()
+{
+    return globalFile.depthInputDisabled;
+}
 
 function setCsvRows(rows)
 {
@@ -524,13 +537,14 @@ function createLimnoQuestionAndAppendToDiv(div)
 function createDepthQuestionAndAppendToDiv(div)
 {
     let depthQuestionYesInput = createDepthQuestionRadioInput(value="Yes");
-    depthQuestionYesInput.attr("checked", "checked");
+    
     let depthQuestionNoInput = createDepthQuestionRadioInput(value="No");
+    depthQuestionNoInput.attr("checked", "checked");
 
     let depthQuestionYesLabel = createDepthQuestionRadioLabel("Yes");
     let depthQuestionNoLabel = createDepthQuestionRadioLabel("No");
 
-    let depthQuestionLabel = createLabelElement({'id':'depthQuestionLabel'}, text="Test");
+    let depthQuestionLabel = createLabelElement({'id':'depthQuestionLabel'}, text="Do you have variables of the same name at different depths?");
 
     //Adds created elements to the <div>
     div.append("<br>");
@@ -553,10 +567,32 @@ function createLimnoQuestionRadioInput(value)
 function createDepthQuestionRadioInput(value)
 {
     let input = createInputElement(getDepthQuestionInputAttributes(value), text="");
-    input.on('change', handleDepthInput);
+    input.on('change', handleDepthQuestionInput);
 
     return input;
 };
+
+function handleDepthQuestionInput(e)
+{
+    //Enable or disable depth based on depth question
+
+    let depthInputs = $('[id*="depthInput"');
+
+    if(e.target.value === 'Yes') 
+    {
+        setDepthInputDisabled(false);
+        addDepthStringsfromPreviewColumnHeadersArray();
+        depthInputs.prop('disabled', false);
+        return;
+    }
+
+    setDepthInputDisabled(true);
+    removeDepthStringsfromPreviewColumnHeadersArray()
+    depthInputs.prop('disabled', true);
+    return;
+}
+
+
 
 function handleLimnoOnlyInput(e){
     //Update 'list' attribute of <input> elements with the class type 'newNameInput
@@ -574,11 +610,6 @@ function handleLimnoOnlyInput(e){
 
     //Change value from <listname>_limno to <listname>_full
     $('.newNameInput').attr('list', currentListBaseName + '_full');
-};
-
-function handleDepthInput(e){
-    //TODO
-    debugger;
 };
 
 function createLimnoQuestionRadioLabel(value)
@@ -679,7 +710,7 @@ function getDepthQuestionInputAttributes(value=undefined)
 {
     return {
         id : `depth${value}Input`,
-        name : 'depthInput',
+        name : 'depthQuestionInput',
         type : 'radio',
         value
     }
@@ -813,6 +844,12 @@ function getRenameTableHeaderElementNames()
                 id: "tableHeaderDepth",
             },
             text: "Depth"
+        },
+        {
+            attributes: {
+                id: "tableHeaderCOMID",
+            },
+            text: "COMID"
         }
     ];
 };
@@ -905,6 +942,32 @@ function createRenameTableData(csvHeadersArray)
         td = createTableDataCellWithInput(params);
         tr.append(td);
 
+
+        params = {
+            "parentRow":tr.attr('id'),
+            "index": index,
+            "className": "depthInput" , 
+            "optionsListName": undefined,
+            "disabled" : true,
+            "changeEventCallback": handleNewDepthInput,
+            "defaultValue": undefined
+        };        
+
+        td = createTableDataCellWithInput(params);
+        tr.append(td);
+
+        params = {
+            "parentRow":tr.attr('id'),
+            "index": index,
+            "className": "comidInput" , 
+            "optionsListName": undefined,
+            "changeEventCallback": undefined,
+            "defaultValue": undefined
+        };        
+
+        td = createTableDataCellWithInput(params);
+        tr.append(td);
+
         createdRows.push(tr);
     },createdRows);
 
@@ -931,7 +994,7 @@ function createTableDataCellWithInput(params)
 {
     let td, input;
 
-    let { parentRow, index, className, optionsListName, changeEventCallback, defaultValue } = params;
+    let { parentRow, index, className, optionsListName, changeEventCallback, defaultValue, disabled } = params;
 
     let cellName = className + "_row_" + index;
     td =  $('<td></td>');
@@ -944,8 +1007,10 @@ function createTableDataCellWithInput(params)
 
     //If there is an optionsListName, set the list attribute
     if(optionsListName) input.attr('list', optionsListName)
-    //Otherwise, disable the element from being edited
-    else input.attr('disabled', true);
+    //OLD - Otherwise, disable the element from being edited
+    // else input.attr('disabled', true);
+
+    if(disabled === true) input.prop('disabled', true);
 
     //Check if there is a default value
     if(defaultValue)
@@ -1021,6 +1086,12 @@ function handleNewUnitInput(e)
     updatePreviewColumn(input);
 };
 
+function handleNewDepthInput(e)
+{
+    let input = e.target;
+    updatePreviewColumn(input);
+}
+
 function updateHeaderName(input)
 {
     //Select element from embeded id
@@ -1083,9 +1154,19 @@ function updatePreviewColumn(input)
     let units = unitsInputElement.value;
     let unitsString = units ? `_${units}` : '';
 
+    let depth;
+
+    if(getDepthInputDisabled() === false)
+    {
+        let depthInputElement = $(`#depthInput_row_${index}`)[0];
+        depth = depthInputElement.value;
+    }
+
+    let depthString = depth ? `_depth${depth}m` : '';
+
     if(newNameString == "") newNameString = originalname;
 
-    let newPreviewName = newNameString + unitsString;
+    let newPreviewName = newNameString + unitsString + depthString;
 
     updatePreviewColumnHeadersArray(index, newPreviewName);
     th.innerText = newPreviewName;
@@ -1101,6 +1182,43 @@ function updatePreviewColumnHeadersArray(index, newPreviewName)
     setPreviewTableHeadersArray(previewTableHeadersArray);
 };
 
+function addDepthStringsfromPreviewColumnHeadersArray()
+{
+    let previewTableHeadersArray = getPreviewTableHeadersArray();
+
+    previewTableHeadersArray.forEach(
+        (value, index, array) => {
+            let depthInputElement = $(`#depthInput_row_${index}`)[0];
+            let depth = depthInputElement.value;
+            let depthString = depth ? `_depth${depth}m` : '';
+
+            let th = $(`[id^='previewHeader'][id$='${index}']`)[0];
+            th.innerText = value + depthString;
+            array[index] = value + depthString;
+        }
+    );
+
+    setPreviewTableHeadersArray(previewTableHeadersArray);
+}
+
+function removeDepthStringsfromPreviewColumnHeadersArray()
+{
+    let previewTableHeadersArray = getPreviewTableHeadersArray();
+    previewTableHeadersArray.forEach(
+        (value, index, array) => {
+            if(value.includes('depth'))
+            {
+                let newValue = value.slice(0,value.lastIndexOf("_"));;
+                let th = $(`[id^='previewHeader'][id$='${index}']`)[0];
+                th.innerText = newValue;
+                array[index] = newValue;
+            }
+        }
+    );
+
+    setPreviewTableHeadersArray(previewTableHeadersArray);
+}
+
 /* -------------- Preview Table  ----------------------------- */
 /*  Short Summary: Creates a table that will preview the output of the downloaded file
  */
@@ -1109,15 +1227,14 @@ function createPreviewTable(csvRows)
 {
     //Select rename table <div>
     let div = $('#previewTableDiv');
-    div.css('margin-bottom', '3em');
 
-    //Clear div
-    div.html("");
+    div[0].removeAttribute('hidden');
 
-    //Create Table Element
-    let table = $("<table class='table'></table><br>");
+    //Get Table Element
+    let table = $("#previewTable");
 
-    table.css('display', 'inline');
+    //Clear Table
+    table[0].innerHTML = "";
 
     //Create one <tr> for each column in the .csv file
     //Create <thead> with <tr> and <th> elements
@@ -1126,15 +1243,55 @@ function createPreviewTable(csvRows)
     //Append <thead> to <table>
     table.append(tableHeaderRow);
 
-
-    //Append header and table to the <div>
-    let previewText = $('<hr><h2>Preview</h2>');
-    previewText.css('text-align', 'center');
-
-    div.append(previewText);
-    div.append(table);
+    let tableBodyRows = createPreviewBodyRows(getCsvRows());
+    
+    tableBodyRows.forEach(
+        function(value){
+            this.append(value);
+        },
+        table
+    );
 }
 
+function createPreviewBodyRows(rows)
+{
+    let createdTableRows = [];
+
+    //Skip Header Row, get first five data rows
+    let firstFiveDataRows = rows.slice(1,6);
+
+    firstFiveDataRows.forEach(createPreviewBodyTableRowElement, createdTableRows)
+
+
+    return createdTableRows
+};
+
+function createPreviewBodyTableRowElement(value, index, array)
+{
+    let tr = $('<tr></tr>');
+    let tdElements = createPreviewBodyTableDataElements(value);
+
+    tdElements.forEach(
+        function(value) {
+            this.append(value);
+        }, tr
+    );
+
+    this.push(tr);
+}
+
+function createPreviewBodyTableDataElements(row)
+{
+    let createdTableDataElements = []
+    row.split(",").forEach(
+        function (value, index, array) {
+            let td = $(`<td>${value}</td>`);
+            this.push(td);
+        }, createdTableDataElements
+    );
+
+    return createdTableDataElements;
+}
 
 function createPreviewTableHead(csvHeadersArray)
 {
