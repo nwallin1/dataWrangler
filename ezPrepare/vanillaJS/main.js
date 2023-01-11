@@ -11,7 +11,9 @@ var globalFile = {
     csvUploaded: false,
     csvRows: null,
     csvHeadersArray: null,
-    output: [],
+    output: {
+        columns: []
+    },
     previewTableHeadersArray: null,
     depthInputDisabled: true
 };
@@ -89,9 +91,14 @@ function setHeaderColumnName(params)
 };
 
 
-function setOutputValue(index, key, value)
+function setOutputValue(key, value)
 {
-    globalFile.output.at(index) ? globalFile.output.at(index)[key] = value : globalFile.output[index] = {[key]: value};
+    globalFile.output[key] = value;
+};
+
+function setColumnsOutputValue(index, key, value)
+{
+    globalFile.output.columns.at(index) ? globalFile.output.columns.at(index)[key] = value : globalFile.output.columns[index] = {[key]: value};
 };
 
 function getDescriptiveOutput()
@@ -477,7 +484,16 @@ function createRenameTable(csvRows)
 
     createLimnoQuestionAndAppendToDiv(div);
     createDepthQuestionAndAppendToDiv(div);
+
+    div.append("<br>");
     
+    //Create an input for the COMID
+    div.append('<a href="https://docs.google.com/document/d/1JYbkfELCY0MWOWYREPyM61-bHjUl49YmqUwISsjw_tY/edit?usp=sharing">Find your Lake Common Identifier (COMID)</a>');
+    div.append("<br>");
+    createCOMIDLabelAndAppendToDiv(div);
+    createCOMIDInputAndAppendToDiv(div);
+    
+
     //Create Table Element
     let table = $("<table class='table'></table>");
     
@@ -500,12 +516,17 @@ function createRenameTable(csvRows)
     div.append($('<hr><h2>Column Rename Table</h2>'));
     div.append(table);
 
+    csvDataRows.forEach(function(element){
+        //Add initial values to output object
+        //Need to call updateRenameTableOutput with the newNameInput data cell for each row
+        updateRenameTableOutput($(`#newNameInput_${element[0].id}`)[0]);
+    })
 
     
 
     //Add Event Handlers
-    $('#renameDownloadButton').on("click", () => {downloadRenameFile(); });
-    $('#descriptionDownloadButton').on("click", () => {downloadDescriptionFile(); });
+    $('#renameDownloadButton').off("click.download").on("click.download", () => {downloadRenameFile(); });
+    $('#descriptionDownloadButton').off("click.download").on("click.download", () => {downloadDescriptionFile(); });
     
     //Unhide Div
     let downloadButtonDiv = $('#downloadButtonDiv');
@@ -641,6 +662,21 @@ function createButtonElement(attributes,text)
     return createElementWithValues('button', attributes, text);
 };
 
+function createCOMIDInputAndAppendToDiv(div)
+{
+    //Create input to select controlled vocabulary
+    let attributes = getCOMIDInputAttributes();
+    
+    let COMIDInput = createInputElement(attributes, text="");
+
+    COMIDInput.on('input', function(e){
+        setOutputValue('COMID', e.target.value);
+    });
+
+    div.append(COMIDInput);
+};
+
+
 /* Short Summary: Create a <input> element for the controlled vocabulary input. The value of this input element
  *                determines which datalist to display for every element with the 'newNameInput' class name
  *
@@ -694,6 +730,15 @@ function getControlledVocabularyInputAttributes(attribute=undefined)
     }
 };
 
+function getCOMIDInputAttributes(attribute=undefined)
+{
+    return {
+        id : 'COMIDInput',
+        name : 'COMIDInput',
+        type : 'text',
+    }
+};
+
 
 function getLimnoQuestionInputAttributes(value=undefined)
 {
@@ -731,6 +776,20 @@ function createControlledVocabularyLabel()
 
     return createLabelElement(labelElementAttributes, text="Controlled Vocabulary:");
 };
+
+
+function createCOMIDLabelAndAppendToDiv(div)
+{
+    let inputElementAttributes = getCOMIDInputAttributes();
+
+    let labelElementAttributes = {
+        id : 'COMIDLabel',
+        for : inputElementAttributes.id
+    }
+
+    div.append(createLabelElement(labelElementAttributes, text="COMID:"));
+};
+
 
 /* Short Summary: Ceate <label> HTML element
  * 
@@ -845,12 +904,12 @@ function getRenameTableHeaderElementNames()
             },
             text: "Depth"
         },
-        {
-            attributes: {
-                id: "tableHeaderCOMID",
-            },
-            text: "COMID"
-        }
+        // {
+        //     attributes: {
+        //         id: "tableHeaderCOMID",
+        //     },
+        //     text: "COMID"
+        // }
     ];
 };
 
@@ -956,17 +1015,17 @@ function createRenameTableData(csvHeadersArray)
         td = createTableDataCellWithInput(params);
         tr.append(td);
 
-        params = {
-            "parentRow":tr.attr('id'),
-            "index": index,
-            "className": "comidInput" , 
-            "optionsListName": undefined,
-            "changeEventCallback": undefined,
-            "defaultValue": undefined
-        };        
+        // params = {
+        //     "parentRow":tr.attr('id'),
+        //     "index": index,
+        //     "className": "comidInput" , 
+        //     "optionsListName": undefined,
+        //     "changeEventCallback": undefined,
+        //     "defaultValue": undefined
+        // };        
 
-        td = createTableDataCellWithInput(params);
-        tr.append(td);
+        // td = createTableDataCellWithInput(params);
+        // tr.append(td);
 
         createdRows.push(tr);
     },createdRows);
@@ -1073,7 +1132,7 @@ function handleNewColumnNameInput(e)
     updateHeaderName(input);
     updateDefinitionColumn(input);
     updatePreviewColumn(input);
-    updateOutput(input);
+    updateRenameTableOutput(input);
 
     //Resize based on input size
     $(input).attr('size', $(input).val().length);
@@ -1117,7 +1176,7 @@ function updateDefinitionColumn(input)
 
 };
 
-function updateOutput(input)
+function updateRenameTableOutput(input)
 {
     let parentRow = $(`#${input.dataset.parentrow}`)[0];
     let originalname = parentRow.dataset.originalname;
@@ -1128,13 +1187,12 @@ function updateOutput(input)
     //TODO finish setting these things in the output
 
     let previewTableHeadersArray = getPreviewTableHeadersArray();
-    setOutputValue(index,'column_name', previewTableHeadersArray[index]);
-    
+    setColumnsOutputValue(index,'column_name', previewTableHeadersArray[index]);
     
     let unitsInputElement = $(`#unitsInput_row_${index}`)[0];
     let units = unitsInputElement.value;
     let unitsString = units ? `_${units}` : '';
-    setOutputValue(index,'units', unitsString);
+    setColumnsOutputValue(index,'units', unitsString);
 
 };
 
