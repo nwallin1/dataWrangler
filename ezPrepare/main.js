@@ -904,12 +904,6 @@ function getRenameTableHeaderElementNames()
             },
             text: "Depth"
         },
-        // {
-        //     attributes: {
-        //         id: "tableHeaderCOMID",
-        //     },
-        //     text: "COMID"
-        // }
     ];
 };
 
