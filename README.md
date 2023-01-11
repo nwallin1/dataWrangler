@@ -12,7 +12,7 @@ Eventually, we would like this to be available by going to a website
 ### Clone the repository 
 
 #### Using the terminal
-    `$git clone https://github.com/nwallin1/dataWrangler.git`
+    git clone https://github.com/nwallin1/dataWrangler.git
 
 
 ### Start Web Server
