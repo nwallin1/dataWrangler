@@ -1,6 +1,9 @@
 # ezPrepare
 
 This tool provides a web interface for renaming columns of a .csv file
+The goal is to allow users to rename columns to a standardized format
+to make their data more reusable by others
+
 
 The tool currently provides standardized column and unit names from ODM2, but could be expanded to include other standardized variables
 
