@@ -77,7 +77,7 @@ function getPreviewTableHeadersArray()
 /* Short Summary: Update given index with a new name in the global columndata object
  *
  * @param params (object) : Object containing function parameters
- *      @param params.index : Index of the value to change
+ *      @param params.rownumber : rownumber of the value to change
  *      @param params.originalname : originalname of the column
  *      @param params.newname : newname of the column
  * 
@@ -86,7 +86,7 @@ function getPreviewTableHeadersArray()
 function setHeaderColumnName(params)
 {
     let columnData = getCsvHeadersArray();
-    columnData[params.index] = params.newname;
+    columnData[params.rownumber] = params.newname;
     setCsvHeadersArray(columnData);
 };
 
@@ -96,9 +96,9 @@ function setOutputValue(key, value)
     globalFile.output[key] = value;
 };
 
-function setColumnsOutputValue(index, key, value)
+function setColumnsOutputValue(rowNumber, key, value)
 {
-    globalFile.output.columns.at(index) ? globalFile.output.columns.at(index)[key] = value : globalFile.output.columns[index] = {[key]: value};
+    globalFile.output.columns.at(rowNumber) ? globalFile.output.columns.at(rowNumber)[key] = value : globalFile.output.columns[rowNumber] = {[key]: value};
 };
 
 function getDescriptiveOutput()
@@ -282,6 +282,18 @@ function getUnitListElement()
 function getUnitListElementId()
 {
     return 'ODM2_units';
+};
+
+function getColumnTypeDefaultValue()
+{
+    return "Normal";
+}
+
+
+
+function getColumnTypeOptions()
+{
+    return $('<option value="DateTime">DateTime</option><option value="Normal">Normal</option>');
 };
 
 function getLimnoListElementId()
@@ -488,7 +500,7 @@ function createRenameTable(csvRows)
     div.append("<br>");
     
     //Create an input for the COMID
-    div.append('<a href="https://docs.google.com/document/d/1JYbkfELCY0MWOWYREPyM61-bHjUl49YmqUwISsjw_tY/edit?usp=sharing">Find your Lake Common Identifier (COMID)</a>');
+    div.append('<a target="_blank" href="https://docs.google.com/document/d/1JYbkfELCY0MWOWYREPyM61-bHjUl49YmqUwISsjw_tY/edit?usp=sharing">Find your Lake Common Identifier (COMID)</a>');
     div.append("<br>");
     createCOMIDLabelAndAppendToDiv(div);
     createCOMIDInputAndAppendToDiv(div);
@@ -498,14 +510,14 @@ function createRenameTable(csvRows)
     let table = $("<table class='table'></table>");
     
     //Create <thead> with <tr> and <th> elements
-    let tableHeaderRow = createRenameTableHead();
+    let tableHeaderRow = createRenameTableColumnHeaders();
 
     //Append <thead> to <table>
     table.append(tableHeaderRow);
 
     //Create one <tr> for each column in the .csv file
     //csvDataRows is an array of <tr> elements
-    let csvDataRows = createRenameTableData(getCsvHeadersArray());
+    let csvDataRows = createRenameTableColumns(getCsvHeadersArray());
     
     //Append each <tr> element to the table
     csvDataRows.forEach(function(element){
@@ -810,7 +822,7 @@ function createLabelElement(attributes, text)
  *                          </tr>
  *                      <thead>
  */
-function createRenameTableHead()
+function createRenameTableColumnHeaders()
 {
     //Create thead element
     let thead,tr;
@@ -818,7 +830,7 @@ function createRenameTableHead()
     thead = $("<thead class='thead-light'></thead>");
 
     //Create <tr> with <th> for the rename table
-    tr = createRenameTableHeadRow();
+    tr = createRenameTableColumnHeaderRow();
     thead.append(tr);
 
     return thead;
@@ -830,7 +842,7 @@ function createRenameTableHead()
  *                      <th></th> [, <th></th>] //N <th> elements, where N is the length of headerElementsArray
  *                     </tr>
  */
-function createRenameTableHeadRow()
+function createRenameTableColumnHeaderRow()
 {
     let tr = $('<tr></tr>');
 
@@ -878,6 +890,12 @@ function getRenameTableHeaderElementNames()
                 id: "tableHeaderCurrentName",
             },
             text: "Current Name"
+        },
+        {
+            attributes: {
+                id: "tableHeaderColumnType"
+            },
+            text: "Column Type"
         },
         {
             attributes: {
@@ -943,89 +961,107 @@ function createElementWithValues(element, attributes, text)
  *                                  row[1] will be the value of the first cell in the second column
  * @return ( Array [HTMLElement] )
  */
-function createRenameTableData(csvHeadersArray)
+function createRenameTableColumns(csvHeadersArray)
 {
     
     let createdRows = [];
 
     //For every column, create a <tr> element
     csvHeadersArray.forEach(function(element, index){
-        let tr,td,textContent, cellName, args;
-        tr = $('<tr></tr>');
-        tr.attr('data-originalname', element);
-        tr.attr('data-index', index);
-        tr.attr('id', 'row_' + index);
-
-        //Create data cell for original column name
-        td = $('<td></td>').text(element);
-        tr.append(td);
-        
-        
-        //Create data cell for variable name selection
-        params = {
-            "parentRow":tr.attr('id'),
-            "index": index,
-            "className": "newNameInput" , 
-            "optionsListName": getSelectedControlledVocabularyDataListId(),
-            "changeEventCallback": handleNewColumnNameInput,
-            "defaultValue": undefined
-        };
-        td = createTableDataCellWithInput(params);
-
-        tr.append(td);
-
-        //Create data cell for definition
-        params["cellName"] = "definitionInput_row_" + index;
-        params["className"] = "definitionInput";
-        params["changeEventCallback"] = undefined; params["defaultValue"] = undefined;
-        td = createTableDataCellWithTextArea(params);
-        tr.append(td);
-
-        //Create data cell for units
-        
-        params = {
-            "parentRow":tr.attr('id'),
-            "index": index,
-            "className": "unitsInput" , 
-            "optionsListName": getSelectedControlledUnitDataListId(),
-            "changeEventCallback": handleNewUnitInput,
-            "defaultValue": undefined
-        };        
-
-        td = createTableDataCellWithInput(params);
-        tr.append(td);
-
-
-        params = {
-            "parentRow":tr.attr('id'),
-            "index": index,
-            "className": "depthInput" , 
-            "optionsListName": undefined,
-            "disabled" : true,
-            "changeEventCallback": handleNewDepthInput,
-            "defaultValue": undefined
-        };        
-
-        td = createTableDataCellWithInput(params);
-        tr.append(td);
-
-        // params = {
-        //     "parentRow":tr.attr('id'),
-        //     "index": index,
-        //     "className": "comidInput" , 
-        //     "optionsListName": undefined,
-        //     "changeEventCallback": undefined,
-        //     "defaultValue": undefined
-        // };        
-
-        // td = createTableDataCellWithInput(params);
-        // tr.append(td);
+        let tr = createNormalTypeRow(element, rowNumber=index);
 
         createdRows.push(tr);
     },createdRows);
 
     return createdRows;
 };
+
+function createNormalTypeRow(element, rowNumber)
+{
+    let tr,td;
+
+    tr = $('<tr></tr>');
+    tr.attr('data-originalname', element);
+    tr.attr('data-rownumber', rowNumber);
+    tr.attr('id', 'row_' + rowNumber);
+
+    //Create data cell for original column name
+    td = $('<td></td>').text(element);
+    tr.append(td);
+    
+    //Create data cell for column type selection
+    params = {
+        "parentRow": tr.attr('id'),
+        "rowNumber": rowNumber,
+        "className": "columnTypeInput" , 
+        "listOfOptions": getColumnTypeOptions(),
+        "changeEventCallback": handleColumnTypeInput,
+        "defaultValue": getColumnTypeDefaultValue(),
+    };
+    td = createTableDataCellWithSelect(params); 
+    tr.append(td);       
+
+    //Create data cell for new name selection
+    params = {
+        "parentRow":tr.attr('id'),
+        "rowNumber": rowNumber,
+        "className": "newNameInput" , 
+        "optionsListName": getSelectedControlledVocabularyDataListId(),
+        "changeEventCallback": handleNewColumnNameInput,
+        "defaultValue": undefined
+    };
+    td = createTableDataCellWithInput(params);
+    tr.append(td);
+
+    //Create data cell for definition
+    params["cellName"] = "definitionInput_row_" + rowNumber;
+    params["className"] = "definitionInput";
+    params["changeEventCallback"] = undefined; params["defaultValue"] = undefined;
+    td = createTableDataCellWithTextArea(params);
+    tr.append(td);
+
+    //Create data cell for units
+    
+    params = {
+        "parentRow":tr.attr('id'),
+        "rowNumber": rowNumber,
+        "className": "unitsInput" , 
+        "optionsListName": getSelectedControlledUnitDataListId(),
+        "changeEventCallback": handleNewUnitInput,
+        "defaultValue": undefined
+    };        
+
+    td = createTableDataCellWithInput(params);
+    tr.append(td);
+
+
+    params = {
+        "parentRow":tr.attr('id'),
+        "rowNumber": rowNumber,
+        "className": "depthInput" , 
+        "optionsListName": undefined,
+        "disabled" : true,
+        "changeEventCallback": handleNewDepthInput,
+        "defaultValue": undefined
+    };        
+
+    td = createTableDataCellWithInput(params);
+    tr.append(td);
+
+    // params = {
+    //     "parentRow":tr.attr('id'),
+    //     "rowNumber": rowNumber,
+    //     "className": "comidInput" , 
+    //     "optionsListName": undefined,
+    //     "changeEventCallback": undefined,
+    //     "defaultValue": undefined
+    // };        
+
+    // td = createTableDataCellWithInput(params);
+    // tr.append(td);
+
+    return tr;
+}
 
 /* Short Summary: Creates a <td> element with child <input> and <label> elements
  *                The <input> is given a list attribute. The list attribute is the id
@@ -1034,7 +1070,7 @@ function createRenameTableData(csvHeadersArray)
  * 
  * @param params ( Object ) : Contains key-value pairs of parameters
  * @param params.parentRow ( jQuery HTMLElement ) : jQuery reference to <tr> element that the <td><input> elements are under
- * @param params.index  (Number) : Number row that this is part of 
+ * @param params.rowNumber  (Number) : Number row that this is part of 
  * @param params.className (String) : name to be added as a classname to the <input>
  * @param params.optionsListName ( String ) : id of the <datalist> element to use. The <datalist> element contains
  *                                      options to select from 
@@ -1047,9 +1083,9 @@ function createTableDataCellWithInput(params)
 {
     let td, input;
 
-    let { parentRow, index, className, optionsListName, changeEventCallback, defaultValue, disabled } = params;
+    let { parentRow, rowNumber, className, optionsListName, changeEventCallback, defaultValue, disabled } = params;
 
-    let cellName = className + "_row_" + index;
+    let cellName = className + "_row_" + rowNumber;
     td =  $('<td></td>');
 
     //Add id, name, and parentrow to the input
@@ -1080,6 +1116,42 @@ function createTableDataCellWithInput(params)
     return td;
 };
 
+
+function createTableDataCellWithSelect(params)
+{
+    let td, select;
+
+    let { parentRow, rowNumber, className, listOfOptions, changeEventCallback, defaultValue, disabled } = params;
+
+    let cellName = className + "_row_" + rowNumber;
+    td =  $('<td></td>');
+
+    //Add id, name, and parentrow to the input
+    select = $('<select></select>').attr('id', cellName).attr('name', cellName).attr('data-parentrow', parentRow);
+
+    //Set class
+    select.addClass(className);
+
+    if(disabled === true) select.prop('disabled', true);
+
+    select.append(listOfOptions);
+
+    //Check if there is a default value
+    if(defaultValue)
+    {
+        select.val(defaultValue);
+    }
+
+    //Add an onChange event
+    select.on('input', changeEventCallback);
+
+    //Add input as child of td
+    td.append(select);
+
+    return td;
+}
+
+
 /* Short Summary: Creates a <td> element with child <textarea> element
  *                The <input> is given a list attribute. The list attribute is the id
  *                of a <datalist> element, which contains options to select from.
@@ -1105,7 +1177,7 @@ function createTableDataCellWithTextArea(params)
     // textarea.css('display', 'inline-table');
     // textarea.css('width', 'inherit');
 
-    //Add row index and row name to input element
+    //Add row rowNumber and row name to input element
     textarea.on('input', changeEventCallback);
     td.append(textarea);
 
@@ -1132,6 +1204,24 @@ function handleNewColumnNameInput(e)
     $(input).attr('size', $(input).val().length);
 };
 
+function handleColumnTypeInput(e)
+{
+    debugger;
+    let input = e.target;
+    // let parentID = input.dataset.parentrow;
+    // $(`#${parentID}`)[0].innerHTML = '';
+
+    if(e.target.value === "Normal")
+    {
+        // changeRowToNormalType();
+        
+    }
+
+    else if(e.target.value === "DateTime")
+    {
+        //changeRowToDateTimeType();
+    }
+}
 
 function handleNewUnitInput(e)
 {
@@ -1174,19 +1264,19 @@ function updateRenameTableOutput(input)
 {
     let parentRow = $(`#${input.dataset.parentrow}`)[0];
     let originalname = parentRow.dataset.originalname;
-    let index = parentRow.dataset.index;
+    let rownumber = parentRow.dataset.rownumber;
 
     let option = input.list.options[input.value];
     
     //TODO finish setting these things in the output
 
     let previewTableHeadersArray = getPreviewTableHeadersArray();
-    setColumnsOutputValue(index,'column_name', previewTableHeadersArray[index]);
+    setColumnsOutputValue(rownumber,'column_name', previewTableHeadersArray[rownumber]);
     
-    let unitsInputElement = $(`#unitsInput_row_${index}`)[0];
+    let unitsInputElement = $(`#unitsInput_row_${rownumber}`)[0];
     let units = unitsInputElement.value;
     let unitsString = units ? `_${units}` : '';
-    setColumnsOutputValue(index,'units', unitsString);
+    setColumnsOutputValue(rownumber,'units', unitsString);
 
 };
 
@@ -1194,15 +1284,15 @@ function updatePreviewColumn(input)
 {
     let parentRow = $(`#${input.dataset.parentrow}`)[0];
     let originalname = parentRow.dataset.originalname;
-    let index = parentRow.dataset.index;
+    let rownumber = parentRow.dataset.rownumber;
 
     //Select Preview Table <th> element
-    let th = $(`#previewHeader_${originalname}_${index}`)[0];
+    let th = $(`#previewHeader_${originalname}_${rownumber}`)[0];
     
-    let newNameElement = $(`#newNameInput_row_${index}`)[0];
+    let newNameElement = $(`#newNameInput_row_${rownumber}`)[0];
     let newNameString = newNameElement.value;
 
-    let unitsInputElement = $(`#unitsInput_row_${index}`)[0];
+    let unitsInputElement = $(`#unitsInput_row_${rownumber}`)[0];
     let units = unitsInputElement.value;
     let unitsString = units ? `_${units}` : '';
 
@@ -1210,7 +1300,7 @@ function updatePreviewColumn(input)
 
     if(getDepthInputDisabled() === false)
     {
-        let depthInputElement = $(`#depthInput_row_${index}`)[0];
+        let depthInputElement = $(`#depthInput_row_${rownumber}`)[0];
         depth = depthInputElement.value;
     }
 
@@ -1220,7 +1310,7 @@ function updatePreviewColumn(input)
 
     let newPreviewName = newNameString + unitsString + depthString;
 
-    updatePreviewColumnHeadersArray(index, newPreviewName);
+    updatePreviewColumnHeadersArray(rownumber, newPreviewName);
     th.innerText = newPreviewName;
 };
 
