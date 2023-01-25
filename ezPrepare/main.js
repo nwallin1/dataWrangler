@@ -159,7 +159,7 @@ function prepareFileForDatalist(relativePathToText, isLimno, fileType, unitsFile
     .then((response) => {
         return response.text();
     }).then((data) => {
-        
+
         //shift() removes first element of the array because it is the header row
         let dataArray = data.split("\n");
         dataArray.shift();
@@ -253,7 +253,7 @@ function createLimnoODM2VariableNameDataList()
 function createFullODM2VariableNameDataList()
 {
     // let listElementId = getFullListElementId();
-    prepareFileForDatalist(relativePathToText='data/full_list/ODM2_varname_full.csv', isLimno=false, fileType='.txt', unitsFile=false, listElementId=getFullListElementId());
+    prepareFileForDatalist(relativePathToText='data/full_list/ODM2_varname_full.csv', isLimno=false, fileType='.csv', unitsFile=false, listElementId=getFullListElementId());
 };
 
 function createUnitDataList()
@@ -288,8 +288,6 @@ function getColumnTypeDefaultValue()
 {
     return "Normal";
 }
-
-
 
 function getColumnTypeOptions()
 {
@@ -450,6 +448,8 @@ function handleFiles()
         setCsvHeadersArray(csvHeadersArray);
         setPreviewTableHeadersArray(csvHeadersArray);
 
+        createQuestionElements();
+        createDateTimeTable();
         createRenameTable(getCsvRows());
         createPreviewTable(getCsvRows());
 
@@ -466,20 +466,10 @@ function getControlledVocabularyDataListId()
     return 'controlledVocabularyList';
 };
 
-/*  Short Summary: Creates a table with values from an input csv file
- *                 The rename table displays the current column name, and provides
- *                 a way to select a new column name.
- *                 See getRenameTableHeaderElementNames() function for information on the current columns
- *  
- *  @params csvRows {Array[String][String]}  An array containing the rows of the csv file.
- *                                        The first row is always the header row.
- *      
- */
-function createRenameTable(csvRows)
-{  
-    
-    //Select rename table <div>
-    let div = $('#renameTableDiv');
+
+function createQuestionElements()
+{
+    let div = $('#questionsDiv');
 
     //Clear div
     div.html("");
@@ -504,7 +494,65 @@ function createRenameTable(csvRows)
     div.append("<br>");
     createCOMIDLabelAndAppendToDiv(div);
     createCOMIDInputAndAppendToDiv(div);
+    div.append("<br>");
+}
+
+
+function createDateTimeTable()
+{
+    let div = $('#dateTimeTableDiv');
+
+    //Clear div
+    div.html("");
     
+    div.append('<hr><h2 class="text-center">Date Time</h2>');
+
+    let select;
+
+    //Add id, name, and parentrow to the input
+    select = $('<select></select>').attr('id', 'dateTimeColumnSelect').attr('name', 'dateTimeColumnSelect');
+
+    let array = getCsvHeadersArray();
+    let optionElementsString = array.reduce((accumulator, currentValue, currentIndex, array) => 
+    {
+        // <option value="DateTime">DateTime</option><option value="Normal">Normal</option>
+        accumulator += `<option value="${currentValue}">${currentValue}</option>`;
+        return accumulator;
+    },
+    initialValue=""
+    );
+
+    let optionElements = $(optionElementsString);
+    select.append(optionElements);
+
+    let selectLabel = createLabelElement({'id':'dateTimeColumnLabel'}, text="Select DateTime Column (If you have one)");
+
+    //Add an onChange event
+    // select.on('input', changeEventCallback);
+    //TODO
+
+    div.append(selectLabel);
+    div.append(select);
+
+}
+
+/*  Short Summary: Creates a table with values from an input csv file
+ *                 The rename table displays the current column name, and provides
+ *                 a way to select a new column name.
+ *                 See getRenameTableHeaderElementNames() function for information on the current columns
+ *  
+ *  @params csvRows {Array[String][String]}  An array containing the rows of the csv file.
+ *                                        The first row is always the header row.
+ *      
+ */
+function createRenameTable(csvRows)
+{  
+    
+    //Select rename table <div>
+    let div = $('#renameTableDiv');
+
+    //Clear div
+    div.html("");
 
     //Create Table Element
     let table = $("<table class='table'></table>");
@@ -1207,6 +1255,7 @@ function handleNewColumnNameInput(e)
 function handleColumnTypeInput(e)
 {
     debugger;
+    //TODO
     let input = e.target;
     // let parentID = input.dataset.parentrow;
     // $(`#${parentID}`)[0].innerHTML = '';
