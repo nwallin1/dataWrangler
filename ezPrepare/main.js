@@ -291,7 +291,7 @@ function getColumnTypeDefaultValue()
 
 function getColumnTypeOptions()
 {
-    return $('<option value="DateTime">DateTime</option><option value="Normal">Normal</option>');
+    return $('<option value="Multivariable">Multivariable</option><option value="Normal">Normal</option>');
 };
 
 function getLimnoListElementId()
@@ -515,7 +515,6 @@ function createDateTimeTable()
     let array = getCsvHeadersArray();
     let optionElementsString = array.reduce((accumulator, currentValue, currentIndex, array) => 
     {
-        // <option value="DateTime">DateTime</option><option value="Normal">Normal</option>
         accumulator += `<option value="${currentValue}">${currentValue}</option>`;
         return accumulator;
     },
