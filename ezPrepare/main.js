@@ -656,20 +656,37 @@ function handleDepthQuestionInput(e)
 {
     //Enable or disable depth based on depth question
 
-    let depthInputs = $('[id*="depthInput"');
 
     if(e.target.value === 'Yes') 
     {
-        setDepthInputDisabled(false);
-        addDepthStringsfromPreviewColumnHeadersArray();
-        depthInputs.prop('disabled', false);
+        showDepthColumn()
+        
         return;
     }
 
+    hideDepthColumn();
+
+    return;
+}
+
+function showDepthColumn()
+{
+    let depthInputs = $('[id*="depthInput"');
+    setDepthInputDisabled(false);
+    addDepthStringsfromPreviewColumnHeadersArray();
+    depthInputs.prop('disabled', false);
+    $('#tableHeaderDepth').attr('hidden', false);
+    depthInputs.attr('hidden', false);
+}
+
+function hideDepthColumn()
+{
+    let depthInputs = $('[id*="depthInput"');
     setDepthInputDisabled(true);
     removeDepthStringsfromPreviewColumnHeadersArray()
     depthInputs.prop('disabled', true);
-    return;
+    $('#tableHeaderDepth').attr('hidden', true)
+    depthInputs.attr('hidden', true);
 }
 
 
@@ -966,8 +983,9 @@ function getRenameTableHeaderElementNames()
         {
             attributes: {
                 id: "tableHeaderDepth",
+                hidden: true
             },
-            text: "Depth"
+            text: "Depth",
         },
     ];
 };
@@ -1146,7 +1164,11 @@ function createTableDataCellWithInput(params)
     //OLD - Otherwise, disable the element from being edited
     // else input.attr('disabled', true);
 
-    if(disabled === true) input.prop('disabled', true);
+    if(disabled === true)
+    {
+        input.prop('disabled', true);
+        input.attr('hidden', true);
+    }
 
     //Check if there is a default value
     if(defaultValue)
