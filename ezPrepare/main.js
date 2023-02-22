@@ -1304,7 +1304,7 @@ function updateDefinitionColumn(input)
 
     //Set definition value to definition value of selected option
     //If option is defined, set the definition value to the option's label
-    $(`#definitionInput_row_${rowNumber}`)[0].value = option ? `${option.label}` : '';
+    $(`#definitionInput_row_${rowNumber}`)[0].value = option ? `${option.dataset.description}` : '';
 
 };
 
