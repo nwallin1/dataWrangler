@@ -449,7 +449,7 @@ function handleFiles()
         setPreviewTableHeadersArray(csvHeadersArray);
 
         createQuestionElements();
-        createDateTimeTable();
+        createDateTimeSection();
         createRenameTable(getCsvRows());
         createPreviewTable(getCsvRows());
 
@@ -498,24 +498,29 @@ function createQuestionElements()
 }
 
 
-function createDateTimeTable()
+function createDateTimeSection()
 {
-    let div = $('#dateTimeTableDiv');
+    let div = $('#dateTimeSection');
 
     //Clear div
     div.html("");
     
     div.append('<hr><h2 class="text-center">Date Time</h2>');
-
     let select;
 
     //Add id, name, and parentrow to the input
     select = $('<select></select>').attr('id', 'dateTimeColumnSelect').attr('name', 'dateTimeColumnSelect');
 
     let array = getCsvHeadersArray();
-    let optionElementsString = array.reduce((accumulator, currentValue, currentIndex, array) => 
+
+
+    //Default Option
+    let optionElementsString = '<option hidden disabled selected value> -- select an option -- </option>'
+    
+    //Add one <option> for each column in the table
+    optionElementsString += array.reduce((accumulator, currentValue, currentIndex, array) => 
     {
-        accumulator += `<option value="${currentValue}">${currentValue}</option>`;
+        accumulator += `<option value="${currentValue}_${currentIndex}">${currentValue}</option>`;
         return accumulator;
     },
     initialValue=""
@@ -524,15 +529,154 @@ function createDateTimeTable()
     let optionElements = $(optionElementsString);
     select.append(optionElements);
 
-    let selectLabel = createLabelElement({'id':'dateTimeColumnLabel'}, text="Select DateTime Column (If you have one)");
+    let selectLabel = createLabelElement({'id':'dateTimeColumnLabel'}, text="Select DateTime Column (If you have one).");
 
     //Add an onChange event
-    // select.on('input', changeEventCallback);
-    //TODO
+    select.on('input', dateTimeColumnSelected);
 
+    let selectHelpText = '<br><span class="form-text"> It is assumed that you have only one column, that includes all your date and time information.</span>'
     div.append(selectLabel);
     div.append(select);
+    div.append(selectHelpText);
 
+}
+
+function dateTimeColumnSelected(event)
+{
+    let selectedColumnName = event.target.value;
+    createDateTimeTable(selectedColumnName);
+}
+
+/*
+ * @param selectedColumnName [String]: The column name that was selected as the "datetime" column
+                                        by the user
+ */
+function createDateTimeTable(selectedColumnName)
+{
+    let div = $('#dateTimeTableDiv');
+
+    //Clear div
+    div.html("");
+    
+    //Create Table Element
+    let table = $("<table class='table'></table>");
+
+    let tableHeaderRow = createDateTimeTableColumnHeaders();
+
+    table.append(tableHeaderRow);
+    
+    // //csvDataRows is an array of <tr> elements
+    let dateTimeRow = createDateTimeTableRow(selectedColumnName);
+    table.append(dateTimeRow);
+
+    //TODO add information to output file
+    // csvDataRows.forEach(function(element){
+    //     //Add initial values to output object
+    //     //Need to call updateRenameTableOutput with the newNameInput data cell for each row
+    //     updateRenameTableOutput($(`#newNameInput_${element[0].id}`)[0]);
+    // })
+
+    div.append($('<hr><h2>DateTime Table</h2>'));
+    div.append(table);
+
+    $('#dateTimeSection').append(div);
+}
+
+
+/* Short Summary: Returns an HTMLElement <tr>
+ * @return ( Array [HTMLElement] )
+ */
+function createDateTimeTableRow(selectedColumnName)
+{
+    let tr,td;
+
+    let rowNumber = "datetime";
+    tr = $('<tr></tr>');
+    tr.attr('data-originalname', selectedColumnName);
+    tr.attr('data-rownumber', rowNumber);
+    tr.attr('id', 'row_' + rowNumber);
+
+    //Create data cell for original column name
+    td = $('<td></td>').text(selectedColumnName);
+    tr.append(td);    
+
+    //Create data cell for new name selection
+    params = {
+        "parentRow":tr.attr('id'),
+        "rowNumber": rowNumber,
+        "className": "dateTimeNewName" , 
+        "optionsListName": undefined,
+        "defaultValue": "dateTime",
+        "disabled": true,
+        "hidden" : false,
+    };
+    td = createTableDataCellWithInput(params);
+    tr.append(td);
+
+    params = {
+        "parentRow":tr.attr('id'),
+        "rowNumber": rowNumber,
+        "className": "dateTimeFormat" , 
+        "optionsListName": undefined,
+        "defaultValue": undefined,
+        "disabled": false,
+        "hidden" : false,
+    };
+    td = createTableDataCellWithInput(params);
+    tr.append(td);
+
+    return tr;
+};
+
+function createDateTimeTableColumnHeaders()
+{
+    //Create thead element
+    let thead,tr;
+
+    thead = $("<thead class='thead-light'></thead>");
+
+    //Create <tr> with <th> for the dateTime table
+    tr = createDateTimeTableColumnHeaderRow();
+    thead.append(tr);
+
+    return thead;
+}
+
+
+function createDateTimeTableColumnHeaderRow()
+{
+    let tr = $('<tr></tr>');
+
+    let headerElementsArray = getDateTimeTableHeaderElementNames();
+
+    //Create one <th> element per object in the headerElementsArray. Adds each <th> to tr variable
+    headerElementsArray.forEach(createTableHeaderElementAndAppendToTableRow,tr);
+
+    return tr;
+}
+
+function getDateTimeTableHeaderElementNames()
+{
+    return [
+        {
+            attributes: {
+                id: "dateTimeCurrentName",
+            },
+            text: "Current Name"
+        },
+        {
+            attributes: {
+                id: "dateTimeNewName",
+            },
+            text: "New Name"
+        },
+        {
+            attributes: {
+                id: "dateTimeFormat",
+            },
+            text: "Your DateTime format"
+        },
+    ];
 }
 
 /*  Short Summary: Creates a table with values from an input csv file
@@ -1059,9 +1203,10 @@ function createNormalTypeRow(element, rowNumber)
         "parentRow": tr.attr('id'),
         "rowNumber": rowNumber,
         "className": "columnTypeInput" , 
-        "listOfOptions": getColumnTypeOptions(),
+        "optionsListName": getColumnTypeOptions(),
         "changeEventCallback": handleColumnTypeInput,
         "defaultValue": getColumnTypeDefaultValue(),
+        "disabled" : false
     };
     td = createTableDataCellWithSelect(params); 
     tr.append(td);       
@@ -1073,15 +1218,21 @@ function createNormalTypeRow(element, rowNumber)
         "className": "newNameInput" , 
         "optionsListName": getSelectedControlledVocabularyDataListId(),
         "changeEventCallback": handleNewColumnNameInput,
-        "defaultValue": undefined
+        "defaultValue": undefined,
+        "disabled" : false,
+        "hidden" : false
     };
     td = createTableDataCellWithInput(params);
     tr.append(td);
 
     //Create data cell for definition
-    params["cellName"] = "definitionInput_row_" + rowNumber;
-    params["className"] = "definitionInput";
-    params["changeEventCallback"] = undefined; params["defaultValue"] = undefined;
+    params = {
+        "parentRow": tr.attr('id'),
+        "rowNumber": rowNumber,
+        "className" : "definitionInput",
+        "changeEventCallback" : undefined,
+    };
+
     td = createTableDataCellWithTextArea(params);
     tr.append(td);
 
@@ -1093,7 +1244,9 @@ function createNormalTypeRow(element, rowNumber)
         "className": "unitsInput" , 
         "optionsListName": getSelectedControlledUnitDataListId(),
         "changeEventCallback": handleNewUnitInput,
-        "defaultValue": undefined
+        "defaultValue": undefined,
+        "disabled" : false,
+        "hidden" : false
     };        
 
     td = createTableDataCellWithInput(params);
@@ -1105,25 +1258,14 @@ function createNormalTypeRow(element, rowNumber)
         "rowNumber": rowNumber,
         "className": "depthInput" , 
         "optionsListName": undefined,
-        "disabled" : true,
         "changeEventCallback": handleNewDepthInput,
-        "defaultValue": undefined
+        "defaultValue": undefined,
+        "disabled" : true,
+        "hidden" : false
     };        
 
     td = createTableDataCellWithInput(params);
     tr.append(td);
-
-    // params = {
-    //     "parentRow":tr.attr('id'),
-    //     "rowNumber": rowNumber,
-    //     "className": "comidInput" , 
-    //     "optionsListName": undefined,
-    //     "changeEventCallback": undefined,
-    //     "defaultValue": undefined
-    // };        
-
-    // td = createTableDataCellWithInput(params);
-    // tr.append(td);
 
     return tr;
 }
@@ -1148,7 +1290,7 @@ function createTableDataCellWithInput(params)
 {
     let td, input;
 
-    let { parentRow, rowNumber, className, optionsListName, changeEventCallback, defaultValue, disabled } = params;
+    let { parentRow, rowNumber, className, optionsListName, changeEventCallback, defaultValue, disabled, hidden} = params;
 
     let cellName = className + "_row_" + rowNumber;
     td =  $('<td></td>');
@@ -1161,12 +1303,15 @@ function createTableDataCellWithInput(params)
 
     //If there is an optionsListName, set the list attribute
     if(optionsListName) input.attr('list', optionsListName)
-    //OLD - Otherwise, disable the element from being edited
-    // else input.attr('disabled', true);
 
     if(disabled === true)
     {
         input.prop('disabled', true);
+    }
+
+    if(hidden === true)
+    {
+        debugger;
         input.attr('hidden', true);
     }
 
@@ -1190,7 +1335,7 @@ function createTableDataCellWithSelect(params)
 {
     let td, select;
 
-    let { parentRow, rowNumber, className, listOfOptions, changeEventCallback, defaultValue, disabled } = params;
+    let { parentRow, rowNumber, className, optionsListName, changeEventCallback, defaultValue, disabled } = params;
 
     let cellName = className + "_row_" + rowNumber;
     td =  $('<td></td>');
@@ -1203,7 +1348,7 @@ function createTableDataCellWithSelect(params)
 
     if(disabled === true) select.prop('disabled', true);
 
-    select.append(listOfOptions);
+    select.append(optionsListName);
 
     //Check if there is a default value
     if(defaultValue)
@@ -1237,7 +1382,8 @@ function createTableDataCellWithTextArea(params)
 {
     let td, textarea;
 
-    let { parentRow, cellName, changeEventCallback } = params;
+    let { parentRow, rowNumber, className, changeEventCallback } = params;
+    let cellName = className + "_row_" + rowNumber;
     td =  $('<td></td>');
     td.css('width', '25vw');
 
