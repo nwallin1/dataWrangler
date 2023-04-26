@@ -613,8 +613,9 @@ function createDateTimeForm(selectedColumnId)
         //Need further user input
         let formatFormGroup = $("<div class='form-group col-md-4'></div>");
         let formatLabel = $("<label for=dateTimeFormFormat>Please Input Your Date Time Format</label>");
-        let formatInput = $("<input type='text' class='form-control' id='dateTimeFormFormat' placeholder='MM/DD/YYY hh/mm/ss'>");
-        let formatHelpText = $("<small id='dateTimeFormFormatHelpText' class='form-text text-muted'><a href='https://github.com/moment/luxon/blob/master/docs/parsing.md#table-of-tokens'>Use Values Found In This Table</a><br>Example: MM/DD/YYY hh/mm/ss</small>");
+        // let formatInput = $("<input type='text' class='form-control' id='dateTimeFormFormat' placeholder='MM/DD/YYY hh/mm/ss'>");
+        let formatInput = $("<input type='text' list='dateTimeFormatList' class='form-control' id='dateTimeFormFormat'>");
+        // let formatHelpText = $("<small id='dateTimeFormFormatHelpText' class='form-text text-muted'><a href='https://github.com/moment/luxon/blob/master/docs/parsing.md#table-of-tokens'>Use Values Found In This Table</a><br>Example: MM/DD/YYYY hh/mm/ss</small>");
 
         formatFormGroup.append(formatLabel);
         formatFormGroup.append(formatInput);
