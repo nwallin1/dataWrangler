@@ -1,4 +1,6 @@
-
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
 
 /**
  * Short Summary: Keep track of global variables
@@ -1073,6 +1075,12 @@ function createTableHeaderElementAndAppendToTableRow(element)
 {
     let th = createTableHeaderElement(element.attributes, text=element.text);
 
+    if(element.text === "Column Type")
+    {
+        let tooltip = $(`<button type="button" class="help-button btn" data-toggle="tooltip" data-placement="right" title="'Normal' column has one variable name, and each row is a data value. 'Multivariable' is a column whose rows are each a variable name. Usually the column name for a 'Multivariable' column is something like 'variable_name'">&#9432;</button>`).tooltip();
+        th.append(tooltip);
+    }
+    
     //This is expected to be a tr element
     this.append(th);
 };

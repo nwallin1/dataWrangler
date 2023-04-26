@@ -21,3 +21,14 @@ label{
 /* updateRenameTableOutput */
 
 /* handleNewColumnNameInput */
+#list-of-prerequisites{
+    display: inline-block;
+}
+
+#list-of-prerequisites > li{
+    text-align: left;
+}
+
+.help-button{
+    size: 5px;
+}

@@ -14,9 +14,17 @@
     <div id="files" class="container">
         <div  id="inputFileDiv">
             <h2>ezPrepare</h2>
+            <h6>Have the following information available for this tool:</h6>
+            <ul id="list-of-prerequisites" class="d.inline-block">
+                <li>.csv file, containing column names and rows with data</li>
+                <li>Units used for each Column</li>
+                <li>[If applicable] What depth measurements were taken at</li>
+            </ul>
+            <br>
             <!-- File Upload -->
             <input type="file" id="fileInput" accept=".csv" style="display:none">
             <button id="fileInputButton">Upload File</button>
+            
         </div>
 
         <div id="questionsDiv"></div>
