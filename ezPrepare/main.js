@@ -2,6 +2,7 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip()
   })
 
+var DateTime = luxon.DateTime;
 /**
  * Short Summary: Keep track of global variables
  * 
@@ -545,140 +546,139 @@ function createDateTimeSection()
 
 function dateTimeColumnSelected(event)
 {
-    let selectedColumnName = event.target.value;
-    createDateTimeTable(selectedColumnName);
+    let selectedColumnId = event.target.value;
+    createDateTimeForm(selectedColumnId);
 }
 
 /*
- * @param selectedColumnName [String]: The column name that was selected as the "datetime" column
+ * @param selectedColumnId [String]: The column name that was selected as the "datetime" column
                                         by the user
  */
-function createDateTimeTable(selectedColumnName)
+function createDateTimeForm(selectedColumnId)
 {
-    let div = $('#dateTimeTableDiv');
+    let div = $('#dateTimeFormDiv');
 
     //Clear div
     div.html("");
-    
-    //Create Table Element
-    let table = $("<table class='table'></table>");
+    //Create Form Element
+    let form = $("<form></form>");
 
-    let tableHeaderRow = createDateTimeTableColumnHeaders();
-
-    table.append(tableHeaderRow);
+    let rowOne = $("<div class='d-flex row'></div>")
+    let columnNameFormGroup = $("<div class='form-group col-md-4'></div>");
+    let columnNameLabel = $("<label for='datetimeFormOriginalName'>Original Date Time Column Name</label>");
+    let columnNameInput = $("<input type='text' class='form-control' id='datetimeFormOriginalName' disabled>");
     
-    // //csvDataRows is an array of <tr> elements
-    let dateTimeRow = createDateTimeTableRow(selectedColumnName);
-    table.append(dateTimeRow);
+    let selectedColumnName = selectedColumnId.split("_")[0];
+    columnNameInput.val(selectedColumnName);
+
+    columnNameFormGroup.append(columnNameLabel);
+    columnNameFormGroup.append(columnNameInput);
+    rowOne.append(columnNameFormGroup);
+
+    let newNameFormGroup = $("<div class='form-group col-md-4'></div>");
+    let newNameLabel = $("<label for='datetimeFormNewName'>New Date Time Column Name</label>");
+    let newNameInput = $("<input type='text' class='form-control' id='datetimeFormNewName' disabled>");
+    newNameInput.val("datetime");
+
+    newNameFormGroup.append(newNameLabel);
+    newNameFormGroup.append(newNameInput);
+    rowOne.append(newNameFormGroup);
+
+    form.append(rowOne);
+
+
+    //Row Two
+    let rowTwo = $("<div class='d-flex row'></div>");
+
+    let valueFormGroup = $("<div class='form-group col-md-4'></div>");
+    let valueLabel = $("<label for='datetimeFormValue'>Date Time Value</label>");
+    let valueInput = $("<input type='text' class='form-control' id='datetimeFormValue' disabled>");
+    valueInput.val(getFirstDateTimeValue(selectedColumnId));
+
+    valueFormGroup.append(valueLabel);
+    valueFormGroup.append(valueInput);
+    rowTwo.append(valueFormGroup);
+
+    let isISOValidDateTimeFormat = testDateTimeFormat(getFirstDateTimeValue(selectedColumnId));
+
+    if(isISOValidDateTimeFormat)
+    {
+        //Display text saying format is an understand ISO Date Time Format
+        let validText = $('<p>Valid Date Time Format Automatically Detected</p>');
+        rowTwo.append(validText);
+    }
+    else
+    {
+        //This is not an ISO valid dateTime.
+        //Need further user input
+        let formatFormGroup = $("<div class='form-group col-md-4'></div>");
+        let formatLabel = $("<label for=dateTimeFormFormat>Please Input Your Date Time Format</label>");
+        let formatInput = $("<input type='text' class='form-control' id='dateTimeFormFormat' placeholder='MM/DD/YYY hh/mm/ss'>");
+        let formatHelpText = $("<small id='dateTimeFormFormatHelpText' class='form-text text-muted'><a href='https://github.com/moment/luxon/blob/master/docs/parsing.md#table-of-tokens'>Use Values Found In This Table</a><br>Example: MM/DD/YYY hh/mm/ss</small>");
+
+        formatFormGroup.append(formatLabel);
+        formatFormGroup.append(formatInput);
+        formatFormGroup.append(formatHelpText);
+        rowTwo.append(formatFormGroup);
+    }
+
+    form.append(rowTwo);
+
+    //Row Three
+    let rowThree = $("<div class='d-flex row'></div>");
+    let zoneFormGroup = $("<div class='form-group col-md-4'></div>");
+    let zoneLabel = $("<label for='datetimeFormZone'>Time Zone</label>");
+    let zoneInput = $("<input class='form-control' id='datetimeFormZone'>");
+
+    let arrayOfTimeZones = Intl.supportedValuesOf('timeZone');
+
+    let dateListOfTimeZones = $("<datalist id='timeZonesDataList'></datalist>")
+    arrayOfTimeZones.forEach(
+        function(value, index, array)
+        {
+            let option = $(`<option value=${value}></option>)`);
+            this.append(option);
+        },
+        thisArg=dateListOfTimeZones
+    );
+
+    $('#datalists').append(dateListOfTimeZones);
+
+    zoneInput.attr('list', 'timeZonesDataList');
+    zoneFormGroup.append(zoneLabel);
+    zoneFormGroup.append(zoneInput);
+    rowThree.append(zoneFormGroup);
+
+    form.append(rowThree);
 
     //TODO add information to output file
-    // csvDataRows.forEach(function(element){
-    //     //Add initial values to output object
-    //     //Need to call updateRenameTableOutput with the newNameInput data cell for each row
-    //     updateRenameTableOutput($(`#newNameInput_${element[0].id}`)[0]);
-    // })
 
-    div.append($('<hr><h2>DateTime Table</h2>'));
-    div.append(table);
+    div.append($('<hr><h2>DateTime Format</h2>'));
+    div.append(form);
 
     $('#dateTimeSection').append(div);
+
 }
 
 
-/* Short Summary: Returns an HTMLElement <tr>
- * @return ( Array [HTMLElement] )
- */
-function createDateTimeTableRow(selectedColumnName)
+function getFirstDateTimeValue(columnName)
 {
-    let tr,td;
+    let index = columnName.at(-1);
 
-    let rowNumber = "datetime";
-    tr = $('<tr></tr>');
-    tr.attr('data-originalname', selectedColumnName);
-    tr.attr('data-rownumber', rowNumber);
-    tr.attr('id', 'row_' + rowNumber);
+    let rows = getCsvRows();
+    //Skip Header Row, get first data row
+    let firstDataRow = rows.slice(1,2)[0];
+    let dateTimeValue = firstDataRow.split(",")[index];
 
-    //Create data cell for original column name
-    td = $('<td></td>').text(selectedColumnName);
-    tr.append(td);    
-
-    //Create data cell for new name selection
-    params = {
-        "parentRow":tr.attr('id'),
-        "rowNumber": rowNumber,
-        "className": "dateTimeNewName" , 
-        "optionsListName": undefined,
-        "defaultValue": "dateTime",
-        "disabled": true,
-        "hidden" : false,
-    };
-    td = createTableDataCellWithInput(params);
-    tr.append(td);
-
-    params = {
-        "parentRow":tr.attr('id'),
-        "rowNumber": rowNumber,
-        "className": "dateTimeFormat" , 
-        "optionsListName": undefined,
-        "defaultValue": undefined,
-        "disabled": false,
-        "hidden" : false,
-    };
-    td = createTableDataCellWithInput(params);
-    tr.append(td);
-
-    return tr;
-};
-
-function createDateTimeTableColumnHeaders()
-{
-    //Create thead element
-    let thead,tr;
-
-    thead = $("<thead class='thead-light'></thead>");
-
-    //Create <tr> with <th> for the dateTime table
-    tr = createDateTimeTableColumnHeaderRow();
-    thead.append(tr);
-
-    return thead;
+    return dateTimeValue;
 }
-
-
-function createDateTimeTableColumnHeaderRow()
+function testDateTimeFormat(dateTimeValue)
 {
-    let tr = $('<tr></tr>');
 
-    let headerElementsArray = getDateTimeTableHeaderElementNames();
-
-    //Create one <th> element per object in the headerElementsArray. Adds each <th> to tr variable
-    headerElementsArray.forEach(createTableHeaderElementAndAppendToTableRow,tr);
-
-    return tr;
-}
-
-function getDateTimeTableHeaderElementNames()
-{
-    return [
-        {
-            attributes: {
-                id: "dateTimeCurrentName",
-            },
-            text: "Current Name"
-        },
-        {
-            attributes: {
-                id: "dateTimeNewName",
-            },
-            text: "New Name"
-        },
-        {
-            attributes: {
-                id: "dateTimeFormat",
-            },
-            text: "Your DateTime format"
-        },
-    ];
+    //Tries to create a DateTime from a string in
+    //an ISO Valid DateTime format - https://moment.github.io/luxon/#/parsing?id=iso-8601
+    let dateTest = DateTime.fromISO(dateTimeValue);
+    return dateTest.isValid;
 }
 
 /*  Short Summary: Creates a table with values from an input csv file
@@ -1319,7 +1319,6 @@ function createTableDataCellWithInput(params)
 
     if(hidden === true)
     {
-        debugger;
         input.attr('hidden', true);
     }
 
@@ -1430,7 +1429,7 @@ function handleNewColumnNameInput(e)
 function handleColumnTypeInput(e)
 {
     debugger;
-    //TODO
+    //TODO this function needs to be changed to handle multiVariable Columns
     let input = e.target;
     // let parentID = input.dataset.parentrow;
     // $(`#${parentID}`)[0].innerHTML = '';
@@ -1441,9 +1440,9 @@ function handleColumnTypeInput(e)
         
     }
 
-    else if(e.target.value === "DateTime")
+    else if(e.target.value === "Multivariable")
     {
-        //changeRowToDateTimeType();
+        //changeRowToMultivariableType();
     }
 }
 
@@ -1627,7 +1626,6 @@ function createPreviewBodyRows(rows)
     let firstFiveDataRows = rows.slice(1,6);
 
     firstFiveDataRows.forEach(createPreviewBodyTableRowElement, createdTableRows)
-
 
     return createdTableRows
 };
