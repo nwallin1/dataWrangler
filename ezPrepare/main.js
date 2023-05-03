@@ -614,13 +614,34 @@ function createDateTimeForm(selectedColumnId)
         let formatFormGroup = $("<div class='form-group col-md-4'></div>");
         let formatLabel = $("<label for=dateTimeFormFormat>Please Input Your Date Time Format</label>");
         // let formatInput = $("<input type='text' class='form-control' id='dateTimeFormFormat' placeholder='MM/DD/YYY hh/mm/ss'>");
-        let formatInput = $("<input type='text' list='dateTimeFormatList' class='form-control' id='dateTimeFormFormat'>");
-        // let formatHelpText = $("<small id='dateTimeFormFormatHelpText' class='form-text text-muted'><a href='https://github.com/moment/luxon/blob/master/docs/parsing.md#table-of-tokens'>Use Values Found In This Table</a><br>Example: MM/DD/YYYY hh/mm/ss</small>");
-
+        let formatSelect = $("<select class='form-control' id='dateTimeFormFormat'>");
+        addDateTimeFormatOptionsToSelectElement(formatSelect);        
+        formatSelect.on('input', function(e){
+            let helpElement = $('#dateTimeFormFormatHelpText')
+            if(e.target.value === "Custom")
+            {
+                $('#formatCustomFormGroup').attr("hidden", false);
+            }
+            else
+            {
+                $('#formatCustomFormGroup').attr("hidden", true);
+            }
+            
+        });
         formatFormGroup.append(formatLabel);
-        formatFormGroup.append(formatInput);
-        formatFormGroup.append(formatHelpText);
+        formatFormGroup.append(formatSelect);
+        
         rowTwo.append(formatFormGroup);
+
+        let formatCustomFormGroup = $("<div id='formatCustomFormGroup' hidden class='form-group col-md-4'></div>");
+        let formatInputCustom = $("<input type='text' class='form-control' id='dateTimeFormFormatCustom'></input>");
+        let formatLabelCustom = $("<label for=dateTimeFormFormatCustom>Custom Date Time Format</label>");
+        let formatHelpTextCustom = $("<small id='dateTimeFormFormatHelpTextCustom' class='form-text text-muted'><a href='https://github.com/moment/luxon/blob/master/docs/parsing.md#table-of-tokens'>Use Values Found In This Table</a><br>Example: MM/DD/YYYY hh/mm/ss</small>");
+        formatCustomFormGroup.append(formatLabelCustom);
+        formatCustomFormGroup.append(formatInputCustom);
+        formatCustomFormGroup.append(formatHelpTextCustom);
+        rowTwo.append(formatCustomFormGroup);
+
     }
 
     form.append(rowTwo);
@@ -661,6 +682,21 @@ function createDateTimeForm(selectedColumnId)
 
 }
 
+
+function addDateTimeFormatOptionsToSelectElement(selectElement)
+{
+   let optionElements =  $(`<option >YYYY-MM-DD HH:mm:ss (Ex: 2023-04-13 14:52:30)</option>
+    <option>YYYY-MM-DD HH:mm (Ex: 2023-04-13 14:52)</option>
+    <option>YYYY-MM-DD HH:mm:ss a (Ex: 2023-04-13 14:52:30 pm)</option>
+    <option>YYYY-MM-DD HH:mm a (Ex: 2023-04-13 14:52 pm)</option>
+    <option>MM/DD/YY hh:mm a (Ex: 04/13/23 2:52 pm)</option>
+    <option>MM/DD/YYYY hh:mm a (Ex: 04/13/2023 2:52 pm)</option>
+    <option>MM/DD/YY HH:mm (Ex: 04/13/23 14:52)</option>
+    <option>MM/DD/YYYY HH:mm (Ex: 04/13/2023 14:52)</option>
+    <option>Custom</option>`);
+    
+    selectElement.append(optionElements);
+}
 
 function getFirstDateTimeValue(columnName)
 {
