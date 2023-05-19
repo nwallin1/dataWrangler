@@ -114,7 +114,8 @@ function getDescriptiveOutput()
 createLimnoODM2VariableNameDataList();
 createFullODM2VariableNameDataList();
 createUnitDataList();
-
+createFullTimeZoneDataList();
+createDSTTimeZoneDataList();
 
 if (document.readyState === 'loading') 
 {  // Loading hasn't finished yet
@@ -154,7 +155,7 @@ function handleDOMContentLoaded()
  * @param { Bool } unitsFile
  *          true if the file is a units file
  */
-function prepareFileForDatalist(relativePathToText, isLimno, fileType, unitsFile='false', listElementId)
+function prepareFileForDatalist(relativePathToText, isLimno, fileType, unitsFile='false', listElementId, hasHeaderColumn=true, isDSTTimeZone=false)
 {
     const getFileRequest = new Request(relativePathToText);
 
@@ -165,7 +166,8 @@ function prepareFileForDatalist(relativePathToText, isLimno, fileType, unitsFile
 
         //shift() removes first element of the array because it is the header row
         let dataArray = data.split("\n");
-        dataArray.shift();
+
+        if(hasHeaderColumn) dataArray.shift();
 
         //Filter out rows that are not needed for Limno
         if(isLimno)
@@ -173,18 +175,29 @@ function prepareFileForDatalist(relativePathToText, isLimno, fileType, unitsFile
             dataArray = filterRowsForLimno(dataArray);
         }
 
+        if(isDSTTimeZone)
+        {
+            dataArray = filterRowsForDST(dataArray);
+        }
+
         dataArray.forEach((value, index, array) => {
-            
-            switch (fileType) {
-                case '.csv':
-                    array[index] = value.split(/"?,(?![\d\w])"?|(?<=,),/, 7);
-                    break;
-                case '.txt':
-                    value = value.replaceAll('"', '');
-                    array[index] = value.split("\t");
-                    break;
-                default:
-                    break;
+            if(isDSTTimeZone)
+            {
+                array[index] = value.split(',')[0]
+            }
+            else
+            {
+                switch (fileType) {
+                    case '.csv':
+                        array[index] = value.split(/"?,(?![\d\w])"?|(?<=,),/, 7);
+                        break;
+                    case '.txt':
+                        value = value.replaceAll('"', '');
+                        array[index] = value.split("\t");
+                        break;
+                    default:
+                        break;
+                }
             }
 
             if( unitsFile === true )
@@ -196,6 +209,13 @@ function prepareFileForDatalist(relativePathToText, isLimno, fileType, unitsFile
                     unitsLink: array[index][4],
                     unitAbbreviation: array[index][6],
                 }
+            }
+            else if(isDSTTimeZone)
+            {
+                array[index] = {
+                    term: array[index], 
+                    name: array[index]
+                };
             }
             else
             {
@@ -239,6 +259,16 @@ function filterRowsForLimno(dataArray)
         });
 };
 
+function filterRowsForDST(dataArray)
+{            
+    //Filter out rows that are not needed
+        return dataArray.filter(
+        (value, index, array) => 
+        {
+            return value.endsWith("Y\r");
+        });
+};
+
 /* -------------- Data List Creation ----------------- */
 
 /*  Short Summary: Fetches local .csv with odm2 variable names, and converts the list
@@ -247,7 +277,7 @@ function filterRowsForLimno(dataArray)
 function createLimnoODM2VariableNameDataList()
 {
     // let listElementId = getLimnoListElementId();
-    prepareFileForDatalist(relativePathToText='data/limno_list/ODM2_varname_limno.txt', isLimno=true, fileType='.txt', unitsFile=false, listElementId=getLimnoListElementId());
+    prepareFileForDatalist(relativePathToText='data/limno_list/ODM2_varname_limno.txt', isLimno=true, fileType='.txt', unitsFile=false, listElementId=getLimnoListElementId(), hasHeaderColumn=true);
 };
 
 /*  Short Summary: Fetches local .csv with odm2 variable names, and converts the list
@@ -256,13 +286,23 @@ function createLimnoODM2VariableNameDataList()
 function createFullODM2VariableNameDataList()
 {
     // let listElementId = getFullListElementId();
-    prepareFileForDatalist(relativePathToText='data/full_list/ODM2_varname_full.csv', isLimno=false, fileType='.csv', unitsFile=false, listElementId=getFullListElementId());
+    prepareFileForDatalist(relativePathToText='data/full_list/ODM2_varname_full.csv', isLimno=false, fileType='.csv', unitsFile=false, listElementId=getFullListElementId(), hasHeaderColumn=true,isDSTTimeZone=false);
 };
 
 function createUnitDataList()
 {
-    prepareFileForDatalist(relativePathToText='data/limno_list/ODM2_units_limno_abbv.txt', isLimno=false, fileType='.txt', unitsFile=true, listElementId=getUnitListElementId());
+    prepareFileForDatalist(relativePathToText='data/limno_list/ODM2_units_limno_abbv.txt', isLimno=false, fileType='.txt', unitsFile=true, listElementId=getUnitListElementId(), hasHeaderColumn=true,isDSTTimeZone=false);
 };
+
+function createFullTimeZoneDataList()
+{
+    prepareFileForDatalist(relativePathToText='data/timeZones/allTimeZones.csv', isLimno=false, fileType='.csv', unitsFile=false, listElementId=getAllTimeZoneListElementId(), hasHeaderColumn=true, isDSTTimeZone=false);
+}
+
+function createDSTTimeZoneDataList()
+{
+    prepareFileForDatalist(relativePathToText='data/timeZones/onlyDSTTimeZones.csv', isLimno=false, fileType='.csv', unitsFile=false, listElementId=getDSTTimeZoneListElementId(), hasHeaderColumn=true, isDSTTimeZone=true);
+}
 
 /*  Short Summary: Selects the controlled unit input, and returns the value
  * 
@@ -285,6 +325,16 @@ function getUnitListElement()
 function getUnitListElementId()
 {
     return 'ODM2_units';
+};
+
+function getAllTimeZoneListElementId()
+{
+    return 'AllTimeZones';
+};
+
+function getDSTTimeZoneListElementId()
+{
+    return 'DSTTimeZones';
 };
 
 function getColumnTypeDefaultValue()
@@ -617,7 +667,6 @@ function createDateTimeForm(selectedColumnId)
         let formatSelect = $("<select class='form-control' id='dateTimeFormFormat'>");
         addDateTimeFormatOptionsToSelectElement(formatSelect);        
         formatSelect.on('input', function(e){
-            let helpElement = $('#dateTimeFormFormatHelpText')
             if(e.target.value === "Custom")
             {
                 $('#formatCustomFormGroup').attr("hidden", false);
@@ -648,25 +697,36 @@ function createDateTimeForm(selectedColumnId)
 
     //Row Three
     let rowThree = $("<div class='d-flex row'></div>");
+    let dstOnlyFormGroup = $("<div id='dstOnlyFormGroup' class='form-group col-md-4'></div>");
+
+    let dstCheckboxLabel = $("<label class='form-check-label' for='dstCheckboxInput'>Filter 'Time Zone' list to only show zones that observe Daylight Savings Time (DST)</label>");
+    let dstCheckboxInput = $("<input id='dstCheckboxInput' class='form-check-input' type='checkbox' value=''>");
+
+    //Create checkbox to switch  to zoneInput.attr('list', ``${getDSTTimeZoneListElementId()}``);
+    dstCheckboxInput.on('change', function(e){
+        if(e.target.checked)
+        {
+            $("#datetimeFormZone").attr('list', `${getDSTTimeZoneListElementId()}`);
+        }
+        else{
+            $("#datetimeFormZone").attr('list', `${getAllTimeZoneListElementId()}`);
+        }
+
+    });
+
+    dstOnlyFormGroup.append(dstCheckboxLabel);
+    dstOnlyFormGroup.append(dstCheckboxInput);
+    
+    rowThree.append(dstOnlyFormGroup);
+
     let zoneFormGroup = $("<div class='form-group col-md-4'></div>");
     let zoneLabel = $("<label for='datetimeFormZone'>Time Zone</label>");
     let zoneInput = $("<input class='form-control' id='datetimeFormZone'>");
+    let zoneTooltip = $(`<button type="button" class="help-button btn" data-toggle="tooltip" data-placement="right" title="For more information on timezone names and details, <a href='https://en.wikipedia.org/wiki/List_of_tz_database_time_zones'>see this link</a>">&#9432;</button>`).tooltip({'html': true, 'delay': { "hide": 2000 }});
+    zoneLabel.append(zoneTooltip);
+    zoneInput.attr('list', `${getAllTimeZoneListElementId()}`);
 
-    let arrayOfTimeZones = Intl.supportedValuesOf('timeZone');
-
-    let dateListOfTimeZones = $("<datalist id='timeZonesDataList'></datalist>")
-    arrayOfTimeZones.forEach(
-        function(value, index, array)
-        {
-            let option = $(`<option value=${value}></option>)`);
-            this.append(option);
-        },
-        thisArg=dateListOfTimeZones
-    );
-
-    $('#datalists').append(dateListOfTimeZones);
-
-    zoneInput.attr('list', 'timeZonesDataList');
+    
     zoneFormGroup.append(zoneLabel);
     zoneFormGroup.append(zoneInput);
     rowThree.append(zoneFormGroup);
@@ -1114,7 +1174,7 @@ function createTableHeaderElementAndAppendToTableRow(element)
 
     if(element.text === "Column Type")
     {
-        let tooltip = $(`<button type="button" class="help-button btn" data-toggle="tooltip" data-placement="right" title="'Normal' column has one variable name, and each row is a data value. 'Multivariable' is a column whose rows are each a variable name. Usually the column name for a 'Multivariable' column is something like 'variable_name'">&#9432;</button>`).tooltip();
+        let tooltip = $(`<button type="button" class="help-button btn" data-toggle="tooltip" data-placement="right" title="Sample Text">&#9432;</button>`).tooltip();
         th.append(tooltip);
     }
     
