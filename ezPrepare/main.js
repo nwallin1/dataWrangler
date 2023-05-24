@@ -578,7 +578,7 @@ function createDateTimeSection()
 
 
     //Default Option
-    let optionElementsString = '<option hidden disabled selected value> -- select an option -- </option>'
+    let optionElementsString = '<option hidden disabled selected value> -- select an option -- </option><option value=""></option>'
     
     //Add one <option> for each column in the table
     optionElementsString += array.reduce((accumulator, currentValue, currentIndex, array) => 
@@ -606,6 +606,7 @@ function createDateTimeSection()
 
 function dateTimeColumnSelected(event)
 {
+
     let selectedColumnId = event.target.value;
 
     hideSelectedRow(selectedColumnId);
@@ -619,6 +620,13 @@ function hideSelectedRow(selectedColumnId)
     {
         //show row
         currentHiddenRow.hidden = false;
+    }
+
+    //If the option selected was no column, then return
+    if(selectedColumnId === "") 
+    {
+        setHiddenDateTimeRow(null);
+        return;   
     }
 
     //Hide next row
@@ -638,6 +646,9 @@ function createDateTimeForm(selectedColumnId)
 
     //Clear div
     div.html("");
+
+    if(selectedColumnId === "") return;
+    
     //Create Form Element
     let form = $("<form></form>");
 
@@ -682,8 +693,8 @@ function createDateTimeForm(selectedColumnId)
     if(isISOValidDateTimeFormat)
     {
         //Display text saying format is an understand ISO Date Time Format
-        let validText = $('<p>Valid Date Time Format Automatically Detected</p>');
-        rowTwo.append(validText);
+        let validText = 'Valid Date Time Format Detected';
+        $('#formatStatusMessage').text(validText);
     }
     else
     {
@@ -698,16 +709,34 @@ function createDateTimeForm(selectedColumnId)
             if(e.target.value === "Custom")
             {
                 $('#formatCustomFormGroup').attr("hidden", false);
+                //TODO
+                //check if valid for custom
+                
+                
             }
             else
             {
                 $('#formatCustomFormGroup').attr("hidden", true);
+                //check if input is valid by seeing if the test value matches the selected format
+                let testDate = DateTime.fromFormat($('#datetimeFormValue')[0].value, e.target.value.split('(')[0].trim());
+                if(testDate.isValid)
+                {
+                    //Display text saying format is an understand ISO Date Time Format
+                    let validText = 'Valid Date Time Format Detected';
+                    $('#formatStatusMessage').text(validText);
+                }
+                else
+                {
+                    //Display text saying format is an understand ISO Date Time Format
+                    let invalidText = 'Format not Detected. Try another format or use the "Custom" Option';
+                    $('#formatStatusMessage').text(invalidText);
+                }
             }
             
         });
         formatFormGroup.append(formatLabel);
         formatFormGroup.append(formatSelect);
-        
+        formatFormGroup.append($('<p id="formatStatusMessage"></p>'));
         rowTwo.append(formatFormGroup);
 
         let formatCustomFormGroup = $("<div id='formatCustomFormGroup' hidden class='form-group col-md-4'></div>");
@@ -770,17 +799,18 @@ function createDateTimeForm(selectedColumnId)
 
 }
 
-
 function addDateTimeFormatOptionsToSelectElement(selectElement)
 {
-   let optionElements =  $(`<option >YYYY-MM-DD HH:mm:ss (Ex: 2023-04-13 14:52:30)</option>
-    <option>YYYY-MM-DD HH:mm (Ex: 2023-04-13 14:52)</option>
-    <option>YYYY-MM-DD HH:mm:ss a (Ex: 2023-04-13 14:52:30 pm)</option>
-    <option>YYYY-MM-DD HH:mm a (Ex: 2023-04-13 14:52 pm)</option>
-    <option>MM/DD/YY hh:mm a (Ex: 04/13/23 2:52 pm)</option>
-    <option>MM/DD/YYYY hh:mm a (Ex: 04/13/2023 2:52 pm)</option>
-    <option>MM/DD/YY HH:mm (Ex: 04/13/23 14:52)</option>
-    <option>MM/DD/YYYY HH:mm (Ex: 04/13/2023 14:52)</option>
+   let optionElements =  $(`
+    <option hidden disabled selected value> -- select an option -- </option><option value=""></option>
+    <option >yyyy-MM-dd HH:mm:ss (Ex: 2023-04-13 14:52:30)</option>
+    <option>yyyy-MM-dd HH:mm (Ex: 2023-04-13 14:52)</option>
+    <option>yyyy-MM-dd HH:mm:ss a (Ex: 2023-04-13 14:52:30 pm)</option>
+    <option>yyyy-MM-dd HH:mm a (Ex: 2023-04-13 14:52 pm)</option>
+    <option>MM/dd/yy hh:mm a (Ex: 04/13/23 2:52 pm)</option>
+    <option>MM/dd/yyyy hh:mm a (Ex: 04/13/2023 2:52 pm)</option>
+    <option>MM/dd/yy HH:mm (Ex: 04/13/23 14:52)</option>
+    <option>MM/dd/yyyy HH:mm (Ex: 04/13/2023 14:52)</option>
     <option>Custom</option>`);
     
     selectElement.append(optionElements);
@@ -1890,11 +1920,45 @@ function prepareRenameTableDataForDownload(){
     //Replace old headers with new headers
     dataArray[0] = headersString;
 
+    //TODO Replace existing datetime column with new format
+
+    debugger;  
+    if(getHiddenDateTimeRow() !== null)
+    {
+        dataArray = replaceDateTimeColumn(dataArray);
+        dataArray = addTimeZoneColumn(dataArray);
+    }
+    
     //Join array of rows into string, reversing String.split("\n");
     let dataString = dataArray.join("\n");
 
     //Encode and return updated global object
     return encodeURIComponent(dataString)
+}
+
+
+function replaceDateTimeColumn(dataArray)
+{
+    dataArray.forEach( (value, index, array) => {
+        // array[index] = value.split(",")[0];
+        array[index] = 'test';
+    })
+    return dataArray;
+}
+
+function addTimeZoneColumn(dataArray)
+{
+    dataArray.forEach( (value, index, array) => {
+        debugger;
+        if(index === 0)
+        {
+            array[index] = value + ',timezone';
+            return;
+        }
+        let timezone = $('#datetimeFormZone')[0].value;
+        array[index] = value + `,${timezone}`;
+    })
+    return dataArray;
 }
 
 /*  Short Summary: Given data and a filename, download the data into a file of the given name
