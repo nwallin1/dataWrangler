@@ -18,10 +18,20 @@ var globalFile = {
         columns: []
     },
     previewTableHeadersArray: null,
-    depthInputDisabled: true
+    depthInputDisabled: true,
+    hiddenDateTimeRow: null
 };
 
 
+function getHiddenDateTimeRow()
+{
+    return globalFile.hiddenDateTimeRow;
+}
+
+function setHiddenDateTimeRow(value)
+{
+    globalFile.hiddenDateTimeRow = value;
+}
 
 function setDepthInputDisabled(value)
 {
@@ -597,7 +607,25 @@ function createDateTimeSection()
 function dateTimeColumnSelected(event)
 {
     let selectedColumnId = event.target.value;
+
+    hideSelectedRow(selectedColumnId);
     createDateTimeForm(selectedColumnId);
+}
+
+function hideSelectedRow(selectedColumnId)
+{
+    let currentHiddenRow = getHiddenDateTimeRow();
+    if(currentHiddenRow !== null)
+    {
+        //show row
+        currentHiddenRow.hidden = false;
+    }
+
+    //Hide next row
+    currentHiddenRow = $(`tr#row_${selectedColumnId.split("_").at(-1)}`)[0];
+    setHiddenDateTimeRow(currentHiddenRow);
+    currentHiddenRow.hidden = true;
+    
 }
 
 /*
@@ -617,8 +645,8 @@ function createDateTimeForm(selectedColumnId)
     let columnNameFormGroup = $("<div class='form-group col-md-4'></div>");
     let columnNameLabel = $("<label for='datetimeFormOriginalName'>Original Date Time Column Name</label>");
     let columnNameInput = $("<input type='text' class='form-control' id='datetimeFormOriginalName' disabled>");
-    
-    let selectedColumnName = selectedColumnId.split("_")[0];
+
+    let selectedColumnName = selectedColumnId.slice(0, -2);
     columnNameInput.val(selectedColumnName);
 
     columnNameFormGroup.append(columnNameLabel);
