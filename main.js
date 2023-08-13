@@ -177,7 +177,6 @@ function handleDOMContentLoaded()
  */
 function prepareFileForDatalist(relativePathToText, isLimno, fileType, unitsFile='false', listElementId, hasHeaderColumn=true, DSTTimeZoneStatus=false)
 {
-    debugger;
     const getFileRequest = new Request(relativePathToText);
 
     fetch(getFileRequest)
