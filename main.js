@@ -199,7 +199,7 @@ function prepareFileForDatalist(relativePathToText, isLimno, fileType, unitsFile
         if(DSTTimeZoneStatus === 'DST')
         {
             dataArray = filterRowsForDST(dataArray);
-        }else
+        }else if(DSTTimeZoneStatus === 'nonDST')
         {
             dataArray = filterRowsForNonDST(dataArray); 
         }
@@ -289,7 +289,7 @@ function filterRowsForDST(dataArray)
         return dataArray.filter(
         (value, index, array) => 
         {
-            return value.endsWith("Y\r");
+            return value.endsWith("Y\r") || value.endsWith("Y");
         });
 };
 
@@ -298,7 +298,7 @@ function filterRowsForNonDST(dataArray)
     return dataArray.filter(
         (value, index, array) => 
         {
-            return value.endsWith("N\r");
+            return (value.endsWith("N\r") || value.endsWith("N"));
         });
 }
 
