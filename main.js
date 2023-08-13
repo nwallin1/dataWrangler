@@ -309,7 +309,7 @@ function filterRowsForNonDST(dataArray)
 function createLimnoODM2VariableNameDataList()
 {
     // let listElementId = getLimnoListElementId();
-    prepareFileForDatalist(relativePathToText='data/limno_list/ODM2_varname_limno.txt', isLimno=true, fileType='.txt', unitsFile=false, listElementId=getLimnoListElementId(), hasHeaderColumn=true);
+    prepareFileForDatalist(relativePathToText='./data/limno_list/ODM2_varname_limno.txt', isLimno=true, fileType='.txt', unitsFile=false, listElementId=getLimnoListElementId(), hasHeaderColumn=true);
 };
 
 /*  Short Summary: Fetches local .csv with odm2 variable names, and converts the list
@@ -318,22 +318,22 @@ function createLimnoODM2VariableNameDataList()
 function createFullODM2VariableNameDataList()
 {
     // let listElementId = getFullListElementId();
-    prepareFileForDatalist(relativePathToText='data/full_list/ODM2_varname_full.csv', isLimno=false, fileType='.csv', unitsFile=false, listElementId=getFullListElementId(), hasHeaderColumn=true,DSTTimeZoneStatus=false);
+    prepareFileForDatalist(relativePathToText='./data/full_list/ODM2_varname_full.csv', isLimno=false, fileType='.csv', unitsFile=false, listElementId=getFullListElementId(), hasHeaderColumn=true,DSTTimeZoneStatus=false);
 };
 
 function createUnitDataList()
 {
-    prepareFileForDatalist(relativePathToText='data/limno_list/ODM2_units_limno_abbv.txt', isLimno=false, fileType='.txt', unitsFile=true, listElementId=getUnitListElementId(), hasHeaderColumn=true,DSTTimeZoneStatus=false);
+    prepareFileForDatalist(relativePathToText='./data/limno_list/ODM2_units_limno_abbv.txt', isLimno=false, fileType='.txt', unitsFile=true, listElementId=getUnitListElementId(), hasHeaderColumn=true,DSTTimeZoneStatus=false);
 };
 
 function createNoDSTTimeZoneDataList()
 {
-    prepareFileForDatalist(relativePathToText='data/timeZones/onlyDSTTimeZones.csv', isLimno=false, fileType='.csv', unitsFile=false, listElementId=getNonDSTTimeZoneListElementId(), hasHeaderColumn=true, DSTTimeZoneStatus='nonDST');
+    prepareFileForDatalist(relativePathToText='./data/timeZones/onlyDSTTimeZones.csv', isLimno=false, fileType='.csv', unitsFile=false, listElementId=getNonDSTTimeZoneListElementId(), hasHeaderColumn=true, DSTTimeZoneStatus='nonDST');
 }
 
 function createDSTTimeZoneDataList()
 {
-    prepareFileForDatalist(relativePathToText='data/timeZones/onlyDSTTimeZones.csv', isLimno=false, fileType='.csv', unitsFile=false, listElementId=getDSTTimeZoneListElementId(), hasHeaderColumn=true, DSTTimeZoneStatus='DST');
+    prepareFileForDatalist(relativePathToText='./data/timeZones/onlyDSTTimeZones.csv', isLimno=false, fileType='.csv', unitsFile=false, listElementId=getDSTTimeZoneListElementId(), hasHeaderColumn=true, DSTTimeZoneStatus='DST');
 }
 
 /*  Short Summary: Selects the controlled unit input, and returns the value
