@@ -1,0 +1,5 @@
+Variables:
+    Declaring Variables:
+        - Use const, then let, then var (var should rarely be used, it usually only adds unneccesary variables to the global scope)
+        - Declare variables at the start of a function or scope. This is because JS will automatically do this when it is running
+    

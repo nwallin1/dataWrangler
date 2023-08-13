@@ -1,0 +1,40 @@
+Renamed Column Details:
+    
+    (1) New Column Name: oxygenDissolved_mgpl
+        Original Name: do_mgl
+
+        Variable Information - 
+            Variable Name: oxygenDissolved
+            Variable Term: Dissolved oxygen
+            Variable Definition: Oxygen, dissolved
+            Variable Link: http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=VariableNameCV
+        
+        Unit Information -
+            Unit Name: milligramPerLiter
+            Unit Abbreviated Name: mgpl
+            Unit Term: Milligram per Liter
+            Unit Alternate Abbreviation: mg/L
+            Unit Type: Concentration or density mass per volume
+            Unit Link: http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html
+
+
+    (2) New Column Name: oxygenDissolved_mgpl
+        Original Name: do_mgl
+
+        Variable Information - 
+            Variable Name: oxygenDissolved
+            Variable Term: Dissolved oxygen
+            Variable Definition: Oxygen, dissolved
+            Variable Link: http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=VariableNameCV
+        
+        Unit Information -
+            Unit Name: milligramPerLiter
+            Unit Abbreviated Name: mgpl
+            Unit Term: Milligram per Liter
+            Unit Alternate Abbreviation: mg/L
+            Unit Type: Concentration or density mass per volume
+            Unit Link: http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=Units&id=1125579048; http://qwwebservices.usgs.gov/service-domains.html
+            
+        
+        
+        
