@@ -279,7 +279,7 @@ function filterRowsForLimno(dataArray)
         return dataArray.filter(
         (value, index, array) => 
         {
-            return value.endsWith("1\r");
+            return value.endsWith("1\r") || value.endsWith("1");
         });
 };
 
