@@ -21,8 +21,18 @@ var globalFile = {
     depthInputDisabled: true,
     hiddenDateTimeRow: null,
     dateTimeFormat: null,
+    uploadedFileName: undefined
 };
 
+function setUploadedFileName(value)
+{
+    globalFile.uploadedFileName = value;
+}
+
+function getUploadedFileName()
+{
+    return globalFile.uploadedFileName;
+}
 function getDateTimeFormat()
 {
     return globalFile.dateTimeFormat;
@@ -517,6 +527,12 @@ function handleFiles()
     const file = fileList[0];
 
     const reader = new FileReader();
+    
+    setUploadedFileName(fileList[0].name);
+
+    let filenameWithoutExtension = fileList[0].name.split('.')[0];
+    $('#renameFileNameInput')[0].value = filenameWithoutExtension + '_renamed.csv';
+    $('#descriptionFileNameInput')[0].value = filenameWithoutExtension + 'parameter_descriptions.txt';
 
     reader.onload = function(e){
         rawFileData = e.target.result;
@@ -1952,8 +1968,6 @@ function createPreviewTableHeadRow(csvHeadersArray)
 };
 
 
-
-
 ///############## DOWNLOADING #################### ///
 /*  Short Summary: Performs the steps to download information from the rename table
  *                  into a file.
@@ -1962,7 +1976,9 @@ function createPreviewTableHeadRow(csvHeadersArray)
 function downloadRenameFile()
 {
     let data = prepareRenameTableDataForDownload();
+
     let filename = $('#renameFileNameInput')[0].value;
+
     downloadAsCsv(data=data,filename=filename);
 };
 
