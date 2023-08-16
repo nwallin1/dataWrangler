@@ -39,3 +39,23 @@ label{
     align-items: center;
     flex-wrap: wrap;
 }
+
+#renameFileNameInput, #descriptionFileNameInput
+{
+    width: 50%;
+}
+
+#formatStatusMessage, #formatCustomStatusMessage
+{
+    font-weight: bold;
+}
+
+.valid-format
+{
+    color: green;
+}
+
+.invalid-format
+{
+    color: lightcoral;
+}

@@ -532,7 +532,7 @@ function handleFiles()
 
     let filenameWithoutExtension = fileList[0].name.split('.')[0];
     $('#renameFileNameInput')[0].value = filenameWithoutExtension + '_renamed.csv';
-    $('#descriptionFileNameInput')[0].value = filenameWithoutExtension + 'parameter_descriptions.txt';
+    $('#descriptionFileNameInput')[0].value = filenameWithoutExtension + '_parameter_descriptions.txt';
 
     reader.onload = function(e){
         rawFileData = e.target.result;
@@ -607,10 +607,31 @@ function createDateTimeSection()
     div.html("");
     
     div.append('<hr><h2 class="text-center">Date Time</h2>');
+
+    let dateTimeQuestionDiv = $('<div id="dateTimeQuestionDiv"></div>');
+    createDateTimeColumnQuestionAndAppendToDiv(dateTimeQuestionDiv);
+    div.append(dateTimeQuestionDiv);
+
+    let dateQuestionDiv = $('<div id="dateQuestionDiv"></div>');
+    createDateColumnQuestionAndAppendToDiv(dateQuestionDiv);
+    dateQuestionDiv.attr('hidden', true);
+    div.append(dateQuestionDiv);
+
+    createDateColumnSelectAndAppendToDiv(div);
+
+    createDateTimeFormAndAppendToDiv(div); 
+
+}
+
+function createDateTimeFormAndAppendToDiv(div)
+{
     let select;
 
     //Add id, name, and parentrow to the input
-    select = $('<select></select>').attr('id', 'dateTimeColumnSelect').attr('name', 'dateTimeColumnSelect');
+    select = $('<select></select>')
+        .attr('id', 'dateTimeColumnSelect')
+        .attr('name', 'dateTimeColumnSelect')
+        .attr('hidden', true);
 
     let array = getCsvHeadersArray();
 
@@ -630,21 +651,27 @@ function createDateTimeSection()
     let optionElements = $(optionElementsString);
     select.append(optionElements);
 
-    let selectLabel = createLabelElement({'id':'dateTimeColumnLabel'}, text="Select DateTime Column (If you have one).");
+    let selectLabel = createLabelElement({'id':'dateTimeColumnLabel'}, text="Select DateTime Column.");
+    selectLabel.attr('hidden', true);
 
     //Add an onChange event
     select.on('input', dateTimeColumnSelected);
 
-    let selectHelpText = '<br><span class="form-text"> It is assumed that you have only one column, that includes all your date and time information.</span>'
+    div.append("<br>");
     div.append(selectLabel);
     div.append(select);
-    div.append(selectHelpText);
+}
 
+function dateColumnSelected(event)
+{
+    let selectedColumnId = event.target.value;
+
+    hideSelectedRow(selectedColumnId);
+    createDateForm(selectedColumnId);
 }
 
 function dateTimeColumnSelected(event)
 {
-
     let selectedColumnId = event.target.value;
 
     hideSelectedRow(selectedColumnId);
@@ -674,25 +701,190 @@ function hideSelectedRow(selectedColumnId)
     
 }
 
-/*
- * @param selectedColumnId [String]: The column name that was selected as the "datetime" column
-                                        by the user
- */
-function createDateTimeForm(selectedColumnId)
+
+function destroyDateTimeForm()
 {
     let div = $('#dateTimeFormDiv');
 
     //Clear div
     div.html("");
+}
+
+
+function destroyDateForm()
+{
+    let div = $('#dateFormDiv');
+
+    //Clear div
+    div.html("");
+}
+
+function createDateForm(selectedColumnId)
+{
+    destroyDateForm();
 
     if(selectedColumnId === "") return;
+
+    let div = $('#dateFormDiv');
     
     //Create Form Element
     let form = $("<form></form>");
 
     let rowOne = $("<div class='d-flex row'></div>")
     let columnNameFormGroup = $("<div class='form-group col-md-4'></div>");
-    let columnNameLabel = $("<label for='datetimeFormOriginalName'>Original Date Time Column Name</label>");
+    let columnNameLabel = $("<label for='dateFormOriginalName'>Date Column Original Name</label>");
+    let columnNameInput = $("<input type='text' class='form-control' id='dateFormOriginalName' disabled>");
+
+    let selectedColumnName = selectedColumnId.slice(0, -2);
+    columnNameInput.val(selectedColumnName);
+
+    columnNameFormGroup.append(columnNameLabel);
+    columnNameFormGroup.append(columnNameInput);
+    rowOne.append(columnNameFormGroup);
+
+    let newNameFormGroup = $("<div class='form-group col-md-4'></div>");
+    let newNameLabel = $("<label for='dateFormNewName'>Date Column New Name</label>");
+    let newNameInput = $("<input type='text' class='form-control' id='dateFormNewName' disabled>");
+    newNameInput.val("datetime");
+
+    newNameFormGroup.append(newNameLabel);
+    newNameFormGroup.append(newNameInput);
+    rowOne.append(newNameFormGroup);
+
+    form.append(rowOne);
+
+
+    //Row Two
+    let rowTwo = $("<div class='d-flex row'></div>");
+
+    let valueFormGroup = $("<div class='form-group col-md-4'></div>");
+    let valueLabel = $("<label for='dateFormValue'>Date Value</label>");
+    let valueInput = $("<input type='text' class='form-control' id='dateFormValue' disabled>");
+    valueInput.val(getFirstDateValue(selectedColumnId));
+
+    valueFormGroup.append(valueLabel);
+    valueFormGroup.append(valueInput);
+    rowTwo.append(valueFormGroup);
+
+    let isISOValidDateFormat = testDateFormat(getFirstDateValue(selectedColumnId));
+
+    let formatStatusMessage = $('<h3 id="formatStatusMessage"></h3>');
+    if(isISOValidDateFormat)
+    {
+        //Display text saying format is an understand ISO Date Time Format
+        let validText = 'Valid Date Format Detected';
+        formatStatusMessage.text(validText);
+        formatStatusMessage.addClass('valid-format');
+    }
+    else
+    {
+        //This is not an ISO valid dateTime.
+        //Need further user input
+        let formatFormGroup = $("<div class='form-group col-md-4'></div>");
+        let formatLabel = $("<label for=dateFormFormat>Please Input Your Date Format</label>");
+        // let formatInput = $("<input type='text' class='form-control' id='dateTimeFormFormat' placeholder='MM/DD/YYY hh/mm/ss'>");
+        let formatSelect = $("<select class='form-control' id='dateFormFormat'>");
+        addDateFormatOptionsToSelectElement(formatSelect);        
+        formatSelect.on('input', function(e){
+            if(e.target.value === "Custom")
+            {
+                $('#formatCustomFormGroup').attr("hidden", false);
+                $('#formatStatusMessage').text(""); 
+            }
+            else
+            {
+                $('#formatCustomFormGroup').attr("hidden", true);
+                //check if input is valid by seeing if the test value matches the selected format
+                let testDate = DateTime.fromFormat($('#dateFormValue')[0].value, e.target.value.split('(')[0].trim());
+                if(testDate.isValid)
+                {
+                    //Display text saying format is an understand ISO Date Time Format
+                    let validText = 'Valid Date Format Detected';
+                    $('#formatStatusMessage').text(validText);
+                    formatStatusMessage.addClass('valid-format');
+                    formatStatusMessage.removeClass('invalid-format');
+                    setDateTimeFormat(e.target.value.split('(')[0].trim());
+                }
+                else
+                {
+                    //Display text saying format is an understand ISO Date Time Format
+                    let invalidText = 'Format not Detected. Try another format or use the "Custom" Option';
+                    formatStatusMessage.addClass('invalid-format');
+                    formatStatusMessage.removeClass('valid-format');
+                    $('#formatStatusMessage').text(invalidText);
+                    setDateTimeFormat(null);
+                }
+            }
+            
+        });
+
+        formatFormGroup.append(formatLabel);
+        formatFormGroup.append(formatSelect);
+        rowTwo.append(formatFormGroup);
+
+        let formatCustomFormGroup = $("<div id='formatCustomFormGroup' hidden class='form-group col-md-4'></div>");
+        let formatInputCustom = $("<input type='text' class='form-control' id='dateFormFormatCustom'></input>");
+        let formatLabelCustom = $("<label for=dateFormFormatCustom>Custom Date Format</label>");
+        let formatHelpTextCustom = $("<small id='dateFormFormatHelpTextCustom' class='form-text text-muted'><a target='_blank' href='https://github.com/moment/luxon/blob/master/docs/parsing.md#table-of-tokens'>Use Values Found In This Table</a><br>Example: yyyy-MM-dd is valid for 2018-05-23</small>");
+        formatCustomFormGroup.append(formatLabelCustom);
+        formatCustomFormGroup.append(formatInputCustom);
+        formatCustomFormGroup.append(formatHelpTextCustom);
+        formatCustomFormGroup.append($('<p id="formatCustomStatusMessage"></p>'));
+        rowTwo.append(formatCustomFormGroup);
+
+        formatInputCustom.on('input', function(e){
+            let testDate = DateTime.fromFormat($('#dateFormValue')[0].value, e.target.value);
+            let formatCustomStatusMessage = $('#formatCustomStatusMessage');
+            if(testDate.isValid)
+            {
+                //Display text saying format is an understand ISO Date Time Format
+                let validText = 'Valid Date Format Detected';
+                formatCustomStatusMessage.addClass('valid-format');
+                formatCustomStatusMessage.removeClass('invalid-format');
+                formatCustomStatusMessage.text(validText);
+                setDateTimeFormat(e.target.value);
+            }
+            else
+            {
+                //Display text saying format is an understand ISO Date Time Format
+                let invalidText = 'Format not Detected. Try another format.';
+                formatCustomStatusMessage.addClass('invalid-format');
+                formatCustomStatusMessage.removeClass('valid-format');
+                formatCustomStatusMessage.text(invalidText);
+                setDateTimeFormat(null);
+            }
+        });
+
+    }
+
+    rowTwo.append(formatStatusMessage);
+    form.append(rowTwo);
+
+    //TODO add information to output file
+
+    div.append($('<br><h2>Date Format</h2>'));
+    div.append(form);
+
+    $('#dateTimeSection').append(div);
+}
+/*
+ * @param selectedColumnId [String]: The column name that was selected as the "datetime" column
+                                        by the user
+ */
+function createDateTimeForm(selectedColumnId)
+{
+    destroyDateTimeForm();
+
+    if(selectedColumnId === "") return;
+
+    let div = $('#dateTimeFormDiv');
+    
+    //Create Form Element
+    let form = $("<form></form>");
+
+    let rowOne = $("<div class='d-flex row'></div>")
+    let columnNameFormGroup = $("<div class='form-group col-md-4'></div>");
+    let columnNameLabel = $("<label for='datetimeFormOriginalName'>Date Time Column Original Name</label>");
     let columnNameInput = $("<input type='text' class='form-control' id='datetimeFormOriginalName' disabled>");
 
     let selectedColumnName = selectedColumnId.slice(0, -2);
@@ -703,7 +895,7 @@ function createDateTimeForm(selectedColumnId)
     rowOne.append(columnNameFormGroup);
 
     let newNameFormGroup = $("<div class='form-group col-md-4'></div>");
-    let newNameLabel = $("<label for='datetimeFormNewName'>New Date Time Column Name</label>");
+    let newNameLabel = $("<label for='datetimeFormNewName'>Date Time Column New Name</label>");
     let newNameInput = $("<input type='text' class='form-control' id='datetimeFormNewName' disabled>");
     newNameInput.val("datetime");
 
@@ -728,11 +920,13 @@ function createDateTimeForm(selectedColumnId)
 
     let isISOValidDateTimeFormat = testDateTimeFormat(getFirstDateTimeValue(selectedColumnId));
 
+    let formatStatusMessage = $('<h3 id="formatStatusMessage"></h3>');
     if(isISOValidDateTimeFormat)
     {
         //Display text saying format is an understand ISO Date Time Format
         let validText = 'Valid Date Time Format Detected';
-        $('#formatStatusMessage').text(validText);
+        formatStatusMessage.text(validText);
+        formatStatusMessage.addClass('valid-format');
     }
     else
     {
@@ -747,9 +941,11 @@ function createDateTimeForm(selectedColumnId)
             if(e.target.value === "Custom")
             {
                 $('#formatCustomFormGroup').attr("hidden", false);  
+                $('#formatStatusMessage').text(""); 
             }
             else
             {
+                
                 $('#formatCustomFormGroup').attr("hidden", true);
                 //check if input is valid by seeing if the test value matches the selected format
                 let testDate = DateTime.fromFormat($('#datetimeFormValue')[0].value, e.target.value.split('(')[0].trim());
@@ -757,6 +953,8 @@ function createDateTimeForm(selectedColumnId)
                 {
                     //Display text saying format is an understand ISO Date Time Format
                     let validText = 'Valid Date Time Format Detected';
+                    formatStatusMessage.addClass('valid-format');
+                    formatStatusMessage.removeClass('invalid-format');
                     $('#formatStatusMessage').text(validText);
                     setDateTimeFormat(e.target.value.split('(')[0].trim());
                 }
@@ -764,6 +962,8 @@ function createDateTimeForm(selectedColumnId)
                 {
                     //Display text saying format is an understand ISO Date Time Format
                     let invalidText = 'Format not Detected. Try another format or use the "Custom" Option';
+                    formatStatusMessage.addClass('invalid-format');
+                    formatStatusMessage.removeClass('valid-format');
                     $('#formatStatusMessage').text(invalidText);
                     setDateTimeFormat(null);
                 }
@@ -772,7 +972,6 @@ function createDateTimeForm(selectedColumnId)
         });
         formatFormGroup.append(formatLabel);
         formatFormGroup.append(formatSelect);
-        formatFormGroup.append($('<p id="formatStatusMessage"></p>'));
         rowTwo.append(formatFormGroup);
 
         let formatCustomFormGroup = $("<div id='formatCustomFormGroup' hidden class='form-group col-md-4'></div>");
@@ -787,24 +986,30 @@ function createDateTimeForm(selectedColumnId)
 
         formatInputCustom.on('input', function(e){
             let testDate = DateTime.fromFormat($('#datetimeFormValue')[0].value, e.target.value);
+            let formatCustomStatusMessage = $('#formatCustomStatusMessage');
             if(testDate.isValid)
             {
                 //Display text saying format is an understand ISO Date Time Format
                 let validText = 'Valid Date Time Format Detected';
-                $('#formatCustomStatusMessage').text(validText);
+                formatCustomStatusMessage.addClass('valid-format');
+                formatCustomStatusMessage.removeClass('invalid-format');
+                formatCustomStatusMessage.text(validText);
                 setDateTimeFormat(e.target.value);
             }
             else
             {
                 //Display text saying format is an understand ISO Date Time Format
-                let invalidText = 'Format not Detected. Try another format or use the "Custom" Option';
-                $('#formatCustomStatusMessage').text(invalidText);
+                let invalidText = 'Format not Detected. Try another format.';
+                formatCustomStatusMessage.addClass('invalid-format');
+                formatCustomStatusMessage.removeClass('valid-format');
+                formatCustomStatusMessage.text(invalidText);
                 setDateTimeFormat(null);
             }
         });
 
     }
 
+    rowTwo.append(formatStatusMessage);
     form.append(rowTwo);
 
     //Row Three
@@ -852,7 +1057,7 @@ function createDateTimeForm(selectedColumnId)
 
     $('#dateTimeSection').append(div);
 
-}
+}//End createDateTimeForm
 
 function addDateTimeFormatOptionsToSelectElement(selectElement)
 {
@@ -871,7 +1076,23 @@ function addDateTimeFormatOptionsToSelectElement(selectElement)
     selectElement.append(optionElements);
 }
 
-function getFirstDateTimeValue(columnName)
+function addDateFormatOptionsToSelectElement(selectElement)
+{
+   let optionElements =  $(`
+    <option hidden disabled selected value> -- select an option -- </option><option value=""></option>
+    <option >yyyy-MM-dd (Ex: 2023-04-13)</option>
+    <option>MM/dd/yyyy (Ex: 04/13/2023)</option>
+    <option>Custom</option>`);
+    
+    selectElement.append(optionElements);
+}
+
+function getFirstDateValue(columnName)
+{
+    return getFirstValueOfColumn(columnName);  
+}
+
+function getFirstValueOfColumn(columnName)
 {
     let index = columnName.at(-1);
 
@@ -882,6 +1103,19 @@ function getFirstDateTimeValue(columnName)
 
     return dateTimeValue;
 }
+
+function getFirstDateTimeValue(columnName)
+{
+    return getFirstValueOfColumn(columnName);
+}
+
+
+function testDateFormat(dateTimeValue)
+{
+    //Valid "DateTime" formats include values with only Dates, and no Times
+    return testDateTimeFormat(dateTimeValue);
+}
+
 function testDateTimeFormat(dateTimeValue)
 {
 
@@ -968,7 +1202,51 @@ function createLimnoQuestionAndAppendToDiv(div)
     div.append(limnoQuestionYesInput);
     div.append(limnoQuestionNoLabel);
     div.append(limnoQuestionNoInput);
+    div.append("<br>");
 };
+
+function createDateTimeColumnQuestionAndAppendToDiv(div)
+{
+    let dateTimeColumnQuestionYesInput = createDateTimeColumnQuestionRadioInput(value="Yes");
+    // dateColumnQuestionYesInput.attr("checked", "checked");
+    let dateTimeColumnQuestionNoInput = createDateTimeColumnQuestionRadioInput(value="No");
+
+    let dateTimeColumnQuestionYesLabel = createDateTimeColumnQuestionRadioLabel("Yes");
+    let dateTimeColumnQuestionNoLabel = createDateTimeColumnQuestionRadioLabel("No");
+
+    let dateTimeColumnQuestionLabel = createLabelElement({'id':'dateTimeColumnQuestionLabel'}, text="Do you have single column for DateTime? (One column includes values for BOTH date and time.)");
+
+    //Adds created elements to the <div>
+    div.append("<br>");
+    div.append(dateTimeColumnQuestionLabel);
+    div.append("<br>");
+    div.append(dateTimeColumnQuestionYesLabel);
+    div.append(dateTimeColumnQuestionYesInput);
+    div.append(dateTimeColumnQuestionNoLabel);
+    div.append(dateTimeColumnQuestionNoInput);
+    div.append("<br>");
+};
+
+function createDateColumnQuestionAndAppendToDiv(div)
+{
+    let dateColumnQuestionYesInput = createDateColumnQuestionRadioInput(value="Yes");
+    // dateColumnQuestionYesInput.attr("checked", "checked");
+    let dateColumnQuestionNoInput = createDateColumnQuestionRadioInput(value="No");
+
+    let dateColumnQuestionYesLabel = createDateColumnQuestionRadioLabel("Yes");
+    let dateColumnQuestionNoLabel = createDateColumnQuestionRadioLabel("No");
+
+    let dateColumnQuestionLabel = createLabelElement({'id':'dateColumnQuestionLabel'}, text="Do you have single column with date values? (Values should include day, month, and year)");
+
+    //Adds created elements to the <div>
+    div.append("<br>");
+    div.append(dateColumnQuestionLabel);
+    div.append("<br>");
+    div.append(dateColumnQuestionYesLabel);
+    div.append(dateColumnQuestionYesInput);
+    div.append(dateColumnQuestionNoLabel);
+    div.append(dateColumnQuestionNoInput);
+}
 
 function createDepthQuestionAndAppendToDiv(div)
 {
@@ -996,6 +1274,22 @@ function createLimnoQuestionRadioInput(value)
 {
     let input = createInputElement(getLimnoQuestionInputAttributes(value), text="");
     input.on('change', handleLimnoOnlyInput);
+
+    return input;
+};
+
+function createDateTimeColumnQuestionRadioInput(value)
+{
+    let input = createInputElement(getDateTimeColumnQuestionInputAttributes(value), text="");
+    input.on('change', handleDateTimeColumnInput);
+
+    return input;
+};
+
+function createDateColumnQuestionRadioInput(value)
+{
+    let input = createInputElement(getDateColumnQuestionInputAttributes(value), text="");
+    input.on('change', handleDateColumnInput);
 
     return input;
 };
@@ -1065,6 +1359,148 @@ function handleLimnoOnlyInput(e){
     $('.newNameInput').attr('list', currentListBaseName + '_full');
 };
 
+function handleDateTimeColumnInput(e)
+{
+    if(e.target.value == "Yes")
+    {
+        hideDateQuestionDiv();  
+        hideDateSelect();
+        hideDateForm();
+
+        showDateTimeSelect();
+        
+
+        //TODO Also hide any Date Inputs/Labels/Questions
+
+        return;
+    }
+
+    //CASE: e.target.value == "No"
+
+    hideDateTimeSelect();
+    hideDateTimeForm();
+
+    //Display question asking if you have just a Date column
+    showDateQuestionDiv();
+    
+    //TODO Also show any Date Inputs/Labels/Questions
+}
+
+function handleDateColumnInput(e)
+{
+    if(e.target.value == "Yes")
+    {
+        showDateSelect();
+
+        return;
+    }
+
+    //CASE: e.target.value == "No"
+    hideDateSelect();
+    hideDateForm();
+
+    //TODO Add some text about what to do if the answer is no to both questions
+    //This means they might have two columns, one for date and one for time
+}
+
+function showDateQuestionDiv()
+{
+    let dateQuestionDiv = $('#dateQuestionDiv');
+    dateQuestionDiv.attr('hidden', false);
+}
+
+function hideDateQuestionDiv()
+{
+    let dateQuestionDiv = $('#dateQuestionDiv');
+    dateQuestionDiv.attr('hidden', true);
+}
+
+function createDateColumnSelectAndAppendToDiv(div)
+{
+    let select;
+
+    //Add id, name, and parentrow to the input
+    select = $('<select></select>')
+        .attr('id', 'dateColumnSelect')
+        .attr('name', 'dateColumnSelect')
+        .attr('hidden', true);
+
+    let array = getCsvHeadersArray();
+
+
+    //Default Option
+    let optionElementsString = '<option hidden disabled selected value> -- select an option -- </option><option value=""></option>'
+    
+    //Add one <option> for each column in the table
+    optionElementsString += array.reduce((accumulator, currentValue, currentIndex, array) => 
+    {
+        accumulator += `<option value="${currentValue}_${currentIndex}">${currentValue}</option>`;
+        return accumulator;
+    },
+    initialValue=""
+    );
+
+    let optionElements = $(optionElementsString);
+    select.append(optionElements);
+
+    let selectLabel = createLabelElement({'id':'dateColumnLabel'}, text="Select Date Column.");
+    selectLabel.attr('hidden', true);
+
+    //Add an onChange event
+    select.on('input', dateColumnSelected);
+
+    div.append("<br>");
+    div.append(selectLabel);
+    div.append(select);
+}
+
+function hideDateTimeForm()
+{
+    hideSelectedRow("");
+    destroyDateTimeForm();
+}
+
+function hideDateForm()
+{
+    hideSelectedRow("");
+    destroyDateForm();
+}
+
+
+
+function hideDateTimeSelect()
+{
+    $('#dateTimeColumnSelect').attr('hidden', true);
+    $('#dateTimeColumnLabel').attr('hidden', true);
+
+    $('#dateTimeColumnSelect').val("");
+
+}
+
+function showDateTimeSelect()
+{
+    $('#dateTimeColumnSelect').attr('hidden', false);
+    $('#dateTimeColumnLabel').attr('hidden', false);
+}
+
+function showDateSelect()
+{
+    $('#dateColumnSelect').attr('hidden', false);
+    $('#dateColumnLabel').attr('hidden', false);
+}
+
+function hideDateSelect()
+{
+    $('#dateColumnSelect').attr('hidden', true);
+    $('#dateColumnLabel').attr('hidden', true);
+
+    $('#dateColumnSelect').val("");
+
+    let yesInput = $('#dateColumnQuestionYesInput')[0];
+    if( yesInput.checked === true) yesInput.checked = false;
+
+}
+
 function createLimnoQuestionRadioLabel(value)
 {
     let inputElementAttributes = getLimnoQuestionInputAttributes(value);
@@ -1076,6 +1512,30 @@ function createLimnoQuestionRadioLabel(value)
 
     return createLabelElement(labelElementAttributes, text=value)
 };
+
+function createDateTimeColumnQuestionRadioLabel(value)
+{
+    let inputElementAttributes = getDateTimeColumnQuestionInputAttributes(value);
+
+    let labelElementAttributes = {
+        id : `dateTimeColumnQuestion${value}Label`,
+        for : inputElementAttributes.id
+    }
+
+    return createLabelElement(labelElementAttributes, text=value)
+};
+
+function createDateColumnQuestionRadioLabel(value)
+{
+    let inputElementAttributes = getDateColumnQuestionInputAttributes(value);
+
+    let labelElementAttributes = {
+        id : `dateColumnQuestion${value}Label`,
+        for : inputElementAttributes.id
+    }
+
+    return createLabelElement(labelElementAttributes, text=value)
+}
 
 function createDepthQuestionRadioLabel(value)
 {
@@ -1182,6 +1642,25 @@ function getLimnoQuestionInputAttributes(value=undefined)
     }
 };
 
+function getDateColumnQuestionInputAttributes(value=undefined)
+{
+    return {
+        id : `dateColumnQuestion${value}Input`,
+        name : 'dateColumnQuestion',
+        type : 'radio',
+        value
+    }
+};
+
+function getDateTimeColumnQuestionInputAttributes(value=undefined)
+{
+    return {
+        id : `dateTimeColumnQuestion${value}Input`,
+        name : 'dateTimeColumnQuestion',
+        type : 'radio',
+        value
+    }
+};
 
 function getDepthQuestionInputAttributes(value=undefined)
 {
