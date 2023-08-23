@@ -21,8 +21,31 @@ var globalFile = {
     depthInputDisabled: true,
     hiddenDateTimeRow: null,
     dateTimeFormat: null,
-    uploadedFileName: undefined
+    uploadedFileName: undefined,
+    currentDateColumnSelected: undefined,
+    currentTimeColumnSelected: undefined
 };
+
+function getCurrentTimeColumnSelected()
+{
+    return globalFile.currentTimeColumnSelected;
+}
+
+function getCurrentDateColumnSelected()
+{
+    return globalFile.currentDateColumnSelected;
+}
+
+
+function setCurrentTimeColumnSelected(value)
+{
+    globalFile.currentTimeColumnSelected = value;
+}
+
+function setCurrentDateColumnSelected(value)
+{
+    globalFile.currentDateColumnSelected = value;
+}
 
 function setUploadedFileName(value)
 {
@@ -420,6 +443,12 @@ function getSelectedControlledVocabularyDataListId()
 
 }
 
+function clearHTMLFromElementByID(id)
+{
+    let el = $(`#${id}`);
+    el.html("");
+}
+
 function getControlledVocabularyInputElement()
 {
     return $('#controlledVocabularyInput')[0];
@@ -549,6 +578,8 @@ function handleFiles()
         setCsvHeadersArray(csvHeadersArray);
         setPreviewTableHeadersArray(csvHeadersArray);
 
+        resetForm();
+        
         createQuestionElements();
         createDateTimeSection();
         createRenameTable(getCsvRows());
@@ -558,6 +589,12 @@ function handleFiles()
 
     reader.readAsText(file);
 };
+
+function resetForm()
+{
+    clearHTMLFromElementByID('dateTimeFormDiv');
+    clearHTMLFromElementByID('dateFormDiv');
+}
 
 /*  Short Summary: Return id of the datalist element that lists out the possible 
  *                 controlled vocabularies to use
@@ -619,6 +656,13 @@ function createDateTimeSection()
 
     createDateColumnSelectAndAppendToDiv(div);
 
+    let timeQuestionDiv = $('<div id="timeQuestionDiv"></div>');
+    createTimeColumnQuestionAndAppendToDiv(timeQuestionDiv);
+    timeQuestionDiv.attr('hidden', true);
+    div.append(timeQuestionDiv);
+
+    createTimeColumnSelectAndAppendToDiv(div);
+
     createDateTimeFormAndAppendToDiv(div); 
 
 }
@@ -665,9 +709,42 @@ function createDateTimeFormAndAppendToDiv(div)
 function dateColumnSelected(event)
 {
     let selectedColumnId = event.target.value;
+    let currentColumn = getCurrentDateColumnSelected();
 
+    if(currentColumn !== undefined)
+    {
+        //Allow previous column to be selected by Date Column
+        $(`#timeColumnSelect > option[value="${currentColumn}"]`).attr('hidden', false);
+    }
+
+    setCurrentDateColumnSelected(selectedColumnId);
     hideSelectedRow(selectedColumnId);
+
+    
+
+    $(`#timeColumnSelect > option[value="${selectedColumnId}"]`).attr('hidden', true);
+
     createDateForm(selectedColumnId);
+}
+
+function timeColumnSelected(event)
+{
+    let selectedColumnId = event.target.value;
+
+    let currentColumn = getCurrentTimeColumnSelected();
+    if(currentColumn !== undefined)
+    {
+        //Allow previous column to be selected by Date Column
+        $(`#dateColumnSelect > option[value="${currentColumn}"]`).attr('hidden', false);
+    }
+
+    setCurrentTimeColumnSelected(selectedColumnId);
+    hideSelectedRow(selectedColumnId);
+
+    //Hide the column with id === selectedColumnId as an option from the Date Format Selector
+    $(`#dateColumnSelect > option[value="${selectedColumnId}"]`).attr('hidden', true);
+
+    createTimeForm(selectedColumnId);
 }
 
 function dateTimeColumnSelected(event)
@@ -705,7 +782,6 @@ function hideSelectedRow(selectedColumnId)
 function destroyDateTimeForm()
 {
     let div = $('#dateTimeFormDiv');
-
     //Clear div
     div.html("");
 }
@@ -745,7 +821,7 @@ function createDateForm(selectedColumnId)
     let newNameFormGroup = $("<div class='form-group col-md-4'></div>");
     let newNameLabel = $("<label for='dateFormNewName'>Date Column New Name</label>");
     let newNameInput = $("<input type='text' class='form-control' id='dateFormNewName' disabled>");
-    newNameInput.val("datetime");
+    newNameInput.val("date");
 
     newNameFormGroup.append(newNameLabel);
     newNameFormGroup.append(newNameInput);
@@ -865,7 +941,7 @@ function createDateForm(selectedColumnId)
     div.append($('<br><h2>Date Format</h2>'));
     div.append(form);
 
-    $('#dateTimeSection').append(div);
+    $('#timeQuestionDiv').before(div);
 }
 /*
  * @param selectedColumnId [String]: The column name that was selected as the "datetime" column
@@ -1023,10 +1099,10 @@ function createDateTimeForm(selectedColumnId)
     dstCheckboxInput.on('change', function(e){
         if(e.target.checked)
         {
-            $("#datetimeFormZone").attr('list', `${getDSTTimeZoneListElementId()}`);
+            $("#dateTimeFormTimeZone").attr('list', `${getDSTTimeZoneListElementId()}`);
         }
         else{
-            $("#datetimeFormZone").attr('list', `${getNonDSTTimeZoneListElementId()}`);
+            $("#dateTimeFormTimeZone").attr('list', `${getNonDSTTimeZoneListElementId()}`);
         }
 
     });
@@ -1037,8 +1113,8 @@ function createDateTimeForm(selectedColumnId)
     rowThree.append(dstOnlyFormGroup);
 
     let zoneFormGroup = $("<div class='form-group col-md-4'></div>");
-    let zoneLabel = $("<label for='datetimeFormZone'>Time Zone</label>");
-    let zoneInput = $("<input class='form-control' id='datetimeFormZone'>");
+    let zoneLabel = $("<label for='dateTimeFormTimeZone'>Time Zone</label>");
+    let zoneInput = $("<input class='form-control' id='dateTimeFormTimeZone'>");
     let zoneTooltip = $(`<button type="button" class="help-button btn" data-toggle="tooltip" data-placement="right" title="For more information on timezone names and details, <a href='https://en.wikipedia.org/wiki/List_of_tz_database_time_zones'>see this link</a>">&#9432;</button>`).tooltip({'html': true, 'delay': { "hide": 2000 }});
     zoneLabel.append(zoneTooltip);
     zoneInput.attr('list', `${getNonDSTTimeZoneListElementId()}`);
@@ -1055,7 +1131,7 @@ function createDateTimeForm(selectedColumnId)
     div.append($('<br><h2>Date Time Format</h2>'));
     div.append(form);
 
-    $('#dateTimeSection').append(div);
+    $('#dateTimeSection').after(div);
 
 }//End createDateTimeForm
 
@@ -1080,6 +1156,7 @@ function addDateFormatOptionsToSelectElement(selectElement)
 {
    let optionElements =  $(`
     <option hidden disabled selected value> -- select an option -- </option><option value=""></option>
+    <option >M/d/y (Ex: 4-30-13)</option>
     <option >yyyy-MM-dd (Ex: 2023-04-13)</option>
     <option>MM/dd/yyyy (Ex: 04/13/2023)</option>
     <option>Custom</option>`);
@@ -1214,7 +1291,7 @@ function createDateTimeColumnQuestionAndAppendToDiv(div)
     let dateTimeColumnQuestionYesLabel = createDateTimeColumnQuestionRadioLabel("Yes");
     let dateTimeColumnQuestionNoLabel = createDateTimeColumnQuestionRadioLabel("No");
 
-    let dateTimeColumnQuestionLabel = createLabelElement({'id':'dateTimeColumnQuestionLabel'}, text="Do you have single column for DateTime? (One column includes values for BOTH date and time.)");
+    let dateTimeColumnQuestionLabel = createLabelElement({'id':'dateTimeColumnQuestionLabel'}, text="Do you have a single column for DateTime? (One column includes values for BOTH date and time.)");
 
     //Adds created elements to the <div>
     div.append("<br>");
@@ -1236,7 +1313,7 @@ function createDateColumnQuestionAndAppendToDiv(div)
     let dateColumnQuestionYesLabel = createDateColumnQuestionRadioLabel("Yes");
     let dateColumnQuestionNoLabel = createDateColumnQuestionRadioLabel("No");
 
-    let dateColumnQuestionLabel = createLabelElement({'id':'dateColumnQuestionLabel'}, text="Do you have single column with date values? (Values should include day, month, and year)");
+    let dateColumnQuestionLabel = createLabelElement({'id':'dateColumnQuestionLabel'}, text="Do you have a single column with date values? (Values should include day, month, and year)");
 
     //Adds created elements to the <div>
     div.append("<br>");
@@ -1246,6 +1323,27 @@ function createDateColumnQuestionAndAppendToDiv(div)
     div.append(dateColumnQuestionYesInput);
     div.append(dateColumnQuestionNoLabel);
     div.append(dateColumnQuestionNoInput);
+}
+
+function createTimeColumnQuestionAndAppendToDiv(div)
+{
+    let timeColumnQuestionYesInput = createTimeColumnQuestionRadioInput(value="Yes");
+    // dateColumnQuestionYesInput.attr("checked", "checked");
+    let timeColumnQuestionNoInput = createTimeColumnQuestionRadioInput(value="No");
+
+    let timeColumnQuestionYesLabel = createTimeColumnQuestionRadioLabel("Yes");
+    let timeColumnQuestionNoLabel = createTimeColumnQuestionRadioLabel("No");
+
+    let timeColumnQuestionLabel = createLabelElement({'id':'timeColumnQuestionLabel'}, text="Do you have a single column with time values? (Values should include at least hours. Optionally minutes and seconds)");
+
+    //Adds created elements to the <div>
+    div.append("<br>");
+    div.append(timeColumnQuestionLabel);
+    div.append("<br>");
+    div.append(timeColumnQuestionYesLabel);
+    div.append(timeColumnQuestionYesInput);
+    div.append(timeColumnQuestionNoLabel);
+    div.append(timeColumnQuestionNoInput);
 }
 
 function createDepthQuestionAndAppendToDiv(div)
@@ -1290,6 +1388,14 @@ function createDateColumnQuestionRadioInput(value)
 {
     let input = createInputElement(getDateColumnQuestionInputAttributes(value), text="");
     input.on('change', handleDateColumnInput);
+
+    return input;
+};
+
+function createTimeColumnQuestionRadioInput(value)
+{
+    let input = createInputElement(getTimeColumnQuestionInputAttributes(value), text="");
+    input.on('change', handleTimeColumnInput);
 
     return input;
 };
@@ -1364,14 +1470,13 @@ function handleDateTimeColumnInput(e)
     if(e.target.value == "Yes")
     {
         hideDateQuestionDiv();  
+        hideTimeQuestionDiv();
         hideDateSelect();
         hideDateForm();
+        hideTimeSelect();
+        hideTimeForm();
 
         showDateTimeSelect();
-        
-
-        //TODO Also hide any Date Inputs/Labels/Questions
-
         return;
     }
 
@@ -1382,8 +1487,9 @@ function handleDateTimeColumnInput(e)
 
     //Display question asking if you have just a Date column
     showDateQuestionDiv();
-    
-    //TODO Also show any Date Inputs/Labels/Questions
+
+    //Display question asking if you have just a Time column
+    showTimeQuestionDiv();
 }
 
 function handleDateColumnInput(e)
@@ -1399,8 +1505,140 @@ function handleDateColumnInput(e)
     hideDateSelect();
     hideDateForm();
 
-    //TODO Add some text about what to do if the answer is no to both questions
-    //This means they might have two columns, one for date and one for time
+    //TODO Add some text about what to do if the answer is no
+}
+
+function handleTimeColumnInput(e)
+{
+    if(e.target.value == "Yes")
+    {
+        showTimeSelect();
+
+        return;
+    }
+
+    //CASE: e.target.value == "No"
+    debugger;
+    hideTimeSelect();
+    hideTimeForm();
+
+    //TODO Add some text about what to do if the answer is no
+
+}
+
+function showTimeSelect()
+{
+    $('#timeColumnSelect').attr('hidden', false);
+    $('#timeColumnLabel').attr('hidden', false);
+}
+
+function hideTimeSelect()
+{
+    $('#timeColumnSelect').attr('hidden', true);
+    $('#timeColumnLabel').attr('hidden', true);
+
+    $('#timeColumnSelect').val("");
+
+    let yesInput = $('#timeColumnQuestionYesInput')[0];
+    if( yesInput.checked === true) yesInput.checked = false;
+
+}
+
+function hideTimeForm()
+{
+    let currentColumn = getCurrentTimeColumnSelected();
+    if(currentColumn !== undefined)
+    {
+        //Allow previous column to be selected by Date Column
+        $(`#dateColumnSelect > option[value="${currentColumn}"]`).attr('hidden', false);
+    }
+
+    setCurrentTimeColumnSelected(undefined);
+    hideSelectedRow("");
+    destroyTimeForm();
+}
+
+function destroyTimeForm()
+{
+    let div = $('#timeFormDiv');
+    //Clear div
+    div.html("");
+}
+
+function createTimeForm(selectedColumnId)
+{
+    destroyTimeForm();
+
+    if(selectedColumnId === "") return;
+
+    let div = $('#timeFormDiv');
+    
+    // //Create Form Element
+    let form = $("<form></form>");
+
+    let rowOne = $("<div class='d-flex row'></div>")
+    let columnNameFormGroup = $("<div class='form-group col-md-4'></div>");
+    let columnNameLabel = $("<label for='datetimeFormOriginalName'>Date Time Column Original Name</label>");
+    let columnNameInput = $("<input type='text' class='form-control' id='datetimeFormOriginalName' disabled>");
+
+    let selectedColumnName = selectedColumnId.slice(0, -2);
+    columnNameInput.val(selectedColumnName);
+
+    columnNameFormGroup.append(columnNameLabel);
+    columnNameFormGroup.append(columnNameInput);
+    rowOne.append(columnNameFormGroup);
+
+    form.append(rowOne);
+
+
+    
+    // //Row Three
+    let rowThree = $("<div class='d-flex row'></div>");
+    let dstOnlyFormGroup = $("<div id='dstOnlyFormGroup' class='form-group col-md-4'></div>");
+
+    let dstCheckboxLabel = $("<label class='form-check-label' for='dstCheckboxInput'>Does your datetime observe DST?</label>");
+    let dstCheckboxInput = $("<input id='dstCheckboxInput' class='form-check-input' type='checkbox' value=''>");
+
+    //Create checkbox to switch  to zoneInput.attr('list', ``${getDSTTimeZoneListElementId()}``);
+    dstCheckboxInput.on('change', function(e){
+        if(e.target.checked)
+        {
+            $("#timeFormTimeZone").attr('list', `${getDSTTimeZoneListElementId()}`);
+        }
+        else{
+            $("#timeFormTimeZone").attr('list', `${getNonDSTTimeZoneListElementId()}`);
+        }
+
+    });
+
+    dstOnlyFormGroup.append(dstCheckboxLabel);
+    dstOnlyFormGroup.append(dstCheckboxInput);
+    
+    rowThree.append(dstOnlyFormGroup);
+
+    let zoneFormGroup = $("<div class='form-group col-md-4'></div>");
+    let zoneLabel = $("<label for='timeFormTimeZone'>Time Zone</label>");
+    let zoneInput = $("<input class='form-control' id='timeFormTimeZone'>");
+    let zoneTooltip = $(`<button type="button" class="help-button btn" data-toggle="tooltip" data-placement="right" title="For more information on timezone names and details, <a href='https://en.wikipedia.org/wiki/List_of_tz_database_time_zones'>see this link</a>">&#9432;</button>`).tooltip({'html': true, 'delay': { "hide": 2000 }});
+    zoneLabel.append(zoneTooltip);
+    zoneInput.attr('list', `${getNonDSTTimeZoneListElementId()}`);
+
+    // zoneInput.on('change', updatePreviewColumn);
+
+    zoneFormGroup.append(zoneLabel);
+    zoneFormGroup.append(zoneInput);
+    rowThree.append(zoneFormGroup);
+
+    form.append(rowThree);
+
+    //TODO add information to output file
+
+    div.append($('<br><h2>Time Format</h2>'));
+    div.append($('<h6>By selecting a time zone in this section, it will add a new column called <strong>"timezone"</strong> to your csv. The existing time column will remain unchanged.</h6>'));
+    div.append(form);
+
+    $('#timeColumnSelect').after(div);
+    
 }
 
 function showDateQuestionDiv()
@@ -1415,10 +1653,21 @@ function hideDateQuestionDiv()
     dateQuestionDiv.attr('hidden', true);
 }
 
+function hideTimeQuestionDiv()
+{
+    let timeQuestionDiv = $('#timeQuestionDiv');
+    timeQuestionDiv.attr('hidden', true);
+}
+
+function showTimeQuestionDiv()
+{
+    let timeQuestionDiv = $('#timeQuestionDiv');
+    timeQuestionDiv.attr('hidden', false);
+}
+
 function createDateColumnSelectAndAppendToDiv(div)
 {
     let select;
-
     //Add id, name, and parentrow to the input
     select = $('<select></select>')
         .attr('id', 'dateColumnSelect')
@@ -1454,6 +1703,44 @@ function createDateColumnSelectAndAppendToDiv(div)
     div.append(select);
 }
 
+function createTimeColumnSelectAndAppendToDiv(div)
+{
+    let select;
+    //Add id, name, and parentrow to the input
+    select = $('<select></select>')
+        .attr('id', 'timeColumnSelect')
+        .attr('name', 'timeColumnSelect')
+        .attr('hidden', true);
+
+    let array = getCsvHeadersArray();
+
+
+    //Default Option
+    let optionElementsString = '<option hidden disabled selected value> -- select an option -- </option><option value=""></option>'
+    
+    //Add one <option> for each column in the table
+    optionElementsString += array.reduce((accumulator, currentValue, currentIndex, array) => 
+    {
+        accumulator += `<option value="${currentValue}_${currentIndex}">${currentValue}</option>`;
+        return accumulator;
+    },
+    initialValue=""
+    );
+
+    let optionElements = $(optionElementsString);
+    select.append(optionElements);
+
+    let selectLabel = createLabelElement({'id':'timeColumnLabel'}, text="Select Time Column.");
+    selectLabel.attr('hidden', true);
+
+    //Add an onChange event
+    select.on('input', timeColumnSelected);
+
+    div.append("<br>");
+    div.append(selectLabel);
+    div.append(select);
+}
+
 function hideDateTimeForm()
 {
     hideSelectedRow("");
@@ -1462,7 +1749,17 @@ function hideDateTimeForm()
 
 function hideDateForm()
 {
+    let currentColumn = getCurrentDateColumnSelected();
+
+    if(currentColumn !== undefined)
+    {
+        //Allow previous column to be selected by Date Column
+        $(`#timeColumnSelect > option[value="${currentColumn}"]`).attr('hidden', false);
+    }
+
+    setCurrentDateColumnSelected(undefined);
     hideSelectedRow("");
+
     destroyDateForm();
 }
 
@@ -1531,6 +1828,18 @@ function createDateColumnQuestionRadioLabel(value)
 
     let labelElementAttributes = {
         id : `dateColumnQuestion${value}Label`,
+        for : inputElementAttributes.id
+    }
+
+    return createLabelElement(labelElementAttributes, text=value)
+}
+
+function createTimeColumnQuestionRadioLabel(value)
+{
+    let inputElementAttributes = getTimeColumnQuestionInputAttributes(value);
+
+    let labelElementAttributes = {
+        id : `timeColumnQuestion${value}Label`,
         for : inputElementAttributes.id
     }
 
@@ -1651,6 +1960,18 @@ function getDateColumnQuestionInputAttributes(value=undefined)
         value
     }
 };
+
+function getTimeColumnQuestionInputAttributes(value=undefined)
+{
+    return {
+        id : `timeColumnQuestion${value}Input`,
+        name : 'timeColumnQuestion',
+        type : 'radio',
+        value
+    }
+};
+
+
 
 function getDateTimeColumnQuestionInputAttributes(value=undefined)
 {
@@ -2511,11 +2832,16 @@ function prepareRenameTableDataForDownload(){
     //Replace old headers with new headers
     dataArray[0] = headersString;
 
-    //TODO Replace existing datetime column with new format
-
+    //If they have a datetime column: Replace existing datetime column with new format
     if(getHiddenDateTimeRow() !== null && getDateTimeFormat() !== null && getTimeZone() !== "")
     {
         dataArray = replaceDateTimeColumn(dataArray);
+        dataArray = addTimeZoneColumn(dataArray);
+    }
+
+    //If they have a Time column: Add a timezone column
+    else if(getHiddenDateTimeRow() !== null && getTimeZone() !== "")
+    {
         dataArray = addTimeZoneColumn(dataArray);
     }
     
@@ -2562,7 +2888,13 @@ function addTimeZoneColumn(dataArray)
 
 function getTimeZone()
 {
-    return $('#datetimeFormZone')[0].value;
+    let dateTimeFormTimeZone = $('#dateTimeFormTimeZone');
+    if(dateTimeFormTimeZone.length > 0) return dateTimeFormTimeZone[0].value;
+    
+    let timeFormTimeZone = $('#timeFormTimeZone'); 
+    if(timeFormTimeZone.length > 0) return timeFormTimeZone[0].value;
+
+    return undefined;
 }
 
 /*  Short Summary: Given data and a filename, download the data into a file of the given name
