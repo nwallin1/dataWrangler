@@ -20,6 +20,7 @@ var globalFile = {
     previewTableHeadersArray: null,
     depthInputDisabled: true,
     hiddenDateTimeRow: null,
+    hiddenTimeRow: null,
     dateTimeFormat: null,
     uploadedFileName: undefined,
     currentDateColumnSelected: undefined,
@@ -74,6 +75,16 @@ function getHiddenDateTimeRow()
 function setHiddenDateTimeRow(value)
 {
     globalFile.hiddenDateTimeRow = value;
+}
+
+function setHiddenTimeRow(value)
+{
+    globalFile.hiddenTimeRow = value;
+}
+
+function getHiddenTimeRow()
+{
+    return globalFile.hiddenTimeRow;
 }
 
 function setDepthInputDisabled(value)
@@ -718,7 +729,7 @@ function dateColumnSelected(event)
     }
 
     setCurrentDateColumnSelected(selectedColumnId);
-    hideSelectedRow(selectedColumnId);
+    hideSelectedDateRow(selectedColumnId);
 
     
 
@@ -739,7 +750,7 @@ function timeColumnSelected(event)
     }
 
     setCurrentTimeColumnSelected(selectedColumnId);
-    hideSelectedRow(selectedColumnId);
+    hideSelectedTimeRow(selectedColumnId);
 
     //Hide the column with id === selectedColumnId as an option from the Date Format Selector
     $(`#dateColumnSelect > option[value="${selectedColumnId}"]`).attr('hidden', true);
@@ -751,33 +762,84 @@ function dateTimeColumnSelected(event)
 {
     let selectedColumnId = event.target.value;
 
-    hideSelectedRow(selectedColumnId);
+    hideSelectedDateTimeRow(selectedColumnId);
     createDateTimeForm(selectedColumnId);
 }
 
-function hideSelectedRow(selectedColumnId)
+function hideSelectedRow(oldRow, newRow)
 {
-    let currentHiddenRow = getHiddenDateTimeRow();
-    if(currentHiddenRow !== null)
+    if(oldRow !== null)
     {
         //show row
-        currentHiddenRow.hidden = false;
+        oldRow.hidden = false;
     }
 
+    if(newRow === null) return;
+
+    //Hide new row
+    newRow.hidden = true;
+    
+}
+
+function hideSelectedDateTimeRow(selectedColumnId)
+{
+    let oldRow = getHiddenDateTimeRow();
+    let newRow;
+
+    if( selectedColumnId === null) newRow = null;
+    else  newRow =  $(`tr#row_${selectedColumnId.split("_").at(-1)}`)[0];
+
+    hideSelectedRow(oldRow,newRow);
+    
     //If the option selected was no column, then return
-    if(selectedColumnId === "") 
+    if(newRow === null) 
     {
         setHiddenDateTimeRow(null);
         return;   
     }
 
-    //Hide next row
-    currentHiddenRow = $(`tr#row_${selectedColumnId.split("_").at(-1)}`)[0];
-    setHiddenDateTimeRow(currentHiddenRow);
-    currentHiddenRow.hidden = true;
-    
+    setHiddenDateTimeRow(newRow);
 }
 
+function hideSelectedDateRow(selectedColumnId)
+{
+    let oldRow = getHiddenDateTimeRow();
+    let newRow;
+
+    if( selectedColumnId === null) newRow = null;
+    else  newRow =  $(`tr#row_${selectedColumnId.split("_").at(-1)}`)[0];
+
+    hideSelectedRow(oldRow,newRow);
+    
+    //If the option selected was no column, then return
+    if(newRow === null) 
+    {
+        setHiddenDateTimeRow(null);
+        return;   
+    }
+
+    setHiddenDateTimeRow(newRow);
+}
+
+function hideSelectedTimeRow(selectedColumnId)
+{
+    let oldRow = getHiddenTimeRow();
+    let newRow;
+    
+    if( selectedColumnId === null) newRow = null;
+    else  newRow =  $(`tr#row_${selectedColumnId.split("_").at(-1)}`)[0];
+
+    hideSelectedRow(oldRow,newRow);
+    
+    //If the option selected was no column, then return
+    if(newRow === null) 
+    {
+        setHiddenTimeRow(null);
+        return;   
+    }
+
+    setHiddenTimeRow(newRow);
+}
 
 function destroyDateTimeForm()
 {
@@ -851,6 +913,7 @@ function createDateForm(selectedColumnId)
         let validText = 'Valid Date Format Detected';
         formatStatusMessage.text(validText);
         formatStatusMessage.addClass('valid-format');
+        setDateTimeFormat("validISO");
     }
     else
     {
@@ -862,6 +925,7 @@ function createDateForm(selectedColumnId)
         let formatSelect = $("<select class='form-control' id='dateFormFormat'>");
         addDateFormatOptionsToSelectElement(formatSelect);        
         formatSelect.on('input', function(e){
+            debugger;
             if(e.target.value === "Custom")
             {
                 $('#formatCustomFormGroup').attr("hidden", false);
@@ -1003,6 +1067,7 @@ function createDateTimeForm(selectedColumnId)
         let validText = 'Valid Date Time Format Detected';
         formatStatusMessage.text(validText);
         formatStatusMessage.addClass('valid-format');
+        setDateTimeFormat("validISO");
     }
     else
     {
@@ -1156,7 +1221,7 @@ function addDateFormatOptionsToSelectElement(selectElement)
 {
    let optionElements =  $(`
     <option hidden disabled selected value> -- select an option -- </option><option value=""></option>
-    <option >M/d/y (Ex: 4-30-13)</option>
+    <option >M/d/y (Ex: 4/30/13)</option>
     <option >yyyy-MM-dd (Ex: 2023-04-13)</option>
     <option>MM/dd/yyyy (Ex: 04/13/2023)</option>
     <option>Custom</option>`);
@@ -1518,7 +1583,6 @@ function handleTimeColumnInput(e)
     }
 
     //CASE: e.target.value == "No"
-    debugger;
     hideTimeSelect();
     hideTimeForm();
 
@@ -1554,7 +1618,7 @@ function hideTimeForm()
     }
 
     setCurrentTimeColumnSelected(undefined);
-    hideSelectedRow("");
+    hideSelectedTimeRow(null);
     destroyTimeForm();
 }
 
@@ -1743,7 +1807,7 @@ function createTimeColumnSelectAndAppendToDiv(div)
 
 function hideDateTimeForm()
 {
-    hideSelectedRow("");
+    hideSelectedDateTimeRow(null);
     destroyDateTimeForm();
 }
 
@@ -1758,7 +1822,7 @@ function hideDateForm()
     }
 
     setCurrentDateColumnSelected(undefined);
-    hideSelectedRow("");
+    hideSelectedDateRow(null);
 
     destroyDateForm();
 }
@@ -2833,14 +2897,13 @@ function prepareRenameTableDataForDownload(){
     dataArray[0] = headersString;
 
     //If they have a datetime column: Replace existing datetime column with new format
-    if(getHiddenDateTimeRow() !== null && getDateTimeFormat() !== null && getTimeZone() !== "")
+    if(getHiddenDateTimeRow() !== null && getDateTimeFormat() !== null)
     {
         dataArray = replaceDateTimeColumn(dataArray);
-        dataArray = addTimeZoneColumn(dataArray);
     }
 
-    //If they have a Time column: Add a timezone column
-    else if(getHiddenDateTimeRow() !== null && getTimeZone() !== "")
+    //If they have a Time column OR DateTime is selected: Add a timezone column
+    if(getTimeZone() !== undefined && getTimeZone() !== '')
     {
         dataArray = addTimeZoneColumn(dataArray);
     }
@@ -2855,16 +2918,33 @@ function prepareRenameTableDataForDownload(){
 
 function replaceDateTimeColumn(dataArray)
 {
+    let firstTimeAlerting = true;
     dataArray.forEach( (value, index, array) => {
         if(index === 0) return;
         let splitValue = value.split(",");
         let dateValue = splitValue[0];
         
         let dateTimeFormat = getDateTimeFormat()
-        let dateTime = DateTime.fromFormat(dateValue, dateTimeFormat, { zone : getTimeZone()});
-        
+        let timeZone = getTimeZone();
+
+        //Default timezone === utc
+        if(timeZone === '') timeZone = 'utc';
+
+        let dateTime;
+        if(dateTimeFormat === "validISO") dateTime = DateTime.fromISO(dateValue, { zone: timeZone});
+        else dateTime = DateTime.fromFormat(dateValue, dateTimeFormat, { zone : timeZone});
         //Convert to ISO Standard format yyyy-MM-ddTHH:mm:ss (Ex: 2023-04-13T14:52:30-04:00)
         let newDateTimeValue = dateTime.toISO();
+        if(newDateTimeValue === null)
+        {
+            newDateTimeValue = dateValue;
+            if(firstTimeAlerting === true)
+            {
+                alert("Some Date Values ae detected in a different format. The tool is unable to convert these formats. The new file will still be generated without those Date Values being changed. Please go through your .csv file and ensure all Date values are in the same format then reupload the .csv");
+                firstTimeAlerting = false;
+            }
+        }
+
         splitValue[0] = newDateTimeValue;
         value = splitValue.join();
         array[index] = value;
