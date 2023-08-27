@@ -24,8 +24,19 @@ var globalFile = {
     dateTimeFormat: null,
     uploadedFileName: undefined,
     currentDateColumnSelected: undefined,
-    currentTimeColumnSelected: undefined
+    currentTimeColumnSelected: undefined,
+    depthUnits: 'Meters',
 };
+
+function setDepthUnits(value)
+{
+    globalFile.depthUnits = value;
+}
+
+function getDepthUnits(value)
+{
+    return globalFile.depthUnits;
+}
 
 function getCurrentTimeColumnSelected()
 {
@@ -519,6 +530,7 @@ function createUnitDataListElements(arr, id)
         option = $('<option></option');
         option.attr('value', value.unitAbbreviation);
         option.attr('id', value.term); 
+        option.attr('name', value.unitAbbreviation); 
         option.attr('data-term', value.term);
         option.attr('data-description', value.unitsTypeCV);
         option.attr('data-provenance', value.unitsLink);
@@ -634,7 +646,8 @@ function createQuestionElements()
 
 
     createLimnoQuestionAndAppendToDiv(div);
-    createDepthQuestionAndAppendToDiv(div);
+    createAllDepthQuestionsAndAppendToDiv(div);
+    //TODO
 
     div.append("<br>");
     
@@ -925,7 +938,6 @@ function createDateForm(selectedColumnId)
         let formatSelect = $("<select class='form-control' id='dateFormFormat'>");
         addDateFormatOptionsToSelectElement(formatSelect);        
         formatSelect.on('input', function(e){
-            debugger;
             if(e.target.value === "Custom")
             {
                 $('#formatCustomFormGroup').attr("hidden", false);
@@ -1307,6 +1319,9 @@ function createRenameTable(csvRows)
     div.append($('<hr><h2>Column Rename Table</h2>'));
     div.append(table);
 
+    //Hide Depth Column by default
+    hideDepthColumn();
+
     csvDataRows.forEach(function(element){
         //Add initial values to output object
         //Need to call updateRenameTableOutput with the newNameInput data cell for each row
@@ -1411,6 +1426,35 @@ function createTimeColumnQuestionAndAppendToDiv(div)
     div.append(timeColumnQuestionNoInput);
 }
 
+function createAllDepthQuestionsAndAppendToDiv(div)
+{
+    createDepthQuestionAndAppendToDiv(div);
+    createDepthUnitsQuestionAndAppendToDiv(div);
+}
+
+function createDepthUnitsQuestionAndAppendToDiv(div)
+{
+    let depthQuestionYesInput = createDepthUnitsQuestionRadioInput(value="Meters");
+    depthQuestionYesInput.attr("checked", "checked");
+
+    let depthQuestionNoInput = createDepthUnitsQuestionRadioInput(value="Feet");
+    
+
+    let depthQuestionYesLabel = createDepthUnitsQuestionRadioLabel("Meters");
+    let depthQuestionNoLabel = createDepthUnitsQuestionRadioLabel("Feet");
+
+    let depthQuestionLabel = createLabelElement({'id':'depthUnitsQuestionLabel'}, text="Are you measuring depth in meters or feet?");
+
+    //Adds created elements to the <div>
+    div.append("<br>");
+    div.append(depthQuestionLabel);
+    div.append("<br>");
+    div.append(depthQuestionYesLabel);
+    div.append(depthQuestionYesInput);
+    div.append(depthQuestionNoLabel);
+    div.append(depthQuestionNoInput);
+}
+
 function createDepthQuestionAndAppendToDiv(div)
 {
     let depthQuestionYesInput = createDepthQuestionRadioInput(value="Yes");
@@ -1421,7 +1465,7 @@ function createDepthQuestionAndAppendToDiv(div)
     let depthQuestionYesLabel = createDepthQuestionRadioLabel("Yes");
     let depthQuestionNoLabel = createDepthQuestionRadioLabel("No");
 
-    let depthQuestionLabel = createLabelElement({'id':'depthQuestionLabel'}, text="Do you have variables of the same name at different depths?");
+    let depthQuestionLabel = createLabelElement({'id':'depthQuestionLabel'}, text="Do your columns have a depth associated with them? (i.e temperature at 1 m, dissolved oxygen at 2.5 m, etc)");
 
     //Adds created elements to the <div>
     div.append("<br>");
@@ -1431,6 +1475,7 @@ function createDepthQuestionAndAppendToDiv(div)
     div.append(depthQuestionYesInput);
     div.append(depthQuestionNoLabel);
     div.append(depthQuestionNoInput);
+
 };
 
 function createLimnoQuestionRadioInput(value)
@@ -1472,6 +1517,34 @@ function createDepthQuestionRadioInput(value)
 
     return input;
 };
+
+function createDepthUnitsQuestionRadioInput(value)
+{
+    let input = createInputElement(getDepthUnitsQuestionInputAttributes(value), text="");
+    input.on('change', handleDepthUnitsQuestionInput);
+
+    return input;
+};
+
+function handleDepthUnitsQuestionInput(e)
+{
+    setDepthUnits(e.target.value);
+
+    //If depth inputs are enabled
+    if(getDepthInputDisabled() === false)
+    {
+        updatePreviewColumnWithNewDepthUnits();
+    }
+    
+    return;
+} 
+
+function updatePreviewColumnWithNewDepthUnits()
+{
+    removeDepthStringsfromPreviewColumnHeadersArray();
+    addDepthStringsfromPreviewColumnHeadersArray();
+    return;
+}
 
 function handleDepthQuestionInput(e)
 {
@@ -1922,6 +1995,18 @@ function createDepthQuestionRadioLabel(value)
     return createLabelElement(labelElementAttributes, text=value)
 };
 
+function createDepthUnitsQuestionRadioLabel(value)
+{
+    let inputElementAttributes = getDepthUnitsQuestionInputAttributes(value);
+
+    let labelElementAttributes = {
+        id : `depthUnitsQuestion${value}Label`,
+        for : inputElementAttributes.id
+    }
+
+    return createLabelElement(labelElementAttributes, text=value)
+};
+
 function createButtonElement(attributes,text)
 {
     return createElementWithValues('button', attributes, text);
@@ -2057,6 +2142,16 @@ function getDepthQuestionInputAttributes(value=undefined)
     }
 }
 
+function getDepthUnitsQuestionInputAttributes(value=undefined)
+{
+    return {
+        id : `depthUnits${value}Input`,
+        name : 'depthUnitsQuestionInput',
+        type : 'radio',
+        value
+    }
+}
+
 /* Short Summary: Create a <label> element for the controlled vocabulary input
  *
  * @return (HTMLElement) : <label> with attributes and text values for the controlled vocabulary input
@@ -2179,7 +2274,7 @@ function getRenameTableHeaderElementNames()
             attributes: {
                 id: "tableHeaderCurrentName",
             },
-            text: "Current Name"
+            text: "Current Variable Name"
         },
         {
             attributes: {
@@ -2192,19 +2287,25 @@ function getRenameTableHeaderElementNames()
                 id: "tableHeaderNewName",
             },
             id: "tableHeaderNewName",
-            text: "New Name"
+            text: "New Variable Name"
         },
         {
             attributes: {
-                id: "tableHeaderDefinition",
+                id: "tableHeaderVariableDefinition",
             },
-            text: "Definition"
+            text: "New Variable Definition"
         },
         {
             attributes: {
                 id: "tableHeaderUnit",
             },
             text: "Unit"
+        },
+        {
+            attributes: {
+                id: "tableHeaderUnitDefinition",
+            },
+            text: "Unit Definition"
         },
         {
             attributes: {
@@ -2318,7 +2419,7 @@ function createNormalTypeRow(element, rowNumber, subrow=false)
     params = {
         "parentRow": tr.attr('id'),
         "rowNumber": rowNumber,
-        "className" : "definitionInput",
+        "className" : "variableNameDefinitionInput",
         "changeEventCallback" : undefined,
     };
 
@@ -2339,6 +2440,16 @@ function createNormalTypeRow(element, rowNumber, subrow=false)
     };        
 
     td = createTableDataCellWithInput(params);
+    tr.append(td);
+
+    params = {
+        "parentRow":tr.attr('id'),
+        "rowNumber": rowNumber,
+        "className": "unitsDefinition", 
+        "changeEventCallback": undefined,
+    };        
+
+    td = createTableDataCellWithTextArea(params);
     tr.append(td);
 
 
@@ -2499,7 +2610,7 @@ function handleNewColumnNameInput(e)
     let input = e.target;
 
     updateHeaderName(input);
-    updateDefinitionColumn(input);
+    updateVariableDefinitionColumn(input);
     updatePreviewColumn(input);
     updateRenameTableOutput(input);
 
@@ -2580,6 +2691,7 @@ function changeRowToMultivariableType(row)
 function handleNewUnitInput(e)
 {
     let input = e.target;
+    updateUnitDefinitionColumn(input);
     updatePreviewColumn(input);
 };
 
@@ -2601,7 +2713,7 @@ function updateHeaderName(input)
     setHeaderColumnName(tr.dataset);
 };
 
-function updateDefinitionColumn(input)
+function updateVariableDefinitionColumn(input)
 {
     //Update Definition
     //Get selected option element
@@ -2610,7 +2722,20 @@ function updateDefinitionColumn(input)
 
     //Set definition value to definition value of selected option
     //If option is defined, set the definition value to the option's label
-    $(`#definitionInput_row_${rowNumber}`)[0].value = option ? `${option.dataset.description}` : '';
+    $(`#variableNameDefinitionInput_row_${rowNumber}`)[0].value = option ? `${option.dataset.description}` : '';
+
+};
+
+function updateUnitDefinitionColumn(input)
+{
+    //Update Definition
+    //Get selected option element
+    let rowNumber = input.id.split("_").pop();
+    let option = input.list.options.namedItem(input.value);
+
+    //Set definition value to definition value of selected option
+    //If option is defined, set the definition value to the option's label
+    $(`#unitsDefinition_row_${rowNumber}`)[0].value = option ? `${option.dataset.description}` : '';
 
 };
 
@@ -2658,7 +2783,11 @@ function updatePreviewColumn(input)
         depth = depthInputElement.value;
     }
 
-    let depthString = depth ? `_depth${depth}m` : '';
+    let depthUnit = getDepthUnits();
+    let depthUnitString = 'm';
+    if(depthUnit !== 'Meters') depthUnitString = 'ft';
+
+    let depthString = depth ? `_depth${depth}${depthUnitString}` : '';
 
     if(newNameString == "") newNameString = originalname;
 
@@ -2686,7 +2815,12 @@ function addDepthStringsfromPreviewColumnHeadersArray()
         (value, index, array) => {
             let depthInputElement = $(`#depthInput_row_${index}`)[0];
             let depth = depthInputElement.value;
-            let depthString = depth ? `_depth${depth}m` : '';
+
+            let depthUnit = getDepthUnits();
+            let depthUnitString = 'm';
+            if(depthUnit !== 'Meters') depthUnitString = 'ft';
+
+            let depthString = depth ? `_depth${depth}${depthUnitString}` : '';
 
             let th = $(`[id^='previewHeader'][id$='${index}']`)[0];
             th.innerText = value + depthString;
