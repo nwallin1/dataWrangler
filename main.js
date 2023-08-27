@@ -429,11 +429,6 @@ function getColumnTypeDefaultValue()
     return "Normal";
 }
 
-function getColumnTypeOptions()
-{
-    return $('<option value="Multivariable">Multivariable</option><option value="Normal">Normal</option>');
-};
-
 function getLimnoListElementId()
 {
     return 'ODM2_limno';
@@ -2243,12 +2238,6 @@ function createRenameTableColumnHeaderRow()
 function createTableHeaderElementAndAppendToTableRow(element)
 {
     let th = createTableHeaderElement(element.attributes, text=element.text);
-
-    if(element.text === "Column Type")
-    {
-        let tooltip = $(`<button type="button" class="help-button btn" data-toggle="tooltip" data-placement="right" title="Sample Text">&#9432;</button>`).tooltip();
-        th.append(tooltip);
-    }
     
     //This is expected to be a tr element
     this.append(th);
@@ -2275,12 +2264,6 @@ function getRenameTableHeaderElementNames()
                 id: "tableHeaderCurrentName",
             },
             text: "Current Variable Name"
-        },
-        {
-            attributes: {
-                id: "tableHeaderColumnType"
-            },
-            text: "Column Type"
         },
         {
             attributes: {
@@ -2386,20 +2369,7 @@ function createNormalTypeRow(element, rowNumber, subrow=false)
 
     //Create data cell for original column name
     td = $('<td></td>').text(element);
-    tr.append(td);
-    
-    //Create data cell for column type selection
-    params = {
-        "parentRow": tr.attr('id'),
-        "rowNumber": rowNumber,
-        "className": "columnTypeInput" , 
-        "optionsListName": getColumnTypeOptions(),
-        "changeEventCallback": handleColumnTypeInput,
-        "defaultValue": getColumnTypeDefaultValue(),
-        "disabled" : false
-    };
-    td = createTableDataCellWithSelect(params); 
-    tr.append(td);       
+    tr.append(td);    
 
     //Create data cell for new name selection
     params = {
@@ -2617,76 +2587,6 @@ function handleNewColumnNameInput(e)
     //Resize based on input size
     $(input).attr('size', $(input).val().length);
 };
-
-function handleColumnTypeInput(e)
-{
-    //TODO this function needs to be changed to handle multiVariable Columns
-    let input = e.target;
-    let rowId = input.dataset.parentrow;
-    let row = $(`#${rowId}`)[0];
-    // $(`#${parentID}`)[0].innerHTML = '';
-
-    if(e.target.value === "Normal")
-    {
-        // changeRowToNormalType(row);
-        
-    }
-
-    else if(e.target.value === "Multivariable")
-    {
-        changeRowToMultivariableType(row);
-    }
-}
-
-function changeRowToNormalType(row)
-{
-    
-    row.dataset.rowtype = 'normal';
-
-    //Remove any subrows
-    debugger;
-}
-
-function changeRowToMultivariableType(row)
-{
-    row.dataset.rowtype = 'multivariable';
-
-    //Create one subrow for each unique variable name
-
-    let dataArray = getCsvRows();
-
-    let set = new Set();
-
-    dataArray.forEach( function(value, index, array){
-        if(index === 0) return;
-
-        //TODO there are sample values like this - "temp, water". These don't work
-        // Well with the value.split(','). Need to fix
-
-        let selectedValue = value.split(',')[this.dataset.rownumber];
-        if(selectedValue !== "" && selectedValue !== null && selectedValue !== undefined) set.add(selectedValue.trim());
-    }, row);
-    
-    let iterator = set.entries();
-
-    let count = 0;
-    for (const item of iterator){
-        let tr = createNormalTypeRow(item[0], `${row.dataset.rownumber}_subrow_${count}`, subrow=true)[0];
-        let br = document.createElement("br")
-        // row.append(br);
-        row.after(tr);
-
-        count = count + 1;
-        debugger;
-
-        //TODO continue working on this
-        //Maybe transition this to only have one <tr> with a select
-        //the select will have a list of the values that you can select
-        if(count > 2) return;
-    }
-
-    debugger;
-}
 
 function handleNewUnitInput(e)
 {
