@@ -76,8 +76,9 @@ function getDateTimeFormat()
 
 function setDateTimeFormat(value)
 {
+    if(value === null) value = '';
     globalFile.dateTimeFormat = value;
-    setOutputValue("Original Date Format", dateTimeFormat);
+    setOutputValue("Original Date Format", globalFile.dateTimeFormat);
 }
 
 function getHiddenDateTimeRow()
@@ -575,6 +576,8 @@ function handleFiles()
     const fileList = this.files;
     const file = fileList[0];
 
+    if(file === undefined) return;
+
     const reader = new FileReader();
     
     setUploadedFileName(fileList[0].name);
@@ -644,7 +647,6 @@ function createQuestionElements()
 
     createLimnoQuestionAndAppendToDiv(div);
     createAllDepthQuestionsAndAppendToDiv(div);
-    //TODO
 
     div.append("<br>");
     
@@ -961,7 +963,7 @@ function createDateForm(selectedColumnId)
                     formatStatusMessage.addClass('invalid-format');
                     formatStatusMessage.removeClass('valid-format');
                     $('#formatStatusMessage').text(invalidText);
-                    setDateTimeFormat(null);
+                    setDateTimeFormat('');
                 }
             }
             
@@ -1000,7 +1002,7 @@ function createDateForm(selectedColumnId)
                 formatCustomStatusMessage.addClass('invalid-format');
                 formatCustomStatusMessage.removeClass('valid-format');
                 formatCustomStatusMessage.text(invalidText);
-                setDateTimeFormat(null);
+                setDateTimeFormat('');
             }
         });
 
@@ -1008,8 +1010,6 @@ function createDateForm(selectedColumnId)
 
     rowTwo.append(formatStatusMessage);
     form.append(rowTwo);
-
-    //TODO add information to output file
 
     div.append($('<br><h2>Date Format</h2>'));
     div.append(form);
@@ -1115,7 +1115,7 @@ function createDateTimeForm(selectedColumnId)
                     formatStatusMessage.addClass('invalid-format');
                     formatStatusMessage.removeClass('valid-format');
                     $('#formatStatusMessage').text(invalidText);
-                    setDateTimeFormat(null);
+                    setDateTimeFormat('');
                 }
             }
             
@@ -1153,7 +1153,7 @@ function createDateTimeForm(selectedColumnId)
                 formatCustomStatusMessage.addClass('invalid-format');
                 formatCustomStatusMessage.removeClass('valid-format');
                 formatCustomStatusMessage.text(invalidText);
-                setDateTimeFormat(null);
+                setDateTimeFormat('');
             }
         });
 
@@ -1199,8 +1199,6 @@ function createDateTimeForm(selectedColumnId)
     rowThree.append(zoneFormGroup);
 
     form.append(rowThree);
-
-    //TODO add information to output file
 
     div.append($('<br><h2>Date Time Format</h2>'));
     div.append(form);
@@ -1449,6 +1447,8 @@ function createDepthUnitsQuestionAndAppendToDiv(div)
     div.append(depthQuestionYesInput);
     div.append(depthQuestionNoLabel);
     div.append(depthQuestionNoInput);
+
+    setOutputValue('Depth Units', 'Meters');
 }
 
 function createDepthQuestionAndAppendToDiv(div)
@@ -1644,7 +1644,6 @@ function handleDateColumnInput(e)
     hideDateSelect();
     hideDateForm();
 
-    //TODO Add some text about what to do if the answer is no
 }
 
 function handleTimeColumnInput(e)
@@ -1659,8 +1658,6 @@ function handleTimeColumnInput(e)
     //CASE: e.target.value == "No"
     hideTimeSelect();
     hideTimeForm();
-
-    //TODO Add some text about what to do if the answer is no
 
 }
 
@@ -1768,8 +1765,6 @@ function createTimeForm(selectedColumnId)
     rowThree.append(zoneFormGroup);
 
     form.append(rowThree);
-
-    //TODO add information to output file
 
     div.append($('<br><h2>Time Format</h2>'));
     div.append($('<h6>By selecting a time zone in this section, it will add a new column called <strong>"timezone"</strong> to your csv. The existing time column will remain unchanged.</h6>'));
@@ -2684,13 +2679,11 @@ function updateVariableOutput(rownumber)
 {
     let newName = getPreviewTableHeadersArray()[rownumber];
     setColumnsOutputValue(rownumber,'new_column_name', newName);
-
     let row = $(`#row_${rownumber}`);
 
     let variableDefinition = row.find(`#variableNameDefinitionInput_row_${rownumber}`)[0].value;
     setColumnsOutputValue(rownumber,'new_variable_definition', variableDefinition);
 
-    debugger;
     let newNameInput = row.find(`#newNameInput_row_${rownumber}`)[0];
 
     let list = newNameInput.list;
@@ -2703,14 +2696,12 @@ function updateVariableOutput(rownumber)
         setColumnsOutputValue(rownumber,'new_variable_controlled_term', option.dataset.term);
         setColumnsOutputValue(rownumber,'new_variable_controlled_provenance', option.dataset.provenance);
         setColumnsOutputValue(rownumber,'new_variable_controlled_name', option.dataset.name);
+    }else
+    {
+        setColumnsOutputValue(rownumber,'new_variable_controlled_term', '');
+        setColumnsOutputValue(rownumber,'new_variable_controlled_provenance', '');
+        setColumnsOutputValue(rownumber,'new_variable_controlled_name', '');
     }
-    //TODO rest of the variables information
-}
-
-function updateDepthOutput(rownumber)
-{
-    let row = $(`#row_${rownumber}`);
-    debugger;
 }
 
 function updateUnitsOutput(rownumber)
@@ -2725,8 +2716,23 @@ function updateUnitsOutput(rownumber)
     let unitsDefinition = row.find(`#unitsDefinition_row_${rownumber}`)[0].value;
     setColumnsOutputValue(rownumber,'units_definition', unitsDefinition);
 
+    let newUnitInput = row.find(`#unitsInput_row_${rownumber}`)[0];
 
-    //TODO rest of the units information
+    let list = newUnitInput.list;
+    let value = newUnitInput.value;
+    let option = list.options.namedItem(value);
+
+    if(option !== null)
+    {
+        setColumnsOutputValue(rownumber,'new_unit_controlled_term', option.dataset.term);
+        setColumnsOutputValue(rownumber,'new_unit_controlled_provenance', option.dataset.provenance);
+        setColumnsOutputValue(rownumber,'new_unit_controlled_name', option.dataset.name);
+    }else
+    {
+        setColumnsOutputValue(rownumber,'new_unit_controlled_term', '');
+        setColumnsOutputValue(rownumber,'new_unit_controlled_provenance', '');
+        setColumnsOutputValue(rownumber,'new_unit_controlled_name', '');
+    }
 }
 
 function updatePreviewColumn(input)
@@ -3007,6 +3013,7 @@ function prepareRenameTableDataForDownload(){
     }
 
     //If they have a Time column OR DateTime is selected: Add a timezone column
+    debugger;
     if(getTimeZone() !== undefined && getTimeZone() !== '')
     {
         dataArray = addTimeZoneColumn(dataArray);
@@ -3039,11 +3046,12 @@ function replaceDateTimeColumn(dataArray)
         else dateTime = DateTime.fromFormat(dateValue, dateTimeFormat, { zone : timeZone});
         //Convert to ISO Standard format yyyy-MM-ddTHH:mm:ss (Ex: 2023-04-13T14:52:30-04:00)
         let newDateTimeValue = dateTime.toISO();
-        if(newDateTimeValue === null)
+        if(newDateTimeValue === null && dateValue !== "")
         {
             newDateTimeValue = dateValue;
             if(firstTimeAlerting === true)
             {
+                debugger;
                 alert("Some Date Values ae detected in a different format. The tool is unable to convert these formats. The new file will still be generated without those Date Values being changed. Please go through your .csv file and ensure all Date values are in the same format then reupload the .csv");
                 firstTimeAlerting = false;
             }
@@ -3082,7 +3090,7 @@ function getTimeZone()
 
     if(timeZone !== undefined) setOutputValue('TimeZone', timeZone);
 
-    return undefined;
+    return timeZone;
 }
 
 /*  Short Summary: Given data and a filename, download the data into a file of the given name
