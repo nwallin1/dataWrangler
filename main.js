@@ -31,6 +31,7 @@ var globalFile = {
 function setDepthUnits(value)
 {
     globalFile.depthUnits = value;
+    setOutputValue('Depth Units', value);
 }
 
 function getDepthUnits(value)
@@ -76,6 +77,7 @@ function getDateTimeFormat()
 function setDateTimeFormat(value)
 {
     globalFile.dateTimeFormat = value;
+    setOutputValue("Original Date Format", dateTimeFormat);
 }
 
 function getHiddenDateTimeRow()
@@ -1319,8 +1321,7 @@ function createRenameTable(csvRows)
 
     csvDataRows.forEach(function(element){
         //Add initial values to output object
-        //Need to call updateRenameTableOutput with the newNameInput data cell for each row
-        updateRenameTableOutput($(`#newNameInput_${element[0].id}`)[0]);
+        setOriginalColumnNameOutput(element[0].dataset.rownumber)
     })
 
     
@@ -1538,6 +1539,7 @@ function updatePreviewColumnWithNewDepthUnits()
 {
     removeDepthStringsfromPreviewColumnHeadersArray();
     addDepthStringsfromPreviewColumnHeadersArray();
+    updateAllRowOutputs();
     return;
 }
 
@@ -1566,6 +1568,8 @@ function showDepthColumn()
     depthInputs.prop('disabled', false);
     $('#tableHeaderDepth').attr('hidden', false);
     depthInputs.attr('hidden', false);
+
+    updateAllRowOutputs();
 }
 
 function hideDepthColumn()
@@ -1576,6 +1580,8 @@ function hideDepthColumn()
     depthInputs.prop('disabled', true);
     $('#tableHeaderDepth').attr('hidden', true)
     depthInputs.attr('hidden', true);
+    
+    updateAllRowOutputs();
 }
 
 
@@ -2582,7 +2588,9 @@ function handleNewColumnNameInput(e)
     updateHeaderName(input);
     updateVariableDefinitionColumn(input);
     updatePreviewColumn(input);
-    updateRenameTableOutput(input);
+    
+    let rownumber = input.dataset.parentrow.at(-1);
+    updateVariableOutput(rownumber);
 
     //Resize based on input size
     $(input).attr('size', $(input).val().length);
@@ -2593,12 +2601,19 @@ function handleNewUnitInput(e)
     let input = e.target;
     updateUnitDefinitionColumn(input);
     updatePreviewColumn(input);
+
+    let rownumber = input.dataset.parentrow.at(-1);
+    updateUnitsOutput(rownumber);
 };
 
 function handleNewDepthInput(e)
 {
     let input = e.target;
     updatePreviewColumn(input);
+
+    let rownumber = input.dataset.parentrow.at(-1);
+    updateRowOutput(rownumber);
+
 }
 
 function updateHeaderName(input)
@@ -2639,25 +2654,80 @@ function updateUnitDefinitionColumn(input)
 
 };
 
-function updateRenameTableOutput(input)
+function setOriginalColumnNameOutput(rownumber)
 {
-    let parentRow = $(`#${input.dataset.parentrow}`)[0];
-    let originalname = parentRow.dataset.originalname;
-    let rownumber = parentRow.dataset.rownumber;
+    let originalName = getCsvHeadersArray()[rownumber];
+    setColumnsOutputValue(rownumber,'original_column_name', originalName);
+    setColumnsOutputValue(rownumber,'new_column_name', originalName);
+}
 
-    let option = input.list.options[input.value];
-    
-    //TODO finish setting these things in the output
 
+function updateAllRowOutputs()
+{
     let previewTableHeadersArray = getPreviewTableHeadersArray();
-    setColumnsOutputValue(rownumber,'column_name', previewTableHeadersArray[rownumber]);
+
+    let numberOfRows = previewTableHeadersArray.length
+
+    for (let i = 0; i < numberOfRows; i++)
+    {
+        updateRowOutput(i);
+    }
+}
+
+function updateRowOutput(rownumber)
+{
+    updateVariableOutput(rownumber);
+    updateUnitsOutput(rownumber);
+}
+
+function updateVariableOutput(rownumber)
+{
+    let newName = getPreviewTableHeadersArray()[rownumber];
+    setColumnsOutputValue(rownumber,'new_column_name', newName);
+
+    let row = $(`#row_${rownumber}`);
+
+    let variableDefinition = row.find(`#variableNameDefinitionInput_row_${rownumber}`)[0].value;
+    setColumnsOutputValue(rownumber,'new_variable_definition', variableDefinition);
+
+    debugger;
+    let newNameInput = row.find(`#newNameInput_row_${rownumber}`)[0];
+
+    let list = newNameInput.list;
+    let value = newNameInput.value;
+    let option = list.options.namedItem(value);
+
     
+    if(option !== null)
+    {
+        setColumnsOutputValue(rownumber,'new_variable_controlled_term', option.dataset.term);
+        setColumnsOutputValue(rownumber,'new_variable_controlled_provenance', option.dataset.provenance);
+        setColumnsOutputValue(rownumber,'new_variable_controlled_name', option.dataset.name);
+    }
+    //TODO rest of the variables information
+}
+
+function updateDepthOutput(rownumber)
+{
+    let row = $(`#row_${rownumber}`);
+    debugger;
+}
+
+function updateUnitsOutput(rownumber)
+{
     let unitsInputElement = $(`#unitsInput_row_${rownumber}`)[0];
     let units = unitsInputElement.value;
-    let unitsString = units ? `_${units}` : '';
+    let unitsString = units ? `${units}` : '';
     setColumnsOutputValue(rownumber,'units', unitsString);
 
-};
+    let row = $(`#row_${rownumber}`);
+
+    let unitsDefinition = row.find(`#unitsDefinition_row_${rownumber}`)[0].value;
+    setColumnsOutputValue(rownumber,'units_definition', unitsDefinition);
+
+
+    //TODO rest of the units information
+}
 
 function updatePreviewColumn(input)
 {
@@ -2892,7 +2962,7 @@ function prepareDescriptionDataForDownload()
     /*
        {
         "column_name" : ...,
-        "column_units" : ...,
+        "controlled_vocabulary_column_units" : ...,
         "depth_value" : ...,
         "depth_units" : ...,
         "controlled_vocabulary_variable_name": ...,
@@ -3002,11 +3072,15 @@ function addTimeZoneColumn(dataArray)
 
 function getTimeZone()
 {
+    let timeZone = undefined;
+
     let dateTimeFormTimeZone = $('#dateTimeFormTimeZone');
-    if(dateTimeFormTimeZone.length > 0) return dateTimeFormTimeZone[0].value;
+    if(dateTimeFormTimeZone.length > 0) timeZone = dateTimeFormTimeZone[0].value;
     
     let timeFormTimeZone = $('#timeFormTimeZone'); 
-    if(timeFormTimeZone.length > 0) return timeFormTimeZone[0].value;
+    if(timeFormTimeZone.length > 0) timezone = timeFormTimeZone[0].value;
+
+    if(timeZone !== undefined) setOutputValue('TimeZone', timeZone);
 
     return undefined;
 }
