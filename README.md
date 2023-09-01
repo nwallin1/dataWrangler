@@ -1,5 +1,7 @@
 # ezPrepare
 
+[![DOI](https://zenodo.org/badge/443222694.svg)](https://zenodo.org/badge/latestdoi/443222694)
+
 This tool provides a web interface for renaming columns of a .csv file
 The goal is to allow users to rename columns to a standardized format
 to make their data more reusable by others
