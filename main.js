@@ -1773,7 +1773,7 @@ function createTimeForm(selectedColumnId)
     let rowThree = $("<div class='d-flex row'></div>");
     let dstOnlyFormGroup = $("<div id='dstOnlyFormGroup' class='form-group col-md-4'></div>");
 
-    let dstCheckboxLabel = $("<label class='form-check-label' for='dstCheckboxInput'>'Check here if the time column observes DST</label>");
+    let dstCheckboxLabel = $("<label class='form-check-label' for='dstCheckboxInput'>Check here if your time column observes DST</label>");
     let dstCheckboxInput = $("<input id='dstCheckboxInput' class='form-check-input' type='checkbox' value=''>");
     let dstTooltip = $(`<button type="button" class="help-button btn" data-toggle="tooltip" data-placement="left" title="by checking this box, you are limiting the formal Olson time zone list to those that observe (or have observed) DST">&#9432;</button>`).tooltip({'html': true });
     dstCheckboxLabel.append(dstTooltip);
@@ -3141,7 +3141,7 @@ function replaceDateTimeColumn(dataArray)
         if(index === 0) return;
         let splitValue = value.split(",");
         let dateValue = splitValue[dateOrDateTimeRowNameIndex];
-        
+        if(dateValue === undefined || dateValue === null) return;
         let dateTimeFormat = getDateTimeFormat()
         let timeZone = getTimeZone();
 
@@ -3154,8 +3154,6 @@ function replaceDateTimeColumn(dataArray)
         //Convert to ISO Standard format yyyy-MM-ddTHH:mm:ss (Ex: 2023-04-13T14:52:30-04:00)
         let newDateTimeValue = dateTime.toISO({includeOffset: false, suppressMilliseconds: true});
 
-        //TODO remove 'T' from the Date Time Value. Replace it with a blank space
-        //(Ex: 2023-04-13T14:52:30-04:00) should become (Ex: 2023-04-13 14:52:30-04:00)
         if(newDateTimeValue === null && dateValue !== "")
         {
             newDateTimeValue = dateValue;
@@ -3165,12 +3163,13 @@ function replaceDateTimeColumn(dataArray)
                 firstTimeAlerting = false;
             }
         }
-        else if(newDateTimeValue !== null)
+        else if(newDateTimeValue !== null && newDateTimeValue !== undefined)
         {
+            //remove 'T' from the Date Time Value. Replace it with a blank space
+            //(Ex: 2023-04-13T14:52:30-04:00) should become (Ex: 2023-04-13 14:52:30-04:00)
             newDateTimeValue = newDateTimeValue.replace('T', ' ');
         }
 
-        debugger;
         splitValue[dateOrDateTimeRowNameIndex] = newDateTimeValue;
         value = splitValue.join();
         array[index] = value;
