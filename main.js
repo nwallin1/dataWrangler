@@ -23,6 +23,7 @@ var globalFile = {
     hiddenTimeRow: null,
     dateTimeFormat: null,
     uploadedFileName: undefined,
+    currentDateTimeColumnSelected: undefined,
     currentDateColumnSelected: undefined,
     currentTimeColumnSelected: undefined,
     depthUnits: 'Meters',
@@ -44,21 +45,31 @@ function getCurrentTimeColumnSelected()
     return globalFile.currentTimeColumnSelected;
 }
 
-function getCurrentDateColumnSelected()
-{
-    return globalFile.currentDateColumnSelected;
-}
-
-
 function setCurrentTimeColumnSelected(value)
 {
     globalFile.currentTimeColumnSelected = value;
+}
+
+function getCurrentDateColumnSelected()
+{
+    return globalFile.currentDateColumnSelected;
 }
 
 function setCurrentDateColumnSelected(value)
 {
     globalFile.currentDateColumnSelected = value;
 }
+
+function getCurrentDateTimeColumnSelected()
+{
+    return globalFile.currentDateTimeColumnSelected;
+}
+
+function setCurrentDateTimeColumnSelected(value)
+{
+    globalFile.currentDateTimeColumnSelected = value;
+}
+
 
 function setUploadedFileName(value)
 {
@@ -244,8 +255,9 @@ function prepareFileForDatalist(relativePathToText, isLimno, fileType, unitsFile
 
         //shift() removes first element of the array because it is the header row
         let dataArray = data.split("\n");
-
+        
         if(hasHeaderColumn) dataArray.shift();
+        if(unitsFile === true) dataArray = dataArray.sort();
 
         //Filter out rows that are not needed for Limno
         if(isLimno)
@@ -262,6 +274,7 @@ function prepareFileForDatalist(relativePathToText, isLimno, fileType, unitsFile
         }
 
         dataArray.forEach((value, index, array) => {
+
             if(DSTTimeZoneStatus !== false)
             {
                 array[index] = value.split(',')[0]
@@ -270,7 +283,7 @@ function prepareFileForDatalist(relativePathToText, isLimno, fileType, unitsFile
             {
                 switch (fileType) {
                     case '.csv':
-                        array[index] = value.split(/"?,(?![\d\w])"?|(?<=,),/, 7);
+                        array[index] = value.split(/"?,(?![\d\w])"?|(?<=,),|,(?<!"[\d,\w-()\s]*)(?![\d,\w-()\s]*")/,7);
                         break;
                     case '.txt':
                         value = value.replaceAll('"', '');
@@ -311,6 +324,7 @@ function prepareFileForDatalist(relativePathToText, isLimno, fileType, unitsFile
         });
 
         let datalist;
+        
         if( unitsFile === true )
         {
             datalist = createUnitDataListElements(dataArray, id=listElementId);
@@ -733,21 +747,41 @@ function dateColumnSelected(event)
 {
     let selectedColumnId = event.target.value;
     let currentColumn = getCurrentDateColumnSelected();
-
     if(currentColumn !== undefined)
     {
-        //Allow previous column to be selected by Date Column
+        //Allow previous column to be selected by Time Column
         $(`#timeColumnSelect > option[value="${currentColumn}"]`).attr('hidden', false);
     }
 
     setCurrentDateColumnSelected(selectedColumnId);
+    //Update preview column and outputs values
+    updateOutputandPreviewFromDateOrDateTimeColumnSelection(selectedColumnId, 'date');
     hideSelectedDateRow(selectedColumnId);
 
-    
-
+    //Hide the column with id === selectedColumnId as an option from the Time Format Selector
     $(`#timeColumnSelect > option[value="${selectedColumnId}"]`).attr('hidden', true);
 
     createDateForm(selectedColumnId);
+}
+
+function updateOutputandPreviewFromDateOrDateTimeColumnSelection(selectedColumnId, new_column_name)
+{
+    let rownumber = selectedColumnId.split("_").at(-1);
+
+    if(selectedColumnId !== "")
+    {
+        updatePreviewColumnHeadersArray(rownumber, new_column_name);
+        //Update how it looks in the table
+        let th = $(`#previewHeader_${selectedColumnId}`)[0];
+        th.innerText = new_column_name;
+        clearRowOutput(rownumber,new_column_name);
+    }else
+    {
+        //Trigger event on newNameInput for this rownumber
+        let previousDateTimeRowNumber = getHiddenDateTimeRow().dataset.rownumber
+        updatePreviewColumnByParentRowId(getHiddenDateTimeRow().id);
+        updateRowOutput(previousDateTimeRowNumber);
+    }
 }
 
 function timeColumnSelected(event)
@@ -774,6 +808,9 @@ function dateTimeColumnSelected(event)
 {
     let selectedColumnId = event.target.value;
 
+    //Update preview column and outputs values
+    updateOutputandPreviewFromDateOrDateTimeColumnSelection(selectedColumnId, 'datetime');
+
     hideSelectedDateTimeRow(selectedColumnId);
     createDateTimeForm(selectedColumnId);
 }
@@ -798,7 +835,7 @@ function hideSelectedDateTimeRow(selectedColumnId)
     let oldRow = getHiddenDateTimeRow();
     let newRow;
 
-    if( selectedColumnId === null) newRow = null;
+    if( selectedColumnId === null || selectedColumnId === "") newRow = null;
     else  newRow =  $(`tr#row_${selectedColumnId.split("_").at(-1)}`)[0];
 
     hideSelectedRow(oldRow,newRow);
@@ -810,6 +847,7 @@ function hideSelectedDateTimeRow(selectedColumnId)
         return;   
     }
 
+    setDateTimeFormat('');
     setHiddenDateTimeRow(newRow);
 }
 
@@ -1026,6 +1064,8 @@ function createDateTimeForm(selectedColumnId)
 
     if(selectedColumnId === "") return;
 
+    setCurrentDateTimeColumnSelected(selectedColumnId);
+
     let div = $('#dateTimeFormDiv');
     
     //Create Form Element
@@ -1166,8 +1206,10 @@ function createDateTimeForm(selectedColumnId)
     let rowThree = $("<div class='d-flex row'></div>");
     let dstOnlyFormGroup = $("<div id='dstOnlyFormGroup' class='form-group col-md-4'></div>");
 
-    let dstCheckboxLabel = $("<label class='form-check-label' for='dstCheckboxInput'>Does your datetime observe DST?</label>");
+    let dstCheckboxLabel = $("<label class='form-check-label' for='dstCheckboxInput'>Check here if your datetime column observes DST</label>");
     let dstCheckboxInput = $("<input id='dstCheckboxInput' class='form-check-input' type='checkbox' value=''>");
+    let dstTooltip = $(`<button type="button" class="help-button btn" data-toggle="tooltip" data-placement="left" title="by checking this box, you are limiting the formal Olson time zone list to those that observe (or have observed) DST">&#9432;</button>`).tooltip({'html': true });
+    dstCheckboxLabel.append(dstTooltip);
 
     //Create checkbox to switch  to zoneInput.attr('list', ``${getDSTTimeZoneListElementId()}``);
     dstCheckboxInput.on('change', function(e){
@@ -1731,9 +1773,10 @@ function createTimeForm(selectedColumnId)
     let rowThree = $("<div class='d-flex row'></div>");
     let dstOnlyFormGroup = $("<div id='dstOnlyFormGroup' class='form-group col-md-4'></div>");
 
-    let dstCheckboxLabel = $("<label class='form-check-label' for='dstCheckboxInput'>Does your datetime observe DST?</label>");
+    let dstCheckboxLabel = $("<label class='form-check-label' for='dstCheckboxInput'>'Check here if the time column observes DST</label>");
     let dstCheckboxInput = $("<input id='dstCheckboxInput' class='form-check-input' type='checkbox' value=''>");
-
+    let dstTooltip = $(`<button type="button" class="help-button btn" data-toggle="tooltip" data-placement="left" title="by checking this box, you are limiting the formal Olson time zone list to those that observe (or have observed) DST">&#9432;</button>`).tooltip({'html': true });
+    dstCheckboxLabel.append(dstTooltip);
     //Create checkbox to switch  to zoneInput.attr('list', ``${getDSTTimeZoneListElementId()}``);
     dstCheckboxInput.on('change', function(e){
         if(e.target.checked)
@@ -1876,6 +1919,7 @@ function createTimeColumnSelectAndAppendToDiv(div)
 
 function hideDateTimeForm()
 {
+    setCurrentDateTimeColumnSelected(undefined);
     hideSelectedDateTimeRow(null);
     destroyDateTimeForm();
 }
@@ -1886,7 +1930,7 @@ function hideDateForm()
 
     if(currentColumn !== undefined)
     {
-        //Allow previous column to be selected by Date Column
+        //Allow previous column to be selected by Time Column
         $(`#timeColumnSelect > option[value="${currentColumn}"]`).attr('hidden', false);
     }
 
@@ -2675,6 +2719,28 @@ function updateRowOutput(rownumber)
     updateUnitsOutput(rownumber);
 }
 
+function clearRowOutput(rownumber, newRowName)
+{
+    setColumnsOutputValue(rownumber,'new_column_name', newRowName);
+
+    let definitionString = 'Date in ISO Format';
+    if(newRowName === 'datetime')
+    {
+        definitionString = 'Date and Time in ISO Format';
+    }
+    setColumnsOutputValue(rownumber,'new_variable_definition', definitionString);
+    setColumnsOutputValue(rownumber,'new_variable_controlled_term', '');
+    setColumnsOutputValue(rownumber,'new_variable_controlled_provenance', '');
+    setColumnsOutputValue(rownumber,'new_variable_controlled_name', '');
+    setColumnsOutputValue(rownumber,'units', '');
+    setColumnsOutputValue(rownumber,'units_definition', '');
+    setColumnsOutputValue(rownumber,'new_unit_controlled_term', '');
+    setColumnsOutputValue(rownumber,'new_unit_controlled_provenance', '');
+    setColumnsOutputValue(rownumber,'new_unit_controlled_name', '');
+
+
+}
+
 function updateVariableOutput(rownumber)
 {
     let newName = getPreviewTableHeadersArray()[rownumber];
@@ -2735,14 +2801,12 @@ function updateUnitsOutput(rownumber)
     }
 }
 
-function updatePreviewColumn(input)
+
+function updatePreviewColumnByParentRowId(parentRowId)
 {
-    let parentRow = $(`#${input.dataset.parentrow}`)[0];
+    let parentRow = $(`#${parentRowId}`)[0];
     let originalname = parentRow.dataset.originalname;
     let rownumber = parentRow.dataset.rownumber;
-
-    //Select Preview Table <th> element
-    let th = $(`#previewHeader_${originalname}_${rownumber}`)[0];
     
     let newNameElement = $(`#newNameInput_row_${rownumber}`)[0];
     let newNameString = newNameElement.value;
@@ -2770,6 +2834,47 @@ function updatePreviewColumn(input)
     let newPreviewName = newNameString + unitsString + depthString;
 
     updatePreviewColumnHeadersArray(rownumber, newPreviewName);
+
+    //Select Preview Table <th> element
+    let th = $(`#previewHeader_${originalname}_${rownumber}`)[0];
+    th.innerText = newPreviewName;
+};
+
+function updatePreviewColumn(input)
+{
+    let parentRow = $(`#${input.dataset.parentrow}`)[0];
+    let originalname = parentRow.dataset.originalname;
+    let rownumber = parentRow.dataset.rownumber;
+    
+    let newNameElement = $(`#newNameInput_row_${rownumber}`)[0];
+    let newNameString = newNameElement.value;
+
+    let unitsInputElement = $(`#unitsInput_row_${rownumber}`)[0];
+    let units = unitsInputElement.value;
+    let unitsString = units ? `_${units}` : '';
+
+    let depth;
+
+    if(getDepthInputDisabled() === false)
+    {
+        let depthInputElement = $(`#depthInput_row_${rownumber}`)[0];
+        depth = depthInputElement.value;
+    }
+
+    let depthUnit = getDepthUnits();
+    let depthUnitString = 'm';
+    if(depthUnit !== 'Meters') depthUnitString = 'ft';
+
+    let depthString = depth ? `_depth${depth}${depthUnitString}` : '';
+
+    if(newNameString == "") newNameString = originalname;
+
+    let newPreviewName = newNameString + unitsString + depthString;
+
+    updatePreviewColumnHeadersArray(rownumber, newPreviewName);
+
+    //Select Preview Table <th> element
+    let th = $(`#previewHeader_${originalname}_${rownumber}`)[0];
     th.innerText = newPreviewName;
 };
 
@@ -3006,14 +3111,13 @@ function prepareRenameTableDataForDownload(){
     //Replace old headers with new headers
     dataArray[0] = headersString;
 
-    //If they have a datetime column: Replace existing datetime column with new format
-    if(getHiddenDateTimeRow() !== null && getDateTimeFormat() !== null)
+    //If they have a datetime or date column selected: Replace existing column with newly formated dates
+    if(getHiddenDateTimeRow() !== null && getDateTimeFormat() !== null && getDateTimeFormat() !== '')
     {
         dataArray = replaceDateTimeColumn(dataArray);
     }
 
     //If they have a Time column OR DateTime is selected: Add a timezone column
-    debugger;
     if(getTimeZone() !== undefined && getTimeZone() !== '')
     {
         dataArray = addTimeZoneColumn(dataArray);
@@ -3030,10 +3134,13 @@ function prepareRenameTableDataForDownload(){
 function replaceDateTimeColumn(dataArray)
 {
     let firstTimeAlerting = true;
+    let dateOrDateTimeRowName = getHiddenDateTimeRow();
+    let dateOrDateTimeRowNameIndex = dateOrDateTimeRowName.dataset.rownumber;
+
     dataArray.forEach( (value, index, array) => {
         if(index === 0) return;
         let splitValue = value.split(",");
-        let dateValue = splitValue[0];
+        let dateValue = splitValue[dateOrDateTimeRowNameIndex];
         
         let dateTimeFormat = getDateTimeFormat()
         let timeZone = getTimeZone();
@@ -3045,19 +3152,26 @@ function replaceDateTimeColumn(dataArray)
         if(dateTimeFormat === "validISO") dateTime = DateTime.fromISO(dateValue, { zone: timeZone});
         else dateTime = DateTime.fromFormat(dateValue, dateTimeFormat, { zone : timeZone});
         //Convert to ISO Standard format yyyy-MM-ddTHH:mm:ss (Ex: 2023-04-13T14:52:30-04:00)
-        let newDateTimeValue = dateTime.toISO();
+        let newDateTimeValue = dateTime.toISO({includeOffset: false, suppressMilliseconds: true});
+
+        //TODO remove 'T' from the Date Time Value. Replace it with a blank space
+        //(Ex: 2023-04-13T14:52:30-04:00) should become (Ex: 2023-04-13 14:52:30-04:00)
         if(newDateTimeValue === null && dateValue !== "")
         {
             newDateTimeValue = dateValue;
             if(firstTimeAlerting === true)
             {
-                debugger;
-                alert("Some Date Values ae detected in a different format. The tool is unable to convert these formats. The new file will still be generated without those Date Values being changed. Please go through your .csv file and ensure all Date values are in the same format then reupload the .csv");
+                alert("Some Date Values are detected in a different format. The tool is unable to convert these formats. The new file will still be generated without those Date Values being changed. Please go through your .csv file and ensure all Date values are in the same format then reupload the .csv");
                 firstTimeAlerting = false;
             }
         }
+        else if(newDateTimeValue !== null)
+        {
+            newDateTimeValue = newDateTimeValue.replace('T', ' ');
+        }
 
-        splitValue[0] = newDateTimeValue;
+        debugger;
+        splitValue[dateOrDateTimeRowNameIndex] = newDateTimeValue;
         value = splitValue.join();
         array[index] = value;
     })
