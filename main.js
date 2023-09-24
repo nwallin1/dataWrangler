@@ -3203,7 +3203,7 @@ function getTimeZone()
     if(dateTimeFormTimeZone.length > 0) timeZone = dateTimeFormTimeZone[0].value;
     
     let timeFormTimeZone = $('#timeFormTimeZone'); 
-    if(timeFormTimeZone.length > 0) timezone = timeFormTimeZone[0].value;
+    if(timeFormTimeZone.length > 0) timeZone = timeFormTimeZone[0].value;
 
     if(timeZone !== undefined) setOutputValue('TimeZone', timeZone);
 
