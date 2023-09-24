@@ -606,9 +606,8 @@ function handleFiles()
     $('#descriptionFileNameInput')[0].value = filenameWithoutExtension + '_parameter_descriptions.txt';
 
     reader.onload = function(e){
-        rawFileData = e.target.result;
-
-        let csvRows = e.target.result.split("\n");
+        let input = e.target.result.replaceAll('\r', '');
+        let csvRows = input.split("\n");
         
         setCsvRows(csvRows);
         setCsvUploaded(true);
