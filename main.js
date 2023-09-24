@@ -283,7 +283,12 @@ function prepareFileForDatalist(relativePathToText, isLimno, fileType, unitsFile
             {
                 switch (fileType) {
                     case '.csv':
-                        array[index] = value.split(/"?,(?![\d\w])"?|(?<=,),|,(?<!"[\d,\w-()\s]*)(?![\d,\w-()\s]*")/,7);
+                        array[index] = value.split(/(?!\B"[^"]*),(?![^"]*"\B)/,7);
+
+                        for (let i = 0; i < array[index].length; i++)
+                        {
+                            array[index][i] = array[index][i].replaceAll('"', '');
+                        }
                         break;
                     case '.txt':
                         value = value.replaceAll('"', '');
